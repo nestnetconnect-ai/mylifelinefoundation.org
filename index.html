@@ -1576,86 +1576,135 @@ function startClock() {
   setInterval(tick, 1000);
 }
 
-/* ─────────────────────────────────────────────
-   NOTICES SYSTEM
-───────────────────────────────────────────── */
+/* ===========================
+   NOTICE & WISHES SYSTEM
+=========================== */
+
 let noticeIdx = 0;
 let noticeTimer = null;
 let notices = [];
 
-const ODISHA_EVENTS = [
-  { tag: 'event', label: '🎉 Event', text: 'Raja Parba Festival — 13–16 June 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Rath Yatra, Puri — 27 June 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Independence Day Celebration — 15 Aug 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Nuakhai Juhar Festival — Sep 2025' },
-  { tag: 'program', label: '📋 Program', text: 'Free Health Camp — Upcoming at Kendrapara' },
-  { tag: 'program', label: '📋 Program', text: 'Education Drive Vol. 3 — Registration Open' },
-  { tag: 'program', label: '📋 Program', text: 'Youth Skill Training — Batch 4 Enrolling' },
-  { tag: 'rating', label: '⭐ Rating', text: 'Foundation rated ⭐⭐⭐⭐⭐ by 98 beneficiaries' },
+/* ---------- AUTO DATE BASED WISHES (ODISHA + NATIONAL) ---------- */
+const AUTO_WISHES = [
+  { m:1, d:26, text:"🇮🇳 ଗଣତନ୍ତ୍ର ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା – My Lifeline Foundation" },
+  { m:3, d:8,  text:"🌸 International Women's Day – ନାରୀଶକ୍ତିକୁ ସଲାମ" },
+  { m:8, d:15, text:"🇮🇳 ସ୍ୱାଧୀନତା ଦିବସର ଶୁଭେଚ୍ଛା" },
+  { m:9, d:1,  text:"🌾 ନୁଆଖାଇ ଜୁହାର – My Lifeline Foundation" },
+  { m:10,d:2,  text:"🙏 Gandhi Jayanti – ଶ୍ରଦ୍ଧାଞ୍ଜଳି" }
 ];
 
+/* ---------- MANUAL WISHES (ADMIN ADD ANYTIME) ---------- */
+const MANUAL_WISHES = [
+  { text:"🕊️ ଶ୍ରଦ୍ଧାଞ୍ଜଳି – Late Ramesh Panda" },
+  { text:"🎉 Jayanti Wishes – Netaji Subhash Chandra Bose" }
+];
+
+/* ---------- FOUNDATION NOTICES ---------- */
+const FOUNDATION_NOTICES = [
+  "📢 Free Health Camp – Kendrapara",
+  "📢 Education Drive – Registration Open",
+  "📢 Youth Skill Training – Batch 4 Enrolling"
+];
+
+/* ---------- BUILD ALL NOTICES ---------- */
 function buildNotices() {
-  notices = [...ODISHA_EVENTS];
 
-  const volunteers = DB.getVolunteers();
+  notices = [];
   const today = new Date();
-  const todayMMDD = `${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-  const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
+  const m = today.getMonth()+1;
+  const d = today.getDate();
 
-  volunteers.forEach(vol => {
-    // Birthday wishes
-    if (vol.dob) {
-      const dobMMDD = vol.dob.substring(5);
-      if (dobMMDD === todayMMDD) {
-        notices.unshift({ tag: 'birthday', label: '🎂 Birthday', text: `Happy Birthday ${vol.name}! 🎉 Best wishes from MLF Family` });
-      }
-    }
-    // Yesterday joined
-    const joinDate = new Date(vol.joinDate);
-    const iYesterday = joinDate.toDateString() === yesterday.toDateString() || joinDate.toDateString() === today.toDateString();
-    if (iYesterday) {
-      const photo = vol.photo ? `<img src="${vol.photo}" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:4px;">` : '🤝 ';
-      notices.push({ tag: 'welcome', label: '🤝 Welcome', text: `Welcome ${vol.name}! New volunteer joined from ${vol.district || 'Odisha'} 🌱` });
+  /* Auto Festival Wishes */
+  AUTO_WISHES.forEach(w=>{
+    if(w.m===m && w.d===d){
+      notices.push({
+        tag:'event',
+        label:'🎉 Wishes',
+        text:w.text
+      });
     }
   });
+
+  /* Manual Wishes */
+  MANUAL_WISHES.forEach(w=>{
+    notices.push({
+      tag:'event',
+      label:'📌 Update',
+      text:w.text
+    });
+  });
+
+  /* Foundation Notices */
+  FOUNDATION_NOTICES.forEach(n=>{
+    notices.push({
+      tag:'program',
+      label:'📢 Notice',
+      text:n
+    });
+  });
+
+  /* Volunteer Birthday (if DB exists) */
+  if(typeof DB !== "undefined"){
+    const volunteers = DB.getVolunteers();
+    const todayMMDD = `${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+    volunteers.forEach(v=>{
+      if(v.dob && v.dob.substring(5)===todayMMDD){
+        notices.unshift({
+          tag:'birthday',
+          label:'🎂 Birthday',
+          text:`Happy Birthday ${v.name}! Best wishes from My Lifeline Foundation`
+        });
+      }
+    });
+  }
 
   renderNotices();
 }
 
-function renderNotices() {
-  if (notices.length === 0) return;
-  const scroll = document.getElementById('cwScroll');
-  const dots = document.getElementById('cwDots');
+/* ---------- RENDER ---------- */
+function renderNotices(){
+  if(notices.length===0) return;
 
-  scroll.innerHTML = notices.map(n => `
+  const scroll = document.getElementById("cwScroll");
+  const dots   = document.getElementById("cwDots");
+
+  scroll.innerHTML = notices.map(n=>`
     <div class="cw-notice-item">
       <span class="cw-notice-tag tag-${n.tag}">${n.label}</span>
       <div class="cw-notice-text">${n.text}</div>
     </div>
-  `).join('');
+  `).join("");
 
-  dots.innerHTML = notices.map((_, i) => `<div class="cw-dot ${i===0?'active':''}" onclick="goNotice(${i})"></div>`).join('');
+  dots.innerHTML = notices.map((_,i)=>
+    `<div class="cw-dot ${i===0?'active':''}" onclick="goNotice(${i})"></div>`
+  ).join("");
 
   noticeIdx = 0;
-  if (noticeTimer) clearInterval(noticeTimer);
-  noticeTimer = setInterval(nextNotice, 3500);
+  if(noticeTimer) clearInterval(noticeTimer);
+  noticeTimer = setInterval(nextNotice, 6000);   // slower speed
 }
 
-function nextNotice() {
-  if (notices.length === 0) return;
-  noticeIdx = (noticeIdx + 1) % notices.length;
+/* ---------- CONTROLS ---------- */
+function nextNotice(){
+  noticeIdx = (noticeIdx+1)%notices.length;
   updateNoticeScroll();
 }
 
-function goNotice(i) {
+function goNotice(i){
   noticeIdx = i;
   updateNoticeScroll();
 }
 
-function updateNoticeScroll() {
-  const scroll = document.getElementById('cwScroll');
-  scroll.style.transform = `translateY(-${noticeIdx * 72}px)`;
-  document.querySelectorAll('.cw-dot').forEach((d,i) => d.classList.toggle('active', i===noticeIdx));
+function updateNoticeScroll(){
+  const scroll = document.getElementById("cwScroll");
+  scroll.style.transform = `translateY(-${noticeIdx*72}px)`;
+  document.querySelectorAll(".cw-dot")
+    .forEach((d,i)=>d.classList.toggle("active",i===noticeIdx));
+}
+
+/* ---------- START ---------- */
+document.addEventListener("DOMContentLoaded", buildNotices);
 }
 
 // Hide clock widget when scrolled past hero
