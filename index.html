@@ -1641,6 +1641,21 @@ function buildNotices() {
     }
   });
 
+  /* ===== AUTO 2026 CALENDAR CHECK ===== */
+if (typeof CALENDAR_2026 !== "undefined") {
+  const todayStr = new Date().toISOString().split("T")[0];
+
+  CALENDAR_2026.forEach(item => {
+    if (item.date === todayStr) {
+      notices.unshift({
+        tag: "event",
+        label: "📅 Today",
+        text: item.event
+      });
+    }
+  });
+}
+
   renderNotices();
 }
 
