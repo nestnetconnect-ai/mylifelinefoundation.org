@@ -131,7 +131,7 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
    CLOCK WIDGET (TOP-RIGHT FLOATING)
 ═══════════════════════════════════════════════ */
 .clock-widget{
-  position:fixed;top:80px;right:16px;z-index:990;
+  position:relative;
   width:230px;
   background:rgba(10,40,80,0.55);
   backdrop-filter:blur(24px);
@@ -692,6 +692,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   <div class="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
+   <div id="navbar-clock-slot"></div>
 </nav>
 
 <div class="mob-menu" id="mobMenu">
@@ -706,7 +707,14 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 <!-- ═══════════════════════════════════════════
      CLOCK WIDGET (FLOATING TOP-RIGHT)
 ═══════════════════════════════════════════ -->
-<div class="clock-widget" id="clockWidget">
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero" id="home">
+   <div id="hero-clock-slot">
+   <div class="clock-widget" id="clockWidget">
   <div class="cw-time" id="cwTime">00:00:00</div>
   <div class="cw-date" id="cwDate">--/--/----</div>
   <div class="cw-divider"></div>
@@ -715,11 +723,6 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   </div>
   <div class="cw-dots" id="cwDots"></div>
 </div>
-
-<!-- ═══════════════════════════════════════════
-     HERO
-═══════════════════════════════════════════ -->
-<section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-g1"></div>
   <div class="hero-g2"></div>
@@ -1767,6 +1770,22 @@ window.addEventListener('DOMContentLoaded', () => {
   buildNotices();
   updateNav();
   checkQRParam();
+   const clockWidget = document.getElementById("clockWidget");
+const heroSlot = document.getElementById("hero-clock-slot");
+const navbarSlot = document.getElementById("navbar-clock-slot");
+
+window.addEventListener("scroll", function () {
+   if (window.scrollY > 120) {
+      if (!navbarSlot.contains(clockWidget)) {
+         navbarSlot.appendChild(clockWidget);
+      }
+   } else {
+      if (!heroSlot.contains(clockWidget)) {
+         heroSlot.appendChild(clockWidget);
+      }
+   }
+ });
+   
 });
 </script>
 </body>
