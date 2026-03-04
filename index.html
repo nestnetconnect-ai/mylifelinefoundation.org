@@ -1703,9 +1703,39 @@ function updateNoticeScroll() {
 }
 
 // Hide clock widget when scrolled past hero
+let clockInNavbar = false;
+
 function handleClockVisibility() {
-  const widget = document.getElementById('clockWidget');
-  widget.classList.toggle('hero-hidden', window.scrollY > window.innerHeight * 0.7);
+
+   const widget = document.getElementById('clockWidget');
+   const navSlot = document.getElementById('navClockSlot');
+   const heroSlot = document.getElementById('hero-clock-slot');
+
+   const shouldMove = window.scrollY > window.innerHeight * 0.7;
+
+   if (shouldMove && !clockInNavbar) {
+
+      clockInNavbar = true;
+
+      widget.classList.add("clock-moving");
+
+      setTimeout(() => {
+         navSlot.appendChild(widget);
+         widget.classList.remove("clock-moving");
+      }, 250);
+   }
+
+   if (!shouldMove && clockInNavbar) {
+
+      clockInNavbar = false;
+
+      widget.classList.add("clock-moving");
+
+      setTimeout(() => {
+         heroSlot.appendChild(widget);
+         widget.classList.remove("clock-moving");
+      }, 250);
+   }
 }
 
 /* ─────────────────────────────────────────────
