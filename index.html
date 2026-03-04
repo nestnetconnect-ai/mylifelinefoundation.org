@@ -1613,7 +1613,11 @@ function startClock() {
     document.getElementById('cwDate').textContent = `${dd}/${mo}/${yyyy}`;
   }
   tick();
-  setInterval(tick, 1000);
+
+if (!window.clockInterval) {
+   window.clockInterval = setInterval(tick, 1000);
+}
+  
 }
 
 /* ─────────────────────────────────────────────
