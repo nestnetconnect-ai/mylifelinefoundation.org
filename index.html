@@ -77,93 +77,72 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .btn-wh{background:rgba(255,255,255,.13);color:var(--white);padding:13px 28px;border-radius:12px;border:1.5px solid rgba(255,255,255,.45);font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .3s;backdrop-filter:blur(8px);font-family:'Poppins',sans-serif;cursor:pointer;}
 .btn-wh:hover{background:rgba(255,255,255,.22);transform:translateY(-3px);}
 .hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.2);border-radius:24px;padding:28px;color:var(--white);animation:fadeUp .8s .4s ease both;}
-   .clock-widget{
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,0.3);
-  border-radius:20px;
-  padding:20px;
-  width:320px;
-  color:#fff;
-  position:absolute;
-  right:60px;
-  top:140px;
-}
-
-.clock-time{
-  font-size:32px;
-  font-weight:800;
-  color:#FFD36E;
-}
-
-.clock-date{
-  font-size:14px;
-  margin-bottom:15px;
-  opacity:.8;
-}
-
-.event-tag{
-  background:#2E8B57;
-  padding:4px 10px;
-  font-size:12px;
-  border-radius:6px;
-  display:inline-block;
-  margin-bottom:8px;
-}
-
-.clock-event p{
-  font-size:14px;
-  margin:0;
-}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.h-stat{text-align:center;padding:18px 10px;background:rgba(255,255,255,.09);border-radius:13px;}
-.h-stat-n{font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;color:var(--orange);line-height:1;}
-.h-stat-l{font-size:11px;color:rgba(255,255,255,.7);margin-top:5px;text-transform:uppercase;letter-spacing:.4px;line-height:1.3;}
-.hero-q{margin-top:18px;padding:16px;background:rgba(46,139,87,.2);border-radius:13px;border-left:3px solid #3AA368;}
-.hero-q p{font-size:13px;line-height:1.65;color:rgba(255,255,255,.85);font-style:italic;}
-.hero-q cite{display:block;margin-top:8px;font-size:12px;color:var(--orange);font-weight:700;font-style:normal;}
-.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.5);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;animation:bob 2s infinite;}
-.scroll-line{width:1px;height:34px;background:rgba(255,255,255,.3);}
-@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-
-/* ═══════════════════════════════════════════════
-   CLOCK WIDGET (TOP-RIGHT FLOATING)
-═══════════════════════════════════════════════ */
+/* ═══ SMART FESTIVAL CLOCK WIDGET ═══ */
 .clock-widget{
   position:fixed;top:80px;right:16px;z-index:990;
-  width:230px;
-  background:rgba(10,40,80,0.55);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,0.22);
-  border-radius:18px;
-  padding:14px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.15);
-  color:var(--white);
+  width:236px;
+  background:rgba(8,28,58,0.85);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.12);
+  color:#fff;
   transition:opacity .3s;
 }
-.clock-widget.hero-hidden{opacity:0;pointer-events:none;}
+.clock-widget::before{
+  content:'';display:block;height:3px;
+  background:linear-gradient(90deg,#FF6B1A,#F5C842,#2E8B57,#F5C842,#FF6B1A);
+  background-size:300% 100%;
+  animation:cwShimmer 4s linear infinite;
+}
+@keyframes cwShimmer{0%{background-position:0%}100%{background-position:300%}}
+.cw-clock-area{padding:14px 16px 10px;text-align:center;}
 .cw-time{
   font-family:'Poppins',sans-serif;
-  font-size:30px;font-weight:800;
-  letter-spacing:2px;color:#FFDD80;
-  text-align:center;line-height:1;
-  text-shadow:0 0 20px rgba(255,200,80,.5);
+  font-size:30px;font-weight:800;letter-spacing:3px;
+  color:#FFDD80;line-height:1;
+  text-shadow:0 0 24px rgba(255,210,80,.5);
+  animation:cwGlow 2s ease-in-out infinite;
 }
-.cw-date{font-size:11px;text-align:center;color:rgba(255,255,255,.7);margin-top:3px;letter-spacing:1px;font-weight:600;}
-.cw-divider{height:1px;background:rgba(255,255,255,.15);margin:10px 0;}
-.cw-notice-box{height:72px;overflow:hidden;position:relative;}
+@keyframes cwGlow{0%,100%{text-shadow:0 0 16px rgba(255,210,80,.35)}50%{text-shadow:0 0 36px rgba(255,210,80,.8)}}
+.cw-date{font-size:10.5px;text-align:center;color:rgba(255,255,255,.6);margin-top:4px;letter-spacing:1.2px;font-weight:600;}
+.cw-odia-month{font-size:10px;text-align:center;color:#FF8C42;margin-top:2px;letter-spacing:.5px;}
+.cw-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);margin:0 14px;}
+.cw-today-banner{
+  margin:10px 12px;
+  background:linear-gradient(135deg,rgba(255,107,26,.22),rgba(245,200,66,.15));
+  border:1px solid rgba(245,200,66,.3);
+  border-radius:10px;padding:10px 12px;
+  display:none;
+}
+.cw-today-banner.show{display:block;animation:cwFadeIn .4s ease;}
+@keyframes cwFadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.cw-today-emoji{font-size:1.1rem;text-align:center;margin-bottom:3px;}
+.cw-today-wish{font-size:10.5px;color:rgba(255,255,255,.88);line-height:1.45;text-align:center;}
+.cw-today-from{font-size:9.5px;color:#FFDD80;text-align:center;margin-top:4px;}
+.cw-notice-section{padding:10px 14px 12px;}
+.cw-notice-label{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;margin-bottom:7px;
+}
+.cw-label-upcoming{background:rgba(46,139,87,.25);color:#86EFAC;}
+.cw-label-today{background:rgba(255,107,26,.25);color:#FFAA70;}
+.cw-label-dot{width:5px;height:5px;border-radius:50%;animation:cwBlink 1.5s infinite;}
+.cw-label-upcoming .cw-label-dot{background:#86EFAC;}
+.cw-label-today .cw-label-dot{background:#FFAA70;}
+@keyframes cwBlink{0%,100%{opacity:1}50%{opacity:.2}}
+.cw-notice-box{height:68px;overflow:hidden;position:relative;}
 .cw-notice-scroll{
-  display:flex;flex-direction:column;gap:0;
+  display:flex;flex-direction:column;
   transition:transform .5s cubic-bezier(.4,0,.2,1);
 }
-.cw-notice-item{
-  min-height:72px;padding:6px 2px;
-  display:flex;flex-direction:column;justify-content:center;
-}
+.cw-notice-item{min-height:68px;padding:4px 2px;display:flex;flex-direction:column;justify-content:center;}
 .cw-notice-tag{
-  display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  display:inline-block;font-size:9px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase;
   padding:2px 7px;border-radius:4px;margin-bottom:4px;
 }
 .tag-event{background:rgba(245,124,0,.3);color:#FFCC80;}
@@ -171,10 +150,47 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .tag-birthday{background:rgba(219,39,119,.3);color:#F9A8D4;}
 .tag-welcome{background:rgba(99,102,241,.3);color:#C4B5FD;}
 .tag-rating{background:rgba(234,179,8,.3);color:#FDE68A;}
-.cw-notice-text{font-size:11.5px;line-height:1.45;color:rgba(255,255,255,.9);}
+.tag-festival{background:rgba(255,107,26,.3);color:#FFAA70;}
+.cw-notice-text{font-size:11px;line-height:1.45;color:rgba(255,255,255,.88);}
 .cw-dots{display:flex;gap:5px;justify-content:center;margin-top:8px;}
-.cw-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s;cursor:pointer;}
-.cw-dot.active{background:var(--orange);width:14px;border-radius:3px;}
+.cw-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.22);transition:all .3s;cursor:pointer;}
+.cw-dot.active{background:#F57C00;width:14px;border-radius:3px;}
+
+/* ═══ FESTIVAL POPUP NOTIFICATION ═══ */
+.mlf-festival-popup{
+  position:fixed;top:20px;right:20px;width:300px;
+  background:rgba(8,24,50,0.96);
+  border:1px solid rgba(245,200,66,.35);
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  z-index:99999;overflow:hidden;
+  transform:translateX(340px);
+  transition:transform .55s cubic-bezier(.34,1.56,.64,1);
+}
+.mlf-festival-popup.popup-show{transform:translateX(0);}
+.popup-top-bar{height:3px;background:linear-gradient(90deg,#FF6B1A,#F5C842,#2E8B57);}
+.popup-inner{padding:15px 17px;position:relative;}
+.popup-close-btn{
+  position:absolute;top:10px;right:12px;
+  background:rgba(255,255,255,.08);border:none;
+  color:rgba(255,255,255,.45);width:22px;height:22px;
+  border-radius:50%;cursor:pointer;font-size:11px;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.popup-close-btn:hover{background:rgba(255,255,255,.18);color:#fff;}
+.popup-org-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#FF8C42;margin-bottom:7px;}
+.popup-emoji-row{font-size:1.5rem;margin-bottom:5px;letter-spacing:3px;}
+.popup-title{font-family:'Poppins',sans-serif;font-size:1rem;color:#FFDD80;font-weight:700;margin-bottom:5px;padding-right:26px;line-height:1.3;}
+.popup-wish-text{font-size:11.5px;color:rgba(255,255,255,.78);line-height:1.55;margin-bottom:8px;}
+.popup-from-line{font-size:10px;color:rgba(255,255,255,.38);}
+.popup-progress-bar-wrap{height:2px;background:rgba(255,255,255,.07);margin-top:12px;border-radius:1px;overflow:hidden;}
+.popup-progress-fill{height:100%;width:100%;background:linear-gradient(90deg,#FF6B1A,#F5C842);transform-origin:left;animation:ppShrink 9s linear forwards;}
+@keyframes ppShrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
+/* ═══ CONFETTI ═══ */
+.mlf-confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;display:none;}
+.conf-p{position:absolute;top:-12px;width:8px;height:8px;opacity:0;border-radius:2px;animation:confFall 3s ease-in forwards;}
+@keyframes confFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
 
 /* ═══════════════════════════════════════════════
    MODAL SYSTEM
@@ -703,18 +719,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   <div id="mobAuthButtons" style="display:flex;flex-direction:column;gap:6px;"></div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     CLOCK WIDGET (FLOATING TOP-RIGHT)
-═══════════════════════════════════════════ -->
-<div class="clock-widget" id="clockWidget">
-  <div class="cw-time" id="cwTime">00:00:00</div>
-  <div class="cw-date" id="cwDate">--/--/----</div>
-  <div class="cw-divider"></div>
-  <div class="cw-notice-box">
-    <div class="cw-notice-scroll" id="cwScroll"></div>
-  </div>
-  <div class="cw-dots" id="cwDots"></div>
-</div>
+
 
 <!-- ═══════════════════════════════════════════
      HERO
@@ -1620,124 +1625,210 @@ if (!window.clockInterval) {
   
 }
 
-/* ─────────────────────────────────────────────
-   NOTICES SYSTEM
-───────────────────────────────────────────── */
-let noticeIdx = 0;
-let noticeTimer = null;
-let notices = [];
+/* ═══════════════════════════════════════════════
+   ODISHA FESTIVAL DATABASE — Kohinoor Panjika
+   Pure Odia Script (ଓଡ଼ିଆ) — Year Independent
+═══════════════════════════════════════════════ */
+const MLF_FESTIVALS = [
+  // JANUARY
+  { month:1,  day:1,  name:"ନବବର୍ଷ ଦିବସ", emoji:"🎆🎊", wish:"ନୂଆ ବର୍ଷର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଏହି ନୂଆ ବର୍ଷ ଆପଣଙ୍କ ଜୀବନରେ ସୁଖ, ଶାନ୍ତି ଓ ସମୃଦ୍ଧି ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:1,  day:14, name:"ମକର ସଂକ୍ରାନ୍ତି / ମକର ମେଳା", emoji:"🪁🌊", wish:"ମକର ସଂକ୍ରାନ୍ତିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ମହାପ୍ରଭୁ ଶ୍ରୀ ଜଗନ୍ନାଥଙ୍କ ଆଶୀର୍ବାଦ ଆପଣଙ୍କ ଉପରେ ବର୍ଷୁ। ଜୟ ଜଗନ୍ନାଥ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:1,  day:26, name:"ଗଣତନ୍ତ୍ର ଦିବସ", emoji:"🇮🇳🎺", wish:"ଗଣତନ୍ତ୍ର ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ହିନ୍ଦ, ଜୟ ଓଡ଼ିଶା। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
 
-const ODISHA_EVENTS = [
-  { tag: 'event', label: '🎉 Event', text: 'Raja Parba Festival — 13–16 June 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Rath Yatra, Puri — 27 June 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Independence Day Celebration — 15 Aug 2025' },
-  { tag: 'event', label: '🎉 Event', text: 'Nuakhai Juhar Festival — Sep 2025' },
-  { tag: 'program', label: '📋 Program', text: 'Free Health Camp — Upcoming at Kendrapara' },
-  { tag: 'program', label: '📋 Program', text: 'Education Drive Vol. 3 — Registration Open' },
-  { tag: 'program', label: '📋 Program', text: 'Youth Skill Training — Batch 4 Enrolling' },
-  { tag: 'rating', label: '⭐ Rating', text: 'Foundation rated ⭐⭐⭐⭐⭐ by 98 beneficiaries' },
+  // FEBRUARY
+  { month:2,  day:5,  name:"ସରସ୍ୱତୀ ପୂଜା", emoji:"📚🌸", wish:"ମାଆ ସରସ୍ୱତୀଙ୍କ ଆଶୀର୍ବାଦ ଆପଣଙ୍କୁ ଜ୍ଞାନ ଓ ବିଦ୍ୟା ପ୍ରଦାନ କରୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:2,  day:26, name:"ମହା ଶିବରାତ୍ରି", emoji:"🔱🕯️", wish:"ମହା ଶିବରାତ୍ରିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ହର ହର ମହାଦେବ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // MARCH
+  { month:3,  day:8,  name:"ଅନ୍ତର୍ଜାତୀୟ ମହିଳା ଦିବସ", emoji:"👩🌸", wish:"ଅନ୍ତର୍ଜାତୀୟ ମହିଳା ଦିବସର ଶୁଭେଚ୍ଛା! ପ୍ରତ୍ୟେକ ନାରୀ ଶକ୍ତି ଓ ସମ୍ମାନର ଯୋଗ୍ୟ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:3,  day:13, name:"ଡୋଳ ପୂର୍ଣ୍ଣିମା / ହୋଲି", emoji:"🎨🌈", wish:"ଡୋଳ ପୂର୍ଣ୍ଣିମା ଓ ହୋଲିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଆପଣଙ୍କ ଜୀବନ ରଙ୍ଗ ଓ ଆନନ୍ଦରେ ଭରପୂର ହେଉ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:3,  day:30, name:"ଉତ୍କଳ ଦିବସ — ଓଡ଼ିଶା ଦିବସ", emoji:"🏵️🌺", wish:"ଉତ୍କଳ ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ଓଡ଼ିଶା, ଜୟ ମାଆ ସମଲେଶ୍ୱରୀ। ଆମ ଓଡ଼ିଶା ଚିରଜୀବୀ ହେଉ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // APRIL
+  { month:4,  day:6,  name:"ରାମ ନବମୀ", emoji:"🏹🪔", wish:"ଶ୍ରୀ ରାମ ନବମୀର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ଶ୍ରୀ ରାମ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:4,  day:14, name:"ମହା ବିଷୁବ ସଂକ୍ରାନ୍ତି — ଓଡ଼ିଆ ନବ ବର୍ଷ", emoji:"🌅🎊", wish:"ଓଡ଼ିଆ ନବ ବର୍ଷ ମହା ବିଷୁବ ସଂକ୍ରାନ୍ତିର ଅଭିନନ୍ଦନ! ନୂଆ ବର୍ଷ ଆପଣଙ୍କ ଜୀବନରେ ଅଶେଷ ଆନନ୍ଦ ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:4,  day:18, name:"ହନୁମାନ ଜୟନ୍ତୀ", emoji:"🙏🚩", wish:"ହନୁମାନ ଜୟନ୍ତୀର ଶୁଭେଚ୍ଛା! ଜୟ ବଜରଙ୍ଗ ବଳୀ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:4,  day:22, name:"ଅକ୍ଷୟ ତୃତୀୟା", emoji:"💛🌼", wish:"ଅକ୍ଷୟ ତୃତୀୟାର ଶୁଭ ଅବସରରେ ଶୁଭେଚ୍ଛା! ଆପଣଙ୍କ ଜୀବନରେ ସୌଭାଗ୍ୟ ଅକ୍ଷୟ ରହୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // MAY
+  { month:5,  day:1,  name:"ଶ୍ରମିକ ଦିବସ", emoji:"✊🛠️", wish:"ଆନ୍ତର୍ଜାତୀୟ ଶ୍ରମିକ ଦିବସର ଶୁଭେଚ୍ଛା! ପ୍ରତ୍ୟେକ ଶ୍ରମିକ ସମ୍ମାନର ଯୋଗ୍ୟ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:5,  day:12, name:"ବୁଦ୍ଧ ପୂର୍ଣ୍ଣିମା", emoji:"☸️🌸", wish:"ବୁଦ୍ଧ ପୂର୍ଣ୍ଣିମାର ଶୁଭେଚ୍ଛା! ଶାନ୍ତି, କରୁଣା ଓ ପ୍ରେମ ଆପଣଙ୍କ ଜୀବନରେ ଆଲୋକ ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:5,  day:23, name:"ସାବିତ୍ରୀ ବ୍ରତ", emoji:"🌳💚", wish:"ସାବିତ୍ରୀ ବ୍ରତର ଶୁଭେଚ୍ଛା! ସମସ୍ତ ପରିବାରରେ ସୁଖ ଓ ସ୍ୱାସ୍ଥ୍ୟ ବଜାୟ ରହୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // JUNE
+  { month:6,  day:16, name:"ସ୍ନାନ ପୂର୍ଣ୍ଣିମା", emoji:"🛕🌊", wish:"ସ୍ନାନ ପୂର୍ଣ୍ଣିମାର ଶୁଭେଚ୍ଛା! ଜୟ ଜଗନ୍ନାଥ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:6,  day:27, name:"ରଥ ଯାତ୍ରା — ଶ୍ରୀ ପୁରୀ", emoji:"🏆🎪", wish:"ଜୟ ଜଗନ୍ନାଥ! ଶ୍ରୀ ପୁରୀ ରଥ ଯାତ୍ରାର କୋଟି କୋଟି ଶୁଭେଚ୍ଛା। ମହାପ୍ରଭୁ ଆପଣ ସମସ୍ତଙ୍କୁ ଆଶୀର୍ବାଦ ଦିଅନ୍ତୁ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // JULY
+  { month:7,  day:6,  name:"ହେରା ପଞ୍ଚମୀ", emoji:"🌸🛕", wish:"ହେରା ପଞ୍ଚମୀର ଶୁଭେଚ୍ଛା! ଜୟ ଜଗନ୍ନାଥ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:7,  day:11, name:"ବାହୁଡ଼ା ଯାତ୍ରା", emoji:"🎊🚩", wish:"ବାହୁଡ଼ା ଯାତ୍ରାର ଶୁଭେଚ୍ଛା! ମହାପ୍ରଭୁ ଘରକୁ ଫେରିଲେ। ଜୟ ଜଗନ୍ନାଥ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:7,  day:13, name:"ସୁନା ବେଶ", emoji:"👑✨", wish:"ସୁନା ବେଶ ଦର୍ଶନର ଶୁଭ ଅବସରରେ ଶୁଭେଚ୍ଛା! ଜୟ ଜଗନ୍ନାଥ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // AUGUST
+  { month:8,  day:15, name:"ସ୍ୱାଧୀନତା ଦିବସ", emoji:"🇮🇳🎆", wish:"ସ୍ୱାଧୀନତା ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ହିନ୍ଦ, ଜୟ ଭାରତ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:8,  day:19, name:"ରକ୍ଷା ବନ୍ଧନ", emoji:"🧡🪢", wish:"ରକ୍ଷା ବନ୍ଧନର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଭାଇ ଭଉଣୀଙ୍କ ପବିତ୍ର ବନ୍ଧନ ଚିରଦିନ ଅଟୁଟ ରହୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:8,  day:27, name:"ଜନ୍ମାଷ୍ଟମୀ", emoji:"🦚🎵", wish:"ଶ୍ରୀ କୃଷ୍ଣ ଜନ୍ମାଷ୍ଟମୀର ଶୁଭେଚ୍ଛା! ଜୟ ଶ୍ରୀ କୃଷ୍ଣ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // SEPTEMBER
+  { month:9,  day:2,  name:"ଗଣେଶ ଚତୁର୍ଥୀ", emoji:"🐘🌺", wish:"ଗଣେଶ ଚତୁର୍ଥୀର ଶୁଭେଚ୍ଛା! ଗଣପତି ବାପ୍ପା ମୋରୟା। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:9,  day:22, name:"ନୁଆଖାଇ ଜୁହାର", emoji:"🌾🎉", wish:"ନୁଆଖାଇ ଜୁହାର! ନୂଆ ଫସଲ ଉତ୍ସବ ଆପଣ ସମସ୍ତଙ୍କ ଜୀବନରେ ଖୁସି ଓ ସମୃଦ୍ଧି ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // OCTOBER
+  { month:10, day:2,  name:"ଗାନ୍ଧୀ ଜୟନ୍ତୀ", emoji:"🕊️🇮🇳", wish:"ଗାନ୍ଧୀ ଜୟନ୍ତୀ ଅବସରରେ ରାଷ୍ଟ୍ରପିତାଙ୍କୁ ଶ୍ରଦ୍ଧାଞ୍ଜଳି। ସତ୍ୟ ଓ ଅହିଂସା ଚିରଜୀବୀ ହେଉ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:10, day:3,  name:"ନବରାତ୍ରି ଆରମ୍ଭ", emoji:"🪔🌹", wish:"ନବରାତ୍ରିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ମାଆ ଦୁର୍ଗାଙ୍କ ଆଶୀର୍ବାଦ ଆପଣ ସମସ୍ତଙ୍କ ଉପରେ ବର୍ଷୁ। ଜୟ ମାଆ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:10, day:10, name:"ମହା ଅଷ୍ଟମୀ — ଦୁର୍ଗା ପୂଜା", emoji:"🌺🙏", wish:"ମହା ଅଷ୍ଟମୀ ଓ ଦୁର୍ଗା ପୂଜାର କୋଟି କୋଟି ଶୁଭେଚ୍ଛା! ଜୟ ମାଆ ଦୁର୍ଗା! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:10, day:12, name:"ବିଜୟ ଦଶମୀ — ଦଶହରା", emoji:"🏹🎊", wish:"ବିଜୟ ଦଶମୀର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ମନ୍ଦ ଉପରେ ଭଲ ଜୟ ସଦା ହେଉ। ଜୟ ଶ୍ରୀ ରାମ! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:10, day:20, name:"କୋଜାଗରୀ ଲକ୍ଷ୍ମୀ ପୂଜା", emoji:"💛🌕", wish:"କୋଜାଗରୀ ଲକ୍ଷ୍ମୀ ପୂଜାର ଶୁଭେଚ୍ଛା! ମାଆ ଲକ୍ଷ୍ମୀ ଆପଣଙ୍କ ଘରେ ଧନ ଓ ସମୃଦ୍ଧି ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // NOVEMBER
+  { month:11, day:1,  name:"କୁମାର ପୂର୍ଣ୍ଣିମା", emoji:"🌕💫", wish:"କୁମାର ପୂର୍ଣ୍ଣିମାର ଶୁଭେଚ୍ଛା! ଭଉଣୀ ଭାଇ ପାଇଁ ଯାହା ମାଗନ୍ତି ତାହା ପୂର୍ଣ୍ଣ ହେଉ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:11, day:5,  name:"ଦୀପାବଳି", emoji:"🪔✨", wish:"ଦୀପାବଳିର ଆଲୋକ ଭରା ଶୁଭେଚ୍ଛା! ଆପଣଙ୍କ ଜୀବନ ଦୀପ ପ୍ରଜ୍ୱଳନ ପରି ଉଜ୍ୱଳ ହେଉ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:11, day:5,  name:"କାର୍ତ୍ତିକ ପୂର୍ଣ୍ଣିମା — ବୋଇତ ବନ୍ଦନା", emoji:"🚢🕯️", wish:"ବୋଇତ ବନ୍ଦନା ଓ କାର୍ତ୍ତିକ ପୂର୍ଣ୍ଣିମାର ଶୁଭେଚ୍ଛା! ଆସ ବୋଇତ ଭସାଇବା। ଜୟ ଓଡ଼ିଶା! — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:11, day:7,  name:"ଭାଇ ଦୁଜ", emoji:"🧡👫", wish:"ଭାଇ ଦୁଜର ହୃଦୟ ଛୁଆଁ ଶୁଭେଚ୍ଛା! ଭାଇ ଭଉଣୀଙ୍କ ମଧୁର ସମ୍ପର୍କ ଚିରଦିନ ଅଟୁଟ ରହୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+
+  // DECEMBER
+  { month:12, day:25, name:"ବଡ଼ ଦିନ — ଖ୍ରୀଷ୍ଟ ଜୟନ୍ତୀ", emoji:"🎄⭐", wish:"ବଡ଼ ଦିନର ଶୁଭେଚ୍ଛା! ପ୍ରେମ, ଶାନ୍ତି ଓ ଖୁସି ଆପଣଙ୍କ ଜୀବନରେ ଆସୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
+  { month:12, day:31, name:"ନବ ବର୍ଷ ଅଭ୍ୟର୍ଥନା", emoji:"🎆🥂", wish:"ନୂଆ ବର୍ଷ ଅଭ୍ୟର୍ଥନା! ଆସନ୍ତା ବର୍ଷ ଆପଣଙ୍କ ଜୀବନରେ ଅଶେଷ ଖୁସି ଓ ସୌଭାଗ୍ୟ ଆଣୁ। — ମାଇଁ  ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍" },
 ];
 
+const ODIA_MONTHS = ['ବୈଶାଖ','ଜ୍ୟେଷ୍ଠ','ଆଷାଢ଼','ଶ୍ରାବଣ','ଭାଦ୍ରବ','ଆଶ୍ୱିନ','କାର୍ତ୍ତିକ','ମାର୍ଗଶିର','ପୌଷ','ମାଘ','ଫାଲ୍ଗୁନ','ଚୈତ୍ର'];
+
+function getTodayFestivals() {
+  const n = new Date();
+  return MLF_FESTIVALS.filter(f => f.month === n.getMonth()+1 && f.day === n.getDate());
+}
+
+function getUpcomingFestivals(count) {
+  const now = new Date(); const yr = now.getFullYear();
+  return MLF_FESTIVALS
+    .map(f => { let d=new Date(yr,f.month-1,f.day); if(d<=now)d=new Date(yr+1,f.month-1,f.day); return {...f, daysLeft:Math.ceil((d-now)/864e5)}; })
+    .sort((a,b) => a.daysLeft-b.daysLeft).slice(0, count||6);
+}
+
+/* ═══ CLOCK ═══ */
+function startClock() {
+  function tick() {
+    const n = new Date();
+    document.getElementById('cwTime').textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
+    document.getElementById('cwDate').textContent = `${String(n.getDate()).padStart(2,'0')}/${String(n.getMonth()+1).padStart(2,'0')}/${n.getFullYear()}`;
+    document.getElementById('cwOdiaMonth').textContent = `🪔 ${ODIA_MONTHS[(n.getMonth()+9)%12]} ମାସ`;
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+/* ═══ FESTIVAL TICKER ═══ */
+let tickerIdx=0, tickerTimer=null, tickerItems=[];
+
 function buildNotices() {
-  notices = [...ODISHA_EVENTS];
+  const today = getTodayFestivals();
+  const upcoming = getUpcomingFestivals(7);
+  const vols = DB.getVolunteers();
+  const now = new Date();
+  const todayStr = now.toDateString();
+  const yestStr = new Date(Date.now()-864e5).toDateString();
 
-  const volunteers = DB.getVolunteers();
-  const today = new Date();
-  const todayMMDD = `${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-  const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
+  tickerItems = [];
+  today.forEach(f => tickerItems.push({type:'festival', isToday:true, ...f}));
+  upcoming.forEach(f => tickerItems.push({type:'festival', isToday:false, ...f}));
 
-  volunteers.forEach(vol => {
-    // Birthday wishes
-    if (vol.dob) {
-      const dobMMDD = vol.dob.substring(5);
-      if (dobMMDD === todayMMDD) {
-        notices.unshift({ tag: 'birthday', label: '🎂 Birthday', text: `Happy Birthday ${vol.name}! 🎉 Best wishes from MLF Family` });
-      }
+  vols.forEach(v => {
+    if (v.dob) {
+      const dp = v.dob.split('-');
+      if (parseInt(dp[1]) === now.getMonth()+1 && parseInt(dp[2]) === now.getDate())
+        tickerItems.unshift({type:'other', tag:'birthday', label:'🎂 Birthday', text:`ଜନ୍ମଦିନ ଶୁଭେଚ୍ଛା ${v.name}! MLF ପରିବାର ତଙ୍କୁ ଶୁଭେଚ୍ଛା ଜଣାଉଛି 🎉`});
     }
-    // Yesterday joined
-    const joinDate = new Date(vol.joinDate);
-    const iYesterday = joinDate.toDateString() === yesterday.toDateString() || joinDate.toDateString() === today.toDateString();
-    if (iYesterday) {
-      const photo = vol.photo ? `<img src="${vol.photo}" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:4px;">` : '🤝 ';
-      notices.push({ tag: 'welcome', label: '🤝 Welcome', text: `Welcome ${vol.name}! New volunteer joined from ${vol.district || 'Odisha'} 🌱` });
-    }
+    const jd = new Date(v.joinDate).toDateString();
+    if (jd === todayStr || jd === yestStr)
+      tickerItems.push({type:'other', tag:'welcome', label:'🤝 Welcome', text:`ସ୍ୱାଗତ ${v.name} (${v.district||'ଓଡ଼ିଶା'}) — MLF ପରିବାରରେ ଯୋଗ ଦେଇଛନ୍ତି 🌱`});
   });
 
+  tickerItems.push(
+    {type:'other', tag:'program', label:'📋 Program', text:'ମାଗଣା ସ୍ୱାସ୍ଥ୍ୟ ଶିବିର — ଶୀଘ୍ର ହେବ, କେନ୍ଦ୍ରାପଡ଼ା'},
+    {type:'other', tag:'program', label:'📋 Program', text:'ଯୁବ କୌଶଳ ତାଲିମ — ବ୍ୟାଚ୍ ୪ ଭର୍ତ୍ତି ଚାଲୁ'},
+    {type:'other', tag:'rating',  label:'⭐ Rating',  text:'ଫାଉଣ୍ଡେସନ୍ ୯୮ ଉପଭୋକ୍ତାଙ୍କ ଦ୍ୱାରା ⭐⭐⭐⭐⭐ ରେଟିଙ୍ଗ ପ୍ରାପ୍ତ'}
+  );
+
   renderNotices();
+  setupTodayBanner(today);
 }
 
 function renderNotices() {
-  if (notices.length === 0) return;
   const scroll = document.getElementById('cwScroll');
   const dots = document.getElementById('cwDots');
-
-  scroll.innerHTML = notices.map(n => `
-    <div class="cw-notice-item">
-      <span class="cw-notice-tag tag-${n.tag}">${n.label}</span>
-      <div class="cw-notice-text">${n.text}</div>
-    </div>
-  `).join('');
-
-  dots.innerHTML = notices.map((_, i) => `<div class="cw-dot ${i===0?'active':''}" onclick="goNotice(${i})"></div>`).join('');
-
-  noticeIdx = 0;
-  if (noticeTimer) clearInterval(noticeTimer);
-  noticeTimer = setInterval(nextNotice, 3500);
+  scroll.innerHTML = tickerItems.map(item => {
+    if (item.type === 'festival') {
+      const cls = item.isToday ? 'tag-festival' : 'tag-event';
+      const lbl = item.isToday ? '🎉 ଆଜିର ଉତ୍ସବ' : `🗓️ ${item.daysLeft} ଦିନ ବାକି`;
+      return `<div class="cw-notice-item"><span class="cw-notice-tag ${cls}">${lbl}</span><div class="cw-notice-text">${item.emoji} ${item.name}</div></div>`;
+    } else {
+      return `<div class="cw-notice-item"><span class="cw-notice-tag tag-${item.tag}">${item.label}</span><div class="cw-notice-text">${item.text}</div></div>`;
+    }
+  }).join('');
+  dots.innerHTML = tickerItems.map((_,i) => `<div class="cw-dot${i===0?' active':''}" onclick="goNotice(${i})"></div>`).join('');
+  tickerIdx = 0;
+  if (tickerTimer) clearInterval(tickerTimer);
+  tickerTimer = setInterval(nextNotice, 3500);
 }
 
 function nextNotice() {
-  if (notices.length === 0) return;
-  noticeIdx = (noticeIdx + 1) % notices.length;
+  if (!tickerItems.length) return;
+  tickerIdx = (tickerIdx+1) % tickerItems.length;
   updateNoticeScroll();
 }
-
-function goNotice(i) {
-  noticeIdx = i;
-  updateNoticeScroll();
-}
-
+function goNotice(i) { tickerIdx=i; updateNoticeScroll(); }
 function updateNoticeScroll() {
-  const scroll = document.getElementById('cwScroll');
-  scroll.style.transform = `translateY(-${noticeIdx * 72}px)`;
-  document.querySelectorAll('.cw-dot').forEach((d,i) => d.classList.toggle('active', i===noticeIdx));
+  document.getElementById('cwScroll').style.transform = `translateY(-${tickerIdx*68}px)`;
+  document.querySelectorAll('.cw-dot').forEach((d,i) => d.classList.toggle('active', i===tickerIdx));
+  const item = tickerItems[tickerIdx];
+  if (item && item.type==='festival' && item.isToday) {
+    document.getElementById('cwNoticeLabel').className = 'cw-notice-label cw-label-today';
+    document.getElementById('cwLabelText').textContent = 'ଆଜିର ଉତ୍ସବ';
+  } else {
+    document.getElementById('cwNoticeLabel').className = 'cw-notice-label cw-label-upcoming';
+    document.getElementById('cwLabelText').textContent = 'ଆସନ୍ତା ଉତ୍ସବ';
+  }
 }
 
-// Hide clock widget when scrolled past hero
-let clockInNavbar = false;
-
-function handleClockVisibility() {
-
-   const widget = document.getElementById('clockWidget');
-   const navSlot = document.getElementById('navClockSlot');
-   const heroSlot = document.getElementById('hero-clock-slot');
-
-   const shouldMove = window.scrollY > window.innerHeight * 0.7;
-
-   if (shouldMove && !clockInNavbar) {
-
-      clockInNavbar = true;
-
-      widget.classList.add("clock-moving");
-
-      setTimeout(() => {
-         navSlot.appendChild(widget);
-         widget.classList.remove("clock-moving");
-      }, 250);
-   }
-
-   if (!shouldMove && clockInNavbar) {
-
-      clockInNavbar = false;
-
-      widget.classList.add("clock-moving");
-
-      setTimeout(() => {
-         heroSlot.appendChild(widget);
-         widget.classList.remove("clock-moving");
-      }, 250);
-   }
+function setupTodayBanner(todayFests) {
+  const b = document.getElementById('cwTodayBanner');
+  if (todayFests.length > 0) {
+    const f = todayFests[0];
+    document.getElementById('cwTodayEmoji').textContent = f.emoji;
+    document.getElementById('cwTodayWish').textContent = f.wish.substring(0,90)+'...';
+    b.classList.add('show');
+  } else {
+    b.classList.remove('show');
+  }
 }
 
+/* ═══ FESTIVAL POPUP ═══ */
+let popupShown = false;
+function showFestivalPopup(f) {
+  if (popupShown) return; popupShown = true;
+  document.getElementById('popupEmojiRow').textContent = f.emoji;
+  document.getElementById('popupTitle').textContent = f.name;
+  document.getElementById('popupWishText').textContent = f.wish;
+  const bar = document.getElementById('popupProgressFill');
+  bar.style.animation='none'; bar.offsetHeight; bar.style.animation='ppShrink 9s linear forwards';
+  setTimeout(() => document.getElementById('festivalPopup').classList.add('popup-show'), 600);
+  setTimeout(() => hideFestivalPopup(), 9800);
+  launchConfetti();
+}
+function hideFestivalPopup() { document.getElementById('festivalPopup').classList.remove('popup-show'); }
+document.getElementById('popupCloseBtn').addEventListener('click', hideFestivalPopup);
+
+/* ═══ CONFETTI ═══ */
+function launchConfetti() {
+  const c = document.getElementById('mlfConfetti'); c.style.display='block'; c.innerHTML='';
+  const cols = ['#FF6B1A','#F5C842','#2ECC71','#E74C3C','#9B59B6','#FF69B4'];
+  for (let i=0; i<55; i++) {
+    const p = document.createElement('div'); p.className='conf-p';
+    p.style.cssText = `left:${Math.random()*100}vw;background:${cols[i%cols.length]};width:${Math.random()*6+5}px;height:${Math.random()*6+5}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-delay:${Math.random()*1.5}s;animation-duration:${Math.random()*2+2.5}s`;
+    c.appendChild(p);
+  }
+  setTimeout(() => { c.style.display='none'; c.innerHTML=''; }, 5000);
+}
+   
 /* ─────────────────────────────────────────────
    IMPACT COUNTERS
 ───────────────────────────────────────────── */
@@ -1803,6 +1894,12 @@ window.addEventListener('DOMContentLoaded', () => {
   buildNotices();
   updateNav();
   checkQRParam();
+
+  // Festival popup — aaj festival hai toh 2 sec baad popup
+  const todayFests = getTodayFestivals();
+  if (todayFests.length > 0) {
+    setTimeout(() => showFestivalPopup(todayFests[0]), 2000);
+  }
 });
 </script>
 </body>
