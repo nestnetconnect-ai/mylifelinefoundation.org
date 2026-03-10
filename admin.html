@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLF Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#0A4D8C;--bdk:#073A6B;--blt:#1565C0;--green:#2E8B57;--glt:#3AA368;--org:#F57C00;--red:#ef4444;--pur:#7c3aed;--off:#F0F4FA;--gray:#6B7280;--glt2:#E8EDF5;--text:#1A202C;--r:14px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--off);color:var(--text);overflow:hidden;}
+#LS{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#073A6B,#0A4D8C,#0d4f30);display:flex;align-items:center;justify-content:center;}
+.lb{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:46px 42px;width:100%;max-width:400px;text-align:center;animation:fu .6s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.lb-i{width:68px;height:68px;border-radius:16px;background:linear-gradient(135deg,var(--blt),var(--green));display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 18px;}
+.lb h1{font-size:21px;font-weight:800;color:#fff;margin-bottom:4px;}
+.lb p{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:28px;}
+.lf{margin-bottom:14px;text-align:left;}
+.lf label{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px;}
+.lf input{width:100%;padding:12px 15px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:11px;color:#fff;font-size:14px;font-family:'Poppins',sans-serif;outline:none;}
+.lf input:focus{border-color:rgba(255,255,255,.5);}
+.lf input::placeholder{color:rgba(255,255,255,.3);}
+.lbtn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--org),#d96d00);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:4px;}
+.lerr{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.35);color:#fca5a5;padding:9px;border-radius:9px;font-size:13px;margin-top:10px;display:none;}
+#APP{display:flex;height:100vh;display:none;}
+.sb{width:255px;flex-shrink:0;background:linear-gradient(180deg,var(--bdk),#0c2a5e);display:flex;flex-direction:column;overflow-y:auto;box-shadow:4px 0 18px rgba(0,0,0,.22);}
+.sb-top{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.07);}
+.sb-logo{display:flex;align-items:center;gap:10px;}
+.sb-ico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--blt),var(--green));display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.sb-txt strong{display:block;font-size:12px;font-weight:700;color:#fff;line-height:1.2;}
+.sb-txt span{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.4px;}
+.sb-adm{margin-top:11px;background:rgba(245,124,0,.18);border:1px solid rgba(245,124,0,.28);border-radius:7px;padding:6px 11px;font-size:11px;font-weight:600;color:#FFCC80;}
+.sb-nav{padding:12px 9px;flex:1;}
+.sb-lbl{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:1.4px;text-transform:uppercase;padding:11px 10px 4px;}
+.si{display:flex;align-items:center;gap:8px;padding:10px 11px;border-radius:9px;color:rgba(255,255,255,.58);font-size:12.5px;font-weight:500;cursor:pointer;transition:all .18s;margin-bottom:1px;border:1px solid transparent;}
+.si:hover{background:rgba(255,255,255,.07);color:#fff;}
+.si.act{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.11);}
+.si .ic{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
+.sbdg{background:var(--org);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:9px;margin-left:auto;}
+.sb-ft{padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);}
+.sb-out{width:100%;padding:9px;border:1px solid rgba(239,68,68,.38);background:rgba(239,68,68,.09);color:#fca5a5;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;}
+.mn{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.tb{background:#fff;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--glt2);box-shadow:0 2px 9px rgba(0,0,0,.05);flex-shrink:0;}
+.tb-l h2{font-size:16px;font-weight:700;color:var(--blue);}
+.tb-l p{font-size:11.5px;color:var(--gray);margin-top:1px;}
+.tb-r{display:flex;align-items:center;gap:10px;}
+.gsdw{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 13px;border-radius:8px;background:var(--off);}
+.gsd{width:7px;height:7px;border-radius:50%;background:#9CA3AF;}
+.gsd.ok{background:#22c55e;animation:p2 2s infinite;}
+@keyframes p2{0%,100%{opacity:1}50%{opacity:.4}}
+.sab{padding:9px 17px;border:none;border-radius:9px;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
+.sab:disabled{background:#9CA3AF;cursor:not-allowed;}
+.ct{flex:1;overflow-y:auto;padding:24px;}
+.pn{display:none;}.pn.act{display:block;}
+.sc{background:#fff;border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.055);border:1px solid var(--glt2);}
+.sc-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.sc-hd h3{font-size:14px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:6px;}
+.btn{padding:8px 16px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .18s;}
+.bo{background:var(--org);color:#fff;}.bo:hover{background:#d96d00;}
+.bb{background:var(--blue);color:#fff;}.bb:hover{background:var(--blt);}
+.bg{background:var(--green);color:#fff;}.bg:hover{background:var(--glt);}
+.fg{display:grid;gap:13px;margin-bottom:13px;}
+.f2{grid-template-columns:1fr 1fr;}
+.f3{grid-template-columns:1fr 1fr 1fr;}
+.f4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.f1{grid-template-columns:1fr;}
+.f{display:flex;flex-direction:column;gap:4px;}
+.f label{font-size:10.5px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;}
+.f input,.f textarea,.f select{padding:9px 12px;border:1.5px solid var(--glt2);border-radius:9px;font-size:13.5px;font-family:'Poppins',sans-serif;color:var(--text);outline:none;transition:all .18s;background:#fff;}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,77,140,.06);}
+.f textarea{resize:vertical;min-height:76px;}
+.fh{font-size:10.5px;color:var(--gray);margin-top:1px;}
+.ds{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px;}
+.dc{background:#fff;border-radius:var(--r);padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.055);border:1px solid var(--glt2);cursor:pointer;transition:all .18s;}
+.dc:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.1);}
+.dc .ic2{font-size:24px;margin-bottom:7px;}
+.dc .num{font-size:26px;font-weight:800;color:var(--blue);}
+.dc .lbl{font-size:11px;color:var(--gray);font-weight:600;margin-top:2px;}
+.dc.or .num{color:var(--org);}
+.dc.gr .num{color:var(--green);}
+.dc.pu .num{color:var(--pur);}
+.dq{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+.dqb{background:#fff;border:1.5px solid var(--glt2);border-radius:var(--r);padding:15px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:11px;}
+.dqb:hover{border-color:var(--blue);transform:translateY(-2px);}
+.dqb .di{font-size:21px;}
+.dqb strong{display:block;font-size:12.5px;font-weight:700;}
+.dqb span{font-size:11px;color:var(--gray);}
+.ib{background:linear-gradient(135deg,rgba(10,77,140,.04),rgba(46,139,87,.04));border:1px solid rgba(10,77,140,.11);border-radius:var(--r);padding:17px;margin-bottom:16px;}
+.ib h4{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:7px;}
+.ib p{font-size:12px;color:var(--gray);line-height:1.75;}
+.ib code{background:rgba(10,77,140,.09);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue);}
+.setup-c{background:#fff;border-radius:var(--r);border:2px dashed #60a5fa;padding:26px;margin-bottom:16px;}
+.setup-c h3{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:7px;}
+.setup-c>p{font-size:12.5px;color:var(--gray);line-height:1.7;margin-bottom:16px;}
+.steps{display:flex;flex-direction:column;gap:13px;}
+.step{display:flex;gap:11px;align-items:flex-start;}
+.sn{width:27px;height:27px;border-radius:50%;background:var(--blue);color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.sb2 strong{font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:4px;}
+.sb2 p{font-size:12px;color:var(--gray);line-height:1.6;}
+.sb2 code{background:rgba(10,77,140,.08);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue);}
+.sb2 a{color:var(--blue);}
+.script-box{background:#0f172a;border-radius:11px;padding:16px;margin-top:11px;position:relative;}
+.script-box pre{font-family:'JetBrains Mono',monospace;font-size:11px;color:#86efac;white-space:pre-wrap;word-break:break-all;line-height:1.7;}
+.cpbtn{position:absolute;top:10px;right:10px;padding:5px 11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#e2e8f0;font-size:11px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;}
+.url-row{display:flex;gap:7px;margin-top:9px;}
+.url-row input{flex:1;padding:9px 12px;border:1.5px solid var(--glt2);border-radius:9px;font-size:12.5px;font-family:'Poppins',sans-serif;outline:none;}
+.url-row input:focus{border-color:var(--blue);}
+.conn{display:flex;align-items:center;gap:11px;padding:13px;background:var(--off);border-radius:11px;margin-top:13px;}
+.cdot{width:12px;height:12px;border-radius:50%;background:#9CA3AF;flex-shrink:0;}
+.cdot.ok{background:#22c55e;animation:p2 2s infinite;}
+.clbl{font-size:13px;font-weight:700;}
+.curl2{font-size:11px;color:var(--gray);}
+.tw3{overflow-x:auto;border-radius:11px;border:1px solid var(--glt2);}
+table{width:100%;border-collapse:collapse;}
+thead th{background:var(--blue);color:#fff;padding:11px 13px;font-size:11.5px;font-weight:700;text-align:left;white-space:nowrap;}
+thead th:first-child{border-radius:11px 0 0 0;}
+thead th:last-child{border-radius:0 11px 0 0;}
+tbody tr{border-bottom:1px solid var(--glt2);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(10,77,140,.03);}
+tbody td{padding:10px 13px;font-size:12.5px;vertical-align:middle;}
+.ba{background:#dcfce7;color:var(--green);padding:3px 9px;border-radius:18px;font-size:10.5px;font-weight:700;}
+.bd{background:rgba(124,58,237,.1);color:var(--pur);padding:3px 9px;border-radius:18px;font-size:10.5px;font-weight:700;}
+.tbtb{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;flex-wrap:wrap;gap:9px;}
+.sb-src{display:flex;align-items:center;gap:7px;background:#fff;border:1.5px solid var(--glt2);border-radius:9px;padding:7px 12px;}
+.sb-src input{border:none;outline:none;font-size:12.5px;font-family:'Poppins',sans-serif;width:190px;}
+.emp{text-align:center;padding:36px 18px;color:var(--gray);}
+.emp .ei{font-size:40px;margin-bottom:9px;}
+.emp h4{font-size:13.5px;font-weight:700;margin-bottom:4px;color:var(--text);}
+.emp p{font-size:12px;}
+.gg{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
+.gi{position:relative;border-radius:11px;overflow:hidden;aspect-ratio:1;background:var(--glt2);}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.gi:hover img{transform:scale(1.06);}
+.gov{position:absolute;inset:0;background:rgba(7,58,107,.7);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;}
+.gi:hover .gov{opacity:1;}
+.gdel{width:32px;height:32px;border-radius:8px;border:none;background:rgba(239,68,68,.85);color:#fff;cursor:pointer;font-size:13px;}
+.gcap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);padding:7px;color:#fff;font-size:10.5px;font-weight:600;}
+.gadd{border:2px dashed var(--glt2);border-radius:11px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--gray);background:#fafbfc;gap:5px;}
+.gadd:hover{border-color:var(--blue);color:var(--blue);}
+.gadd .gp{font-size:24px;}
+.gadd span{font-size:11.5px;font-weight:600;}
+.al{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;}
+.ai{background:var(--off);border-radius:11px;padding:13px 15px;display:flex;align-items:flex-start;justify-content:space-between;gap:11px;border:1px solid var(--glt2);}
+.atag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:18px;margin-bottom:4px;}
+.t-event{background:rgba(245,124,0,.14);color:var(--org);}
+.t-program{background:rgba(46,139,87,.14);color:var(--green);}
+.t-birthday{background:rgba(219,39,119,.14);color:#db2777;}
+.t-welcome{background:rgba(99,102,241,.14);color:#6366f1;}
+.atxt{font-size:12.5px;color:var(--text);line-height:1.55;}
+.adel{width:27px;height:27px;border-radius:7px;border:none;background:rgba(239,68,68,.1);color:var(--red);cursor:pointer;font-size:13px;flex-shrink:0;}
+.adel:hover{background:var(--red);color:#fff;}
+.aform{background:var(--off);border-radius:11px;padding:17px;border:2px dashed var(--glt2);}
+.aform h4{font-size:12.5px;font-weight:700;color:var(--blue);margin-bottom:11px;}
+.lp{display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:16px;background:var(--off);border-radius:11px;}
+.lb2{width:68px;height:68px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden;flex-shrink:0;}
+.lb2 img{width:100%;height:100%;object-fit:cover;}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;}
+.stc{background:var(--off);border-radius:11px;padding:17px;border:1.5px solid var(--glt2);text-align:center;}
+.stc label{font-size:10.5px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:7px;}
+.stc input{width:100%;padding:9px;border:1.5px solid var(--glt2);border-radius:9px;font-size:19px;font-weight:800;font-family:'Poppins',sans-serif;color:var(--org);text-align:center;outline:none;background:#fff;}
+.stc input:focus{border-color:var(--org);}
+.stc .li{margin-top:6px;font-size:11.5px;color:var(--gray);border:1.5px solid var(--glt2);border-radius:7px;padding:6px;width:100%;text-align:center;font-family:'Poppins',sans-serif;outline:none;}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.mb{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:18px;}
+.mb.op{display:flex;}
+.md{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:460px;box-shadow:0 28px 70px rgba(0,0,0,.28);animation:fu .3s ease both;}
+.md h3{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;}
+.mbtns{display:flex;gap:9px;margin-top:16px;}
+.bc{flex:1;padding:10px;border:1.5px solid var(--glt2);background:#fff;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;color:var(--gray);}
+.bco{flex:1;padding:10px;border:none;border-radius:9px;background:var(--org);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;}
+.tw2{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:7px;pointer-events:none;}
+.tn{background:#1a202c;color:#fff;padding:11px 16px;border-radius:11px;font-size:12.5px;font-weight:600;pointer-events:all;transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:300px;}
+.tn.show{transform:none;}
+.tn.success{background:#166534;border-left:4px solid #22c55e;}
+.tn.error{background:#7f1d1d;border-left:4px solid #ef4444;}
+.tn.info{background:#1e3a5f;border-left:4px solid #60a5fa;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
+@media(max-width:700px){.sb{width:190px;}.ds{grid-template-columns:1fr 1fr;}.dq{grid-template-columns:1fr 1fr;}.sg{grid-template-columns:1fr 1fr;}.gg{grid-template-columns:1fr 1fr;}.f2,.f3,.f4{grid-template-columns:1fr;}.cg{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="LS">
+  <div class="lb">
+    <div class="lb-i">🌱</div>
+    <h1>MLF Admin Panel</h1>
+    <p>My Lifeline Foundation — Secure Access</p>
+    <div class="lf"><label>Username</label><input type="text" id="lu" value="admin"></div>
+    <div class="lf"><label>Password</label><input type="password" id="lp" placeholder="Password" onkeydown="if(event.key==='Enter')login()"></div>
+    <button class="lbtn" onclick="login()">🔐 Login to Admin Panel</button>
+    <div class="lerr" id="le">❌ Wrong password! Try again.</div>
+  </div>
+</div>
+<div id="APP">
+  <aside class="sb">
+    <div class="sb-top">
+      <div class="sb-logo"><div class="sb-ico" id="SBI">🌱</div><div class="sb-txt"><strong id="SBN">My Lifeline Foundation</strong><span>Admin Panel</span></div></div>
+      <div class="sb-adm">👤 Administrator</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-lbl">Overview</div>
+      <div class="si act" onclick="sh('dashboard')"><span class="ic">🏠</span> Dashboard</div>
+      <div class="si" onclick="sh('setup')"><span class="ic">⚙️</span> Google Sheets Setup</div>
+      <div class="sb-lbl">Registrations</div>
+      <div class="si" onclick="sh('volunteers')"><span class="ic">🤝</span> Volunteers <span class="sbdg" id="VBC">0</span></div>
+      <div class="si" onclick="sh('donors')"><span class="ic">❤️</span> Donors <span class="sbdg" id="DBC">0</span></div>
+      <div class="sb-lbl">Content</div>
+      <div class="si" onclick="sh('hero')"><span class="ic">🖼️</span> Hero Section</div>
+      <div class="si" onclick="sh('logo')"><span class="ic">🎨</span> Logo &amp; Branding</div>
+      <div class="si" onclick="sh('stats')"><span class="ic">📊</span> Impact Stats</div>
+      <div class="si" onclick="sh('gallery')"><span class="ic">📸</span> Gallery</div>
+      <div class="si" onclick="sh('announcements')"><span class="ic">📢</span> Announcements</div>
+      <div class="si" onclick="sh('contact')"><span class="ic">📞</span> Contact Info</div>
+      <div class="sb-lbl">Tools</div>
+      <div class="si" onclick="xAll()"><span class="ic">📥</span> Export All Data</div>
+      <div class="si" onclick="window.open('https://nestnetconnect-ai.github.io/mylifelinefoundation/','_blank')"><span class="ic">🌐</span> View Live Site</div>
+    </nav>
+    <div class="sb-ft"><button class="sb-out" onclick="logout()">🚪 Logout</button></div>
+  </aside>
+  <div class="mn">
+    <div class="tb">
+      <div class="tb-l"><h2 id="PT">Dashboard</h2><p id="PS">Welcome to MLF Admin Panel</p></div>
+      <div class="tb-r">
+        <div class="gsdw"><div class="gsd" id="GSD"></div><span id="GST">Not Connected</span></div>
+        <button class="sab" onclick="saveAll()" id="SAB" disabled>💾 Save All to Sheets</button>
+      </div>
+    </div>
+    <div class="ct">
+
+<!-- DASHBOARD -->
+<div class="pn act" id="pn-dashboard">
+<div class="ds">
+  <div class="dc" onclick="sh('volunteers')"><div class="ic2">🤝</div><div class="num" id="DV">0</div><div class="lbl">Total Volunteers</div></div>
+  <div class="dc or" onclick="sh('donors')"><div class="ic2">❤️</div><div class="num" id="DD">0</div><div class="lbl">Total Donors</div></div>
+  <div class="dc gr" onclick="sh('gallery')"><div class="ic2">📸</div><div class="num" id="DG">0</div><div class="lbl">Gallery Images</div></div>
+  <div class="dc pu" onclick="sh('announcements')"><div class="ic2">📢</div><div class="num" id="DA">0</div><div class="lbl">Announcements</div></div>
+</div>
+<div class="ib"><h4>🚀 Kaise kaam karta hai ye Admin Panel?</h4>
+<p>1. <strong>Google Sheets Setup</strong> tab mein jaao → Apps Script URL connect karo (sirf ek baar)<br>
+2. Volunteer aur Donor data automatically Google Sheet se yahan dikhega<br>
+3. Content edit karo → <strong>Save All to Sheets</strong> press karo → Changes live ho jayenge<br>
+4. Apni <code>index.html</code> mein Script URL add karo → Volunteer registration automatically Sheet mein jayegi</p></div>
+<div class="dq">
+  <div class="dqb" onclick="sh('volunteers')"><div class="di">🤝</div><div><strong>Volunteers</strong><span>Registered list dekho</span></div></div>
+  <div class="dqb" onclick="sh('donors')"><div class="di">❤️</div><div><strong>Donors</strong><span>Donation records</span></div></div>
+  <div class="dqb" onclick="sh('setup')"><div class="di">⚙️</div><div><strong>Sheets Setup</strong><span>Database connect karo</span></div></div>
+  <div class="dqb" onclick="sh('hero')"><div class="di">🖼️</div><div><strong>Hero Edit</strong><span>Homepage content</span></div></div>
+  <div class="dqb" onclick="sh('gallery')"><div class="di">📸</div><div><strong>Gallery</strong><span>Photos manage karo</span></div></div>
+  <div class="dqb" onclick="sh('stats')"><div class="di">📊</div><div><strong>Stats</strong><span>Numbers update karo</span></div></div>
+</div>
+</div>
+
+<!-- SETUP -->
+<div class="pn" id="pn-setup">
+<div class="setup-c">
+  <h3>🔗 Google Sheets Setup — Step by Step Guide</h3>
+  <p>Ye ek baar ka kaam hai. Iske baad Volunteers, Donors aur Content sab automatically Google Sheet mein save hoga. <strong>Completely Free!</strong></p>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><div class="sb2"><strong>Google Sheet banao</strong><p><a href="https://sheets.new" target="_blank">sheets.new</a> pe jao → Ek naya sheet khulega → Name do: <code>MLF Website Data</code></p></div></div>
+    <div class="step"><div class="sn">2</div><div class="sb2"><strong>Apps Script open karo</strong><p>Sheet mein: upar <code>Extensions</code> menu click karo → <code>Apps Script</code> click karo → pura code delete karo</p></div></div>
+    <div class="step"><div class="sn">3</div><div class="sb2"><strong>Ye code copy karke Apps Script mein paste karo:</strong>
+      <div class="script-box"><button class="cpbtn" onclick="copyCode()">📋 Copy</button>
+<pre id="SC">function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var d = JSON.parse(e.postData.contents);
+    var tab = ss.getSheetByName(d.tab) || ss.insertSheet(d.tab);
+    if (d.action === 'append') {
+      tab.appendRow(d.row);
+    } else if (d.action === 'write') {
+      tab.clearContents();
+      if (d.rows && d.rows.length)
+        tab.getRange(1,1,d.rows.length,d.rows[0].length).setValues(d.rows);
+    }
+    return ContentService.createTextOutput(
+      JSON.stringify({status:'ok'})
+    ).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(
+      JSON.stringify({status:'error',msg:err.toString()})
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var tab = ss.getSheetByName(e.parameter.tab);
+    if (!tab) return ContentService.createTextOutput(
+      JSON.stringify({data:[]})
+    ).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(
+      JSON.stringify({data: tab.getDataRange().getValues()})
+    ).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(
+      JSON.stringify({data:[]})
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre></div></div></div>
+    <div class="step"><div class="sn">4</div><div class="sb2"><strong>Deploy as Web App karo</strong><p>Upar blue <code>Deploy</code> button → <code>New Deployment</code> → Type: <code>Web App</code> → Execute as: <code>Me</code> → Who has access: <code>Anyone</code> → <code>Deploy</code> → Authorize karo → URL copy karo</p></div></div>
+    <div class="step"><div class="sn">5</div><div class="sb2"><strong>Copied URL yahan paste karo:</strong>
+      <div class="url-row"><input type="text" id="SU" placeholder="https://script.google.com/macros/s/..."><button class="btn bb" onclick="connectSheets()">🔗 Connect</button></div>
+      <div class="conn"><div class="cdot" id="CD"></div><div><div class="clbl" id="CL">Not Connected</div><div class="curl2" id="CU2">Koi URL set nahi</div></div></div>
+    </div></div>
+    <div class="step"><div class="sn">6</div><div class="sb2"><strong>index.html mein ye 2 lines add karo (JS section ke top mein)</strong>
+      <div class="script-box" style="margin-top:9px;"><pre style="color:#fbbf24;">// Apna Apps Script URL yahan daalo:
+const SHEETS_URL = "APNA_URL_YAHAN_DAALO";
+
+// Volunteer registration ke baad ye function call karo:
+// sendToSheets('Volunteers', 'append', {row: [id, name, mobile, ...]});</pre></div>
+    </div></div>
+  </div>
+</div>
+</div>
+
+<!-- VOLUNTEERS -->
+<div class="pn" id="pn-volunteers">
+<div class="sc">
+  <div class="sc-hd"><h3>🤝 Registered Volunteers</h3>
+    <div style="display:flex;gap:7px;"><button class="btn bg" onclick="loadData()">🔄 Refresh</button><button class="btn bb" onclick="xVol()">📥 Export CSV</button></div>
+  </div>
+  <div class="tbtb">
+    <div class="sb-src"><span>🔍</span><input type="text" id="VS" placeholder="Name, ID ya Mobile..." oninput="fVol()"></div>
+    <span style="font-size:12.5px;color:var(--gray);">Total: <strong id="VT">0</strong> volunteers</span>
+  </div>
+  <div id="VW"><div class="emp"><div class="ei">🤝</div><h4>Koi volunteer nahi</h4><p>Google Sheets connect karo ya Refresh dabao</p></div></div>
+</div>
+</div>
+
+<!-- DONORS -->
+<div class="pn" id="pn-donors">
+<div class="sc">
+  <div class="sc-hd"><h3>❤️ Donor Records</h3>
+    <div style="display:flex;gap:7px;"><button class="btn bg" onclick="loadData()">🔄 Refresh</button><button class="btn bb" onclick="xDon()">📥 Export CSV</button></div>
+  </div>
+  <div class="tbtb">
+    <div class="sb-src"><span>🔍</span><input type="text" id="DS" placeholder="Name ya Mobile..." oninput="fDon()"></div>
+    <span style="font-size:12.5px;color:var(--gray);">Total: <strong id="DT">0</strong> donors</span>
+  </div>
+  <div id="DW"><div class="emp"><div class="ei">❤️</div><h4>Koi donor nahi</h4><p>Neeche manually add karo ya Sheets se load hoga</p></div></div>
+</div>
+<div class="sc">
+  <div class="sc-hd"><h3>➕ Manually Donor Add Karo</h3></div>
+  <div class="fg f2"><div class="f"><label>Donor Name *</label><input type="text" id="DN" placeholder="Full name"></div><div class="f"><label>Mobile *</label><input type="text" id="DM" placeholder="10-digit number"></div></div>
+  <div class="fg f3"><div class="f"><label>Amount (Rs.) *</label><input type="number" id="DAM" placeholder="500"></div><div class="f"><label>Date</label><input type="date" id="DD2"></div><div class="f"><label>Mode</label><select id="DMO"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Cheque</option></select></div></div>
+  <div class="fg f2"><div class="f"><label>Purpose</label><input type="text" id="DP" placeholder="Education Fund, Health Camp..."></div><div class="f"><label>Note</label><input type="text" id="DNO" placeholder="Optional"></div></div>
+  <button class="btn bb" onclick="addDonor()" style="margin-top:4px;">➕ Add Donor Record</button>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="pn" id="pn-hero">
+<div class="sc">
+  <div class="sc-hd"><h3>🖼️ Hero Section</h3><button class="btn bo" onclick="saveSec('hero')">💾 Save</button></div>
+  <div class="fg f2"><div class="f"><label>Badge Text</label><input type="text" id="HB" placeholder="🌿 Kendrapara, Odisha — India"></div><div class="f"><label>Background Image URL</label><input type="text" id="HBGI" placeholder="https://images.unsplash.com/..."></div></div>
+  <div class="fg f1"><div class="f"><label>Main Heading</label><input type="text" id="HH1"></div></div>
+  <div class="fg f1"><div class="f"><label>Description</label><textarea id="HP" rows="3"></textarea></div></div>
+  <div class="fg f3"><div class="f"><label>Button 1</label><input type="text" id="HB1"></div><div class="f"><label>Button 2</label><input type="text" id="HB2"></div><div class="f"><label>Orange Word</label><input type="text" id="HEM"></div></div>
+  <div class="fg f2"><div class="f"><label>Testimonial Quote</label><input type="text" id="HQ"></div><div class="f"><label>Quote Author</label><input type="text" id="HC"></div></div>
+</div>
+</div>
+
+<!-- LOGO -->
+<div class="pn" id="pn-logo">
+<div class="sc">
+  <div class="sc-hd"><h3>🎨 Logo &amp; Branding</h3><button class="btn bo" onclick="saveSec('logo')">💾 Save</button></div>
+  <div class="lp">
+    <div class="lb2" id="LB">🌱</div>
+    <div><div style="font-size:17px;font-weight:800;color:var(--blue);" id="LN">My Lifeline Foundation</div><div style="font-size:11.5px;color:var(--gray);" id="LT">Empowering Rural Odisha</div></div>
+  </div>
+  <div class="fg f2"><div class="f"><label>Organization Name</label><input type="text" id="LN2" oninput="prevLogo()"></div><div class="f"><label>Tagline</label><input type="text" id="LT2" oninput="prevLogo()"></div></div>
+  <div class="fg f2"><div class="f"><label>Logo Emoji</label><input type="text" id="LE" placeholder="🌱" oninput="prevLogo()"></div><div class="f"><label>Logo Image URL (optional)</label><input type="text" id="LI" placeholder="https://...logo.png" oninput="prevLogo()"><div class="fh">Image URL doge toh emoji ki jagah image dikhegi</div></div></div>
+  <div class="fg f2"><div class="f"><label>Browser Tab Title</label><input type="text" id="LTT"></div><div class="f"><label>Favicon Emoji</label><input type="text" id="LF" placeholder="🌱"></div></div>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="pn" id="pn-stats">
+<div class="sc">
+  <div class="sc-hd"><h3>📊 Impact Stats</h3><button class="btn bo" onclick="saveSec('stats')">💾 Save</button></div>
+  <div class="sg">
+    <div class="stc"><label>Stat 1</label><input type="text" id="S1N" placeholder="500+"><input type="text" class="li" id="S1L" placeholder="Families Helped"></div>
+    <div class="stc"><label>Stat 2</label><input type="text" id="S2N" placeholder="50+"><input type="text" class="li" id="S2L" placeholder="Programs Done"></div>
+    <div class="stc"><label>Stat 3</label><input type="text" id="S3N" placeholder="1000+"><input type="text" class="li" id="S3L" placeholder="Youth Reached"></div>
+    <div class="stc"><label>Stat 4</label><input type="text" id="S4N" placeholder="5"><input type="text" class="li" id="S4L" placeholder="Years of Service"></div>
+  </div>
+</div>
+</div>
+
+<!-- GALLERY -->
+<div class="pn" id="pn-gallery">
+<div class="sc">
+  <div class="sc-hd"><h3>📸 Gallery — <span id="GC">0</span> images</h3>
+    <div style="display:flex;gap:7px;"><button class="btn bb" onclick="openM('IM')">➕ Add Image</button><button class="btn bo" onclick="saveSec('gallery')">💾 Save</button></div>
+  </div>
+  <div class="gg" id="GG"></div>
+</div>
+</div>
+
+<!-- ANNOUNCEMENTS -->
+<div class="pn" id="pn-announcements">
+<div class="sc">
+  <div class="sc-hd"><h3>📢 Announcements</h3><button class="btn bo" onclick="saveSec('announcements')">💾 Save</button></div>
+  <div class="al" id="AL"></div>
+  <div class="aform"><h4>➕ Naya Announcement</h4>
+    <div class="fg f2"><div class="f"><label>Type</label><select id="AT"><option value="event">Event</option><option value="program">Program</option><option value="birthday">Birthday</option><option value="welcome">Welcome</option></select></div><div class="f"><label>Tag Label</label><input type="text" id="ATL" placeholder="Upcoming Event"></div></div>
+    <div class="fg f1"><div class="f"><label>Text</label><textarea id="ATX" rows="3"></textarea></div></div>
+    <button class="btn bb" onclick="addAnn()" style="margin-top:5px;">➕ Add</button>
+  </div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div class="pn" id="pn-contact">
+<div class="sc">
+  <div class="sc-hd"><h3>📞 Contact Info</h3><button class="btn bo" onclick="saveSec('contact')">💾 Save</button></div>
+  <div class="cg">
+    <div class="f"><label>Address</label><textarea id="CA" rows="3"></textarea></div>
+    <div class="f"><label>Phone 1</label><input type="text" id="CP1"></div>
+    <div class="f"><label>Phone 2</label><input type="text" id="CP2"></div>
+    <div class="f"><label>WhatsApp</label><input type="text" id="CWA"></div>
+    <div class="f"><label>Email 1</label><input type="email" id="CE1"></div>
+    <div class="f"><label>Email 2</label><input type="email" id="CE2"></div>
+    <div class="f"><label>Website</label><input type="text" id="CWB"></div>
+    <div class="f"><label>Maps Embed URL</label><input type="text" id="CM"></div>
+  </div>
+</div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADD IMAGE MODAL -->
+<div class="mb" id="IM"><div class="md">
+  <h3>📸 Gallery mein Image Add Karo</h3>
+  <div class="f" style="margin-bottom:11px;"><label>Image URL *</label><input type="text" id="IU" placeholder="https://... direct image link" oninput="prvImg()"><div class="fh">Unsplash, Google Drive ya koi bhi direct image URL daalo</div></div>
+  <img id="IP" src="" style="width:100%;max-height:130px;object-fit:cover;border-radius:9px;display:none;margin-bottom:11px;">
+  <div class="f" style="margin-bottom:11px;"><label>Caption (optional)</label><input type="text" id="IC" placeholder="Photo description..."></div>
+  <div class="mbtns"><button class="bc" onclick="closeM('IM')">Cancel</button><button class="bco" onclick="addImg()">Add Image</button></div>
+</div></div>
+
+<div class="tw2" id="TW"></div>
+
+<script>
+const PWD='Admin@123';
+let SURL='',conn=false,vols=[],dons=[];
+let ST={
+  hero:{b:'🌿 Kendrapara, Odisha — India',bg:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1800&q=80',h1:'Empowering Rural Lives Through Education & Hope',p:'We work in rural Odisha to support education, health awareness, and youth development for underprivileged communities.',b1:'Donate Now',b2:'Join as Volunteer',em:'Education',q:'"Because of My Lifeline Foundation, my child is going to school again."',c:'— Beneficiary Family, Kendrapara'},
+  logo:{n:'My Lifeline Foundation',t:'Empowering Rural Odisha',e:'🌱',i:'',tt:'My Lifeline Foundation – Empowering Rural Odisha',f:'🌱'},
+  stats:[{n:'500+',l:'Families Helped'},{n:'50+',l:'Programs Done'},{n:'1000+',l:'Youth Reached'},{n:'5',l:'Years of Service'}],
+  gallery:[{url:'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80',cap:'Education Program'},{url:'https://images.unsplash.com/photo-1594608661623-aa0bd3a69799?w=600&q=80',cap:'Health Camp'},{url:'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=600&q=80',cap:'Youth Training'}],
+  announcements:[{t:'event',tl:'Upcoming Event',tx:'Annual Charity Run — 25th March, Kendrapara'},{t:'program',tl:'Program',tx:'Free Health Check-up Camp — 30th March, Garapur'}],
+  contact:{a:'Plot No-635, Garapur, Kendrapara – 754211, Odisha',p1:'06727-796700',p2:'+91 9337994358',w:'+91 8480141339',e1:'info@mylifelinefoundation.org',e2:'admin@mylifelinefoundation.org',wb:'www.mylifelinefoundation.org',m:''}
+};
+function login(){if(document.getElementById('lp').value===PWD){document.getElementById('LS').style.display='none';document.getElementById('APP').style.display='flex';init();}else{const e=document.getElementById('le');e.style.display='block';setTimeout(()=>e.style.display='none',3000);}}
+function logout(){document.getElementById('APP').style.display='none';document.getElementById('LS').style.display='flex';document.getElementById('lp').value='';}
+function init(){const s=localStorage.getItem('mlf_st');if(s)try{const p=JSON.parse(s);Object.assign(ST.hero,p.hero||{});Object.assign(ST.logo,p.logo||{});if(p.stats)ST.stats=p.stats;if(p.gallery)ST.gallery=p.gallery;if(p.announcements)ST.announcements=p.announcements;Object.assign(ST.contact,p.contact||{});}catch(e){}SURL=localStorage.getItem('mlf_url')||'';if(SURL){const el=document.getElementById('SU');if(el)el.value=SURL;setConn(true);loadData();}loadFields();renderGal();renderAnn();updDash();}
+const PM={dashboard:['Dashboard','Welcome to MLF Admin Panel'],setup:['Google Sheets Setup','Database connect karo — ek baar ka kaam'],volunteers:['Volunteers','Registered volunteer list'],donors:['Donors','Donation records'],hero:['Hero Section','Homepage hero content edit karo'],logo:['Logo & Branding','Logo aur naam badlo'],stats:['Impact Stats','Numbers update karo'],gallery:['Gallery','Photos manage karo'],announcements:['Announcements','Notice board'],contact:['Contact Info','Phone, email, address']};
+function sh(n){document.querySelectorAll('.pn').forEach(p=>p.classList.remove('act'));document.getElementById('pn-'+n).classList.add('act');const m=PM[n]||[n,''];document.getElementById('PT').textContent=m[0];document.getElementById('PS').textContent=m[1];if(n==='gallery')renderGal();if(n==='announcements')renderAnn();if(n==='volunteers')rVols();if(n==='donors')rDons();}
+function gv(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function sv(id,v){const e=document.getElementById(id);if(e)e.value=v||'';}
+function loadFields(){sv('HB',ST.hero.b);sv('HBGI',ST.hero.bg);sv('HH1',ST.hero.h1);sv('HP',ST.hero.p);sv('HB1',ST.hero.b1);sv('HB2',ST.hero.b2);sv('HEM',ST.hero.em);sv('HQ',ST.hero.q);sv('HC',ST.hero.c);sv('LN2',ST.logo.n);sv('LT2',ST.logo.t);sv('LE',ST.logo.e);sv('LI',ST.logo.i);sv('LTT',ST.logo.tt);sv('LF',ST.logo.f);prevLogo();ST.stats.forEach((s,i)=>{sv('S'+(i+1)+'N',s.n);sv('S'+(i+1)+'L',s.l);});sv('CA',ST.contact.a);sv('CP1',ST.contact.p1);sv('CP2',ST.contact.p2);sv('CWA',ST.contact.w);sv('CE1',ST.contact.e1);sv('CE2',ST.contact.e2);sv('CWB',ST.contact.wb);sv('CM',ST.contact.m);}
+function rH(){ST.hero={b:gv('HB'),bg:gv('HBGI'),h1:gv('HH1'),p:gv('HP'),b1:gv('HB1'),b2:gv('HB2'),em:gv('HEM'),q:gv('HQ'),c:gv('HC')};}
+function rL(){ST.logo={n:gv('LN2'),t:gv('LT2'),e:gv('LE'),i:gv('LI'),tt:gv('LTT'),f:gv('LF')};}
+function rSt(){ST.stats=[{n:gv('S1N'),l:gv('S1L')},{n:gv('S2N'),l:gv('S2L')},{n:gv('S3N'),l:gv('S3L')},{n:gv('S4N'),l:gv('S4L')}];}
+function rC(){ST.contact={a:gv('CA'),p1:gv('CP1'),p2:gv('CP2'),w:gv('CWA'),e1:gv('CE1'),e2:gv('CE2'),wb:gv('CWB'),m:gv('CM')};}
+function connectSheets(){const u=gv('SU');if(!u){toast('URL daalo!','error');return;}SURL=u;localStorage.setItem('mlf_url',u);setConn(true);document.getElementById('SAB').disabled=false;toast('Connected! Data load ho raha hai...','success');loadData();}
+function setConn(ok){conn=ok;['GSD'].forEach(id=>{const e=document.getElementById(id);if(e){e.className='gsd'+(ok?' ok':'');}});const gt=document.getElementById('GST');if(gt)gt.textContent=ok?'Google Sheets Connected':'Not Connected';const cd=document.getElementById('CD');if(cd)cd.className='cdot'+(ok?' ok':'');const cl=document.getElementById('CL');if(cl)cl.textContent=ok?'Connected':'Not Connected';const cu=document.getElementById('CU2');if(cu)cu.textContent=SURL?SURL.substring(0,48)+'...':'Koi URL set nahi';if(ok&&document.getElementById('SAB'))document.getElementById('SAB').disabled=false;}
+async function post(tab,action,data){if(!SURL)return false;try{await fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({tab,action,...data})});return true;}catch(e){return false;}}
+async function getTab(tab){if(!SURL)return[];try{const r=await fetch(SURL+'?tab='+tab);const d=await r.json();return d.data||[];}catch(e){return[];}}
+async function loadData(){toast('Data load ho raha hai...','info');try{const vd=await getTab('Volunteers');if(vd.length>1){const h=vd[0];vols=vd.slice(1).map(r=>{const o={};h.forEach((k,i)=>o[k]=r[i]||'');return o;});rVols();}const dd=await getTab('Donors');if(dd.length>1){const h=dd[0];dons=dd.slice(1).map(r=>{const o={};h.forEach((k,i)=>o[k]=r[i]||'');return o;});rDons();}updDash();toast('Data loaded!','success');}catch(e){toast('Load error — Sheets URL check karo','error');}}
+async function saveSec(s){if(s==='hero')rH();if(s==='logo')rL();if(s==='stats')rSt();if(s==='contact')rC();localStorage.setItem('mlf_st',JSON.stringify(ST));if(conn){let rows,tab;if(s==='hero'){tab='Content_Hero';rows=[['key','value'],...Object.entries(ST.hero)];}else if(s==='logo'){tab='Content_Logo';rows=[['key','value'],...Object.entries(ST.logo)];}else if(s==='stats'){tab='Content_Stats';rows=[['num','label'],...ST.stats.map(x=>[x.n,x.l])];}else if(s==='gallery'){tab='Content_Gallery';rows=[['url','caption'],...ST.gallery.map(x=>[x.url,x.cap])];}else if(s==='announcements'){tab='Content_Announcements';rows=[['type','tag','text'],...ST.announcements.map(x=>[x.t,x.tl,x.tx])];}else if(s==='contact'){tab='Content_Contact';rows=[['key','value'],...Object.entries(ST.contact)];}if(tab)await post(tab,'write',{rows});toast(s+' saved to Google Sheets!','success');}else{toast('Locally saved! Sheets connect karo.','info');}document.getElementById('SBN').textContent=ST.logo.n;document.getElementById('SBI').textContent=ST.logo.e||'🌱';updDash();}
+async function saveAll(){rH();rL();rSt();rC();localStorage.setItem('mlf_st',JSON.stringify(ST));const b=document.getElementById('SAB');b.disabled=true;b.textContent='Saving...';for(const s of['hero','logo','stats','gallery','announcements','contact'])await saveSec(s);b.disabled=false;b.innerHTML='Save All to Sheets';toast('Sab kuch save ho gaya!','success');}
+function rVols(data){const l=data||vols;document.getElementById('VT').textContent=l.length;document.getElementById('VBC').textContent=l.length;document.getElementById('DV').textContent=l.length;const w=document.getElementById('VW');if(!l.length){w.innerHTML='<div class="emp"><div class="ei">🤝</div><h4>Koi volunteer nahi</h4><p>Google Sheets connect karo ya Refresh dabao</p></div>';return;}w.innerHTML='<div class="tw3"><table><thead><tr><th>#</th><th>Volunteer ID</th><th>Name</th><th>Mobile</th><th>District</th><th>State</th><th>Occupation</th><th>Join Date</th><th>Status</th></tr></thead><tbody>'+l.map((v,i)=>'<tr><td>'+(i+1)+'</td><td><strong style="color:var(--blue)">'+(v.id||v['Volunteer ID']||v['ID']||'-')+'</strong></td><td>'+(v.name||v['Name']||'-')+'</td><td>'+(v.mobile||v['Mobile']||'-')+'</td><td>'+(v.district||v['District']||'-')+'</td><td>'+(v.state||v['State']||'-')+'</td><td>'+(v.occupation||v['Occupation']||'-')+'</td><td>'+(v.joinDate||v['Join Date']||'-')+'</td><td><span class="ba">'+(v.status||v['Status']||'Active')+'</span></td></tr>').join('')+'</tbody></table></div>';}
+function fVol(){const q=gv('VS').toLowerCase();rVols(vols.filter(v=>(v.name||'').toLowerCase().includes(q)||(v.id||'').toLowerCase().includes(q)||(v.mobile||'').includes(q)));}
+function xVol(){if(!vols.length){toast('Koi data nahi!','error');return;}const h=['ID','Name','Mobile','DOB','Father','Mother','Occupation','Village','Post','District','State','PIN','Join Date','Status'];const r=vols.map(v=>[v.id||'',v.name||'',v.mobile||'',v.dob||'',v.fatherName||'',v.motherName||'',v.occupation||'',v.at||'',v.post||'',v.district||'',v.state||'',v.pin||'',v.joinDate||'',v.status||'Active']);dlCSV([h,...r],'MLF_Volunteers.csv');toast('CSV downloaded!','success');}
+function rDons(data){const l=data||dons;document.getElementById('DT').textContent=l.length;document.getElementById('DBC').textContent=l.length;document.getElementById('DD').textContent=l.length;const w=document.getElementById('DW');if(!l.length){w.innerHTML='<div class="emp"><div class="ei">❤️</div><h4>Koi donor nahi</h4><p>Neeche add karo ya Sheets se load hoga</p></div>';return;}const tot=l.reduce((s,d)=>s+(parseFloat(d.amount||d['Amount']||0)),0);w.innerHTML='<div style="background:linear-gradient(135deg,var(--pur),#4c1d95);color:#fff;border-radius:11px;padding:13px 16px;margin-bottom:11px;display:flex;align-items:center;gap:9px;"><span style="font-size:20px;">💰</span><div><div style="font-size:18px;font-weight:800;">Rs.'+tot.toLocaleString('en-IN')+'</div><div style="font-size:11px;opacity:.8;">Total Donations</div></div></div><div class="tw3"><table><thead><tr><th>#</th><th>Name</th><th>Mobile</th><th>Amount</th><th>Date</th><th>Mode</th><th>Purpose</th><th>Note</th></tr></thead><tbody>'+l.map((d,i)=>'<tr><td>'+(i+1)+'</td><td><strong>'+(d.name||d['Name']||'-')+'</strong></td><td>'+(d.mobile||d['Mobile']||'-')+'</td><td><strong style="color:var(--green)">Rs.'+parseFloat(d.amount||d['Amount']||0).toLocaleString('en-IN')+'</strong></td><td>'+(d.date||d['Date']||'-')+'</td><td><span class="bd">'+(d.mode||d['Mode']||'Cash')+'</span></td><td>'+(d.purpose||d['Purpose']||'-')+'</td><td>'+(d.note||d['Note']||'-')+'</td></tr>').join('')+'</tbody></table></div>';}
+function fDon(){const q=gv('DS').toLowerCase();rDons(dons.filter(d=>(d.name||'').toLowerCase().includes(q)||(d.mobile||'').includes(q)));}
+async function addDonor(){const n=gv('DN'),m=gv('DM'),a=gv('DAM');if(!n||!m||!a){toast('Name, Mobile aur Amount zaroori hai!','error');return;}const today=new Date().toISOString().split('T')[0];const donor={name:n,mobile:m,amount:a,date:gv('DD2')||today,mode:gv('DMO'),purpose:gv('DP'),note:gv('DNO')};dons.push(donor);if(conn){const isF=dons.length===1;if(isF)await post('Donors','write',{rows:[['Name','Mobile','Amount','Date','Mode','Purpose','Note'],[n,m,a,donor.date,donor.mode,donor.purpose,donor.note]]});else await post('Donors','append',{row:[n,m,a,donor.date,donor.mode,donor.purpose,donor.note]});toast('Donor Google Sheets mein add ho gaya!','success');}else{toast('Added locally! Sheets connect karo.','info');}rDons();['DN','DM','DAM','DP','DNO'].forEach(id=>sv(id,''));}
+function xDon(){if(!dons.length){toast('Koi data nahi!','error');return;}const h=['Name','Mobile','Amount','Date','Mode','Purpose','Note'];const r=dons.map(d=>[d.name||'',d.mobile||'',d.amount||'',d.date||'',d.mode||'',d.purpose||'',d.note||'']);dlCSV([h,...r],'MLF_Donors.csv');toast('CSV downloaded!','success');}
+function renderGal(){const g=document.getElementById('GG');document.getElementById('GC').textContent=ST.gallery.length;document.getElementById('DG').textContent=ST.gallery.length;g.innerHTML='';ST.gallery.forEach((img,i)=>{const d=document.createElement('div');d.className='gi';d.innerHTML='<img src="'+img.url+'" alt="'+img.cap+'" onerror="this.src=\'https://placehold.co/300\'"><div class="gcap">'+img.cap+'</div><div class="gov"><button class="gdel" onclick="delImg('+i+')">🗑</button></div>';g.appendChild(d);});const a=document.createElement('div');a.className='gadd';a.innerHTML='<div class="gp">+</div><span>Add Image</span>';a.onclick=()=>openM('IM');g.appendChild(a);}
+function prvImg(){const u=gv('IU'),p=document.getElementById('IP');if(u){p.src=u;p.style.display='block';}else p.style.display='none';}
+function addImg(){const u=gv('IU');if(!u){toast('URL daalo!','error');return;}ST.gallery.push({url:u,cap:gv('IC')});renderGal();closeM('IM');localStorage.setItem('mlf_st',JSON.stringify(ST));toast('Image add ho gayi!','success');}
+function delImg(i){if(!confirm('Delete karni hai?'))return;ST.gallery.splice(i,1);renderGal();localStorage.setItem('mlf_st',JSON.stringify(ST));toast('Deleted','info');}
+function renderAnn(){const l=document.getElementById('AL');document.getElementById('DA').textContent=ST.announcements.length;if(!ST.announcements.length){l.innerHTML='<div style="text-align:center;color:var(--gray);padding:16px;font-size:12.5px;">Koi announcement nahi</div>';return;}l.innerHTML=ST.announcements.map((a,i)=>'<div class="ai"><div><div class="atag t-'+a.t+'">'+a.tl+'</div><div class="atxt">'+a.tx+'</div></div><button class="adel" onclick="delAnn('+i+')">x</button></div>').join('');}
+function addAnn(){const tx=gv('ATX');if(!tx){toast('Text likho!','error');return;}ST.announcements.push({t:gv('AT'),tl:gv('ATL')||gv('AT'),tx});renderAnn();sv('ATX','');sv('ATL','');localStorage.setItem('mlf_st',JSON.stringify(ST));toast('Added!','success');}
+function delAnn(i){ST.announcements.splice(i,1);renderAnn();localStorage.setItem('mlf_st',JSON.stringify(ST));toast('Deleted','info');}
+function prevLogo(){const n=gv('LN2')||'My Lifeline Foundation',t=gv('LT2')||'Empowering Rural Odisha',e=gv('LE')||'🌱',i=gv('LI');document.getElementById('LN').textContent=n;document.getElementById('LT').textContent=t;document.getElementById('SBN').textContent=n;const b=document.getElementById('LB');b.innerHTML=i?'<img src="'+i+'" onerror="this.parentElement.textContent=\''+e+'\'">':(e);document.getElementById('SBI').textContent=e;}
+function updDash(){document.getElementById('DV').textContent=vols.length;document.getElementById('DD').textContent=dons.length;document.getElementById('DG').textContent=ST.gallery.length;document.getElementById('DA').textContent=ST.announcements.length;document.getElementById('VBC').textContent=vols.length;document.getElementById('DBC').textContent=dons.length;}
+function openM(id){document.getElementById(id).classList.add('op');}
+function closeM(id){document.getElementById(id).classList.remove('op');}
+function toast(msg,type='info'){const c=document.getElementById('TW'),t=document.createElement('div');t.className='tn '+type;t.textContent=msg;c.appendChild(t);requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3200);}
+function copyCode(){navigator.clipboard.writeText(document.getElementById('SC').textContent).then(()=>toast('Code copied!','success'));}
+function dlCSV(rows,fn){const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');const b=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;a.click();}
+function xAll(){const d={volunteers:vols,donors:dons,content:ST,date:new Date().toISOString()};const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='MLF_All_Data.json';a.click();toast('All data exported!','success');}
+</script>
+</body>
+</html>
