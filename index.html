@@ -1252,7 +1252,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
         </ul>
         <div style="display:flex;gap:16px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--gray-lt);">
           <div class="trust-item"><span>📞</span> <a href="tel:+919337994358" style="color:var(--gray);text-decoration:none;">+91 9337994358</a></div>
-          <div class="trust-item"><span>✉️</span> <a href="mailto:mylifelinefoundation@gmail.com" style="color:var(--gray);text-decoration:none;font-size:12px;">mylifelinefoundation@gmail.com</a></div>
+          <div class="trust-item"><span>✉️</span> <a href="/cdn-cgi/l/email-protection#533e2a3f3a35363f3a3d36353c263d3732273a3c3d13343e323a3f7d303c3e" style="color:var(--gray);text-decoration:none;font-size:12px;"><span class="__cf_email__" data-cfemail="5d302431343b38313433383b322833393c293432331d3a303c3431733e3230">[email&#160;protected]</span></a></div>
         </div>
       </div>
       <div>
@@ -1287,7 +1287,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
         <h3>Get In Touch</h3>
         <div class="ci-row"><div class="ci-ico">📍</div><div class="ci-body"><strong>Office Address</strong>Plot No-635, Garapur, In front of Collector Residence, Kendrapara – 754211, Odisha, India</div></div>
         <div class="ci-row"><div class="ci-ico">📞</div><div class="ci-body"><strong>Phone</strong><a href="tel:06727796700">06727-796700</a><br><a href="tel:+919337994358">+91 9337994358</a></div></div>
-        <div class="ci-row"><div class="ci-ico">✉️</div><div class="ci-body"><strong>Email</strong><a href="mailto:mylifelinefoundation@gmail.com">mylifelinefoundation@gmail.com</a><br><a href="mailto:info.mylifelinefoundation@gmail.com">info.mylifelinefoundation@gmail.com</a></div></div>
+        <div class="ci-row"><div class="ci-ico">✉️</div><div class="ci-body"><strong>Email</strong><a href="/cdn-cgi/l/email-protection#cea3b7a2a7a8aba2a7a0aba8a1bba0aaafbaa7a1a08ea9a3afa7a2e0ada1a3"><span class="__cf_email__" data-cfemail="8fe2f6e3e6e9eae3e6e1eae9e0fae1ebeefbe6e0e1cfe8e2eee6e3a1ece0e2">[email&#160;protected]</span></a><br><a href="/cdn-cgi/l/email-protection#5d34333b3273302431343b38313433383b322833393c293432331d3a303c3431733e3230"><span class="__cf_email__" data-cfemail="a4cdcac2cb8ac9ddc8cdc2c1c8cdcac1c2cbd1cac0c5d0cdcbcae4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></a></div></div>
         <div class="ci-row"><div class="ci-ico">🌐</div><div class="ci-body"><strong>Website</strong><a href="http://www.mylifelinefoundation.org" target="_blank">www.mylifelinefoundation.org</a></div></div>
         <div class="ci-row"><div class="ci-ico">💬</div><div class="ci-body"><strong>WhatsApp</strong><a href="https://api.whatsapp.com/send?phone=918480141339&text=I%20am%20interested%20in%20join%20ngo" target="_blank">+91 8480141339 — Join as Volunteer</a></div></div>
         <div class="niti-badge"><strong>Reg. No:</strong> U85100OR2020NPL032868<br><strong>PAN:</strong> AANCM3910F<br><strong>NITI Aayog ID:</strong> OR/2020/0255447<br>Section 8, Companies Act 2013</div>
@@ -1624,7 +1624,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 <!-- ═══════════════════════════════════════════
      JAVASCRIPT — FULL APP
 ═══════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ─────────────────────────────────────────────
    APP STATE & STORAGE
 ───────────────────────────────────────────── */
@@ -1637,6 +1637,28 @@ const DB = {
   getCounter: () => parseInt(localStorage.getItem('mlf_counter') || '0'),
   incCounter: () => { const n = DB.getCounter() + 1; localStorage.setItem('mlf_counter', n); return n; }
 };
+
+/* ─────────────────────────────────────────────
+   GOOGLE SHEETS URL — Apna Apps Script URL yahan daalo
+───────────────────────────────────────────── */
+const SHEETS_URL = "APNA_APPS_SCRIPT_URL_YAHAN";
+
+/* ─────────────────────────────────────────────
+   GOOGLE SHEETS SENDER
+───────────────────────────────────────────── */
+async function sendToSheets(tab, action, data) {
+  if (!SHEETS_URL || SHEETS_URL === "APNA_APPS_SCRIPT_URL_YAHAN") return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tab, action, ...data })
+    });
+  } catch(e) {
+    console.log('Sheets sync error:', e);
+  }
+}
 
 function getCurrentVolunteer() {
   const sid = DB.getSession();
@@ -1776,6 +1798,23 @@ function submitRegistration(e) {
   volunteers.push(volunteer);
   DB.saveVolunteers(volunteers);
   DB.setSession(volId);
+
+  // ── Auto-save to Google Sheets ──
+  const isFirst = volunteers.length === 1;
+  if (isFirst) {
+    // First volunteer — write with headers
+    sendToSheets('Volunteers', 'write', {
+      rows: [
+        ['Volunteer ID','Name','DOB','Father Name','Mother Name','Occupation','Mobile','Aadhaar (masked)','Village','Post','Police Station','District','State','PIN','Join Date','Status'],
+        [volunteer.id, volunteer.name, volunteer.dob, volunteer.fatherName, volunteer.motherName, volunteer.occupation, volunteer.mobile, volunteer.aadhaarDisplay, volunteer.at, volunteer.post, volunteer.ps, volunteer.district, volunteer.state, volunteer.pin, volunteer.joinDate, volunteer.status]
+      ]
+    });
+  } else {
+    // Append new row
+    sendToSheets('Volunteers', 'append', {
+      row: [volunteer.id, volunteer.name, volunteer.dob, volunteer.fatherName, volunteer.motherName, volunteer.occupation, volunteer.mobile, volunteer.aadhaarDisplay, volunteer.at, volunteer.post, volunteer.ps, volunteer.district, volunteer.state, volunteer.pin, volunteer.joinDate, volunteer.status]
+    });
+  }
 
   closeModal('modalRegister');
   document.getElementById('regForm').reset();
@@ -2394,10 +2433,24 @@ function submitContactForm() {
   const phone = document.getElementById('msg-phone').value.trim();
   const subject = document.getElementById('msg-subject').value.trim();
   const body = document.getElementById('msg-body').value.trim();
-  if (!name || !phone || !subject || !body) { showToast('Please fill all required fields', 'error'); return; }
-  if (phone.length !== 10) { showToast('Enter valid 10-digit mobile number', 'error'); return; }
-  showToast('Message sent! We will contact you soon. ✅', 'success');
-  ['msg-name','msg-phone','msg-email','msg-subject','msg-body'].forEach(id => { document.getElementById(id).value=''; });
+
+  if (!name || !phone || !subject || !body) {
+    showToast('Please fill all fields', 'error'); return;
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  const time = new Date().toLocaleTimeString('en-IN');
+
+  // Save to Google Sheets
+  sendToSheets('Contact_Messages', 'append', {
+    row: [name, phone, subject, body, today, time]
+  });
+
+  showToast('Message sent successfully! We will contact you soon. 📨', 'success');
+  document.getElementById('msg-name').value = '';
+  document.getElementById('msg-phone').value = '';
+  document.getElementById('msg-subject').value = '';
+  document.getElementById('msg-body').value = '';
 }
 
 </script>
