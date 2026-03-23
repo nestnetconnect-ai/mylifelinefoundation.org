@@ -51,7 +51,8 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:70px;}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,77,140,.90) 0%,rgba(10,77,140,.65) 45%,rgba(46,139,87,.70) 100%),url('pexels-pixabay-159632.jpg') center/cover no-repeat;transition:background-image .5s;}
+/* FIX 1: Removed hardcoded pexels jpg — JS will set background dynamically */
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,77,140,.92) 0%,rgba(10,77,140,.70) 45%,rgba(46,139,87,.75) 100%);transition:background .5s;}
 .hero-g1{position:absolute;bottom:-80px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,124,0,.2) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
 .hero-g2{position:absolute;top:80px;left:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(46,139,87,.22) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
 .hero-wrap{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 4%;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
@@ -852,7 +853,13 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 <!-- PROFILE DASHBOARD -->
 <div class="profile-overlay" id="profileDashboard">
   <div class="profile-header-bar">
-    <div class="logo-w"><div class="logo-ico" style="width:36px;height:36px;font-size:16px;"><img src="Lifeline.png" alt="MLF" onerror="this.style.opacity='.5'"></div><span>My Lifeline Foundation — Volunteer Portal</span></div>
+    <!-- FIX 2: Profile bar logo — updated dynamically by JS -->
+    <div class="logo-w">
+      <div class="logo-ico" style="width:36px;height:36px;font-size:16px;overflow:hidden;border-radius:8px;">
+        <img src="Lifeline.png" alt="MLF" id="profileBarLogoImg" onerror="this.style.opacity='.5'" style="width:100%;height:100%;object-fit:contain;">
+      </div>
+      <span id="profileBarOrgName">My Lifeline Foundation — Volunteer Portal</span>
+    </div>
     <div class="profile-header-btns">
       <button class="btn-sm btn-sm-save" onclick="saveProfileChanges()">💾 Save Changes</button>
       <button class="btn-sm btn-sm-outline" onclick="closeProfile()">🏠 Home</button>
@@ -896,9 +903,13 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 </div>
 
 <!-- ID CARD TEMPLATE -->
+<!-- FIX 3: ID card logo — updated dynamically by JS -->
 <div id="id-card-template">
   <div class="id-card-inner">
-    <div class="id-card-top"><div class="id-card-logo"><img src="Lifeline.png" alt="MLF Logo"></div><div class="id-card-org"><strong>My Lifeline Foundation</strong><span>Empowering Rural Odisha</span></div></div>
+    <div class="id-card-top">
+      <div class="id-card-logo"><img src="Lifeline.png" alt="MLF Logo" id="idCardLogoImg" style="width:100%;height:100%;object-fit:contain;"></div>
+      <div class="id-card-org"><strong id="idCardOrgName">My Lifeline Foundation</strong><span>Empowering Rural Odisha</span></div>
+    </div>
     <div class="id-card-vol-type">VOLUNTEER ID CARD</div>
     <div class="id-card-main">
       <div id="idCardPhoto" class="id-card-photo-def">👤</div>
@@ -916,9 +927,6 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 <div id="mlfConfetti"></div>
 
 <script>
-/* ═══════════════════════════════════════
-   MLF WEBSITE SCRIPT v2.0 — Supabase + Admin Panel Driven
-═══════════════════════════════════════ */
 const ODIA_MONTHS=['ବୈଶାଖ','ଜ୍ୟେଷ୍ଠ','ଆଷାଢ଼','ଶ୍ରାବଣ','ଭାଦ୍ରବ','ଆଶ୍ୱିନ','କାର୍ତ୍ତିକ','ମାର୍ଗଶିର','ପୌଷ','ମାଘ','ଫାଲ୍ଗୁନ','ଚୈତ୍ର'];
 
 // ── DATA ACCESS ──
@@ -940,11 +948,30 @@ function loadAdminContent(){
   function si(id,src){const e=document.getElementById(id);if(e&&src){e.src=src;}}
   function sh(id,v){const e=document.getElementById(id);if(e&&v!=null)e.innerHTML=v;}
 
+  // ── FIX: Logo update — all 4 logo locations ──
   if(D.logo){
-    s('navOrgName',D.logo.n); s('navOrgTag',D.logo.t); s('ftOrgName',D.logo.n); s('ftOrgTag',D.logo.t);
-    if(D.logo.i){si('navLogoImg',D.logo.i);si('ftLogoImg',D.logo.i);}
+    s('navOrgName',D.logo.n);
+    s('navOrgTag',D.logo.t);
+    s('ftOrgName',D.logo.n);
+    s('ftOrgTag',D.logo.t);
+    // Profile bar org name
+    if(D.logo.n){const pbn=document.getElementById('profileBarOrgName');if(pbn)pbn.textContent=(D.logo.n)+' — Volunteer Portal';}
+    // ID card org name
+    s('idCardOrgName',D.logo.n);
+    if(D.logo.i){
+      // Nav logo
+      si('navLogoImg',D.logo.i);
+      // Footer logo
+      si('ftLogoImg',D.logo.i);
+      // Profile bar logo
+      si('profileBarLogoImg',D.logo.i);
+      // ID card logo
+      si('idCardLogoImg',D.logo.i);
+    }
     if(D.logo.tt)document.getElementById('pageTitle').textContent=D.logo.tt;
   }
+
+  // ── FIX: Hero background — dynamic from admin ──
   if(D.hero){
     const h=D.hero;
     const badge=document.getElementById('heroBadge');if(badge&&h.b)badge.childNodes[badge.childNodes.length-1].textContent=' '+h.b;
@@ -953,8 +980,16 @@ function loadAdminContent(){
     s('heroQ','"'+h.q+'"'); s('heroC',h.c);
     if(h.b1){const b=document.getElementById('heroBtn1');if(b)b.textContent='❤️ '+(h.b1);}
     if(h.b2){const b=document.getElementById('heroBtn2');if(b)b.textContent='🤝 '+(h.b2);}
-    if(h.bg){const bg=document.getElementById('heroBg');if(bg)bg.style.background=`linear-gradient(135deg,rgba(10,77,140,.90) 0%,rgba(10,77,140,.65) 45%,rgba(46,139,87,.70) 100%),url('${h.bg}') center/cover no-repeat`;}
+    // Hero background — use admin image if set, else gradient only
+    const bg=document.getElementById('heroBg');
+    if(bg){
+      if(h.bg){
+        bg.style.background=`linear-gradient(135deg,rgba(10,77,140,.90) 0%,rgba(10,77,140,.65) 45%,rgba(46,139,87,.70) 100%),url('${h.bg}') center/cover no-repeat`;
+      }
+      // If no admin image set, CSS gradient fallback is already applied (no hardcoded jpg)
+    }
   }
+
   if(D.about){
     s('aboutP1',D.about.p1); s('aboutP2',D.about.p2); s('aboutBadgeN',D.about.bn); s('aboutBadgeL',D.about.bl);
     s('aboutMT','🎯 '+(D.about.mt||'Our Mission')); s('aboutMP',D.about.mp);
@@ -1039,7 +1074,6 @@ function loadAdminContent(){
   if(D.gallery&&D.gallery.length){
     const g=document.getElementById('dynamicGalleryGrid');
     if(g)g.innerHTML=D.gallery.map(img=>`<div class="fgi"><img src="${img.url}" alt="${img.cap||'MLF Activity'}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="fgi-ov"><span class="fgi-cap">${img.cap||'MLF Activity'}</span></div></div>`).join('');
-    // Update home gallery with admin photos
     const gi=document.querySelectorAll('#homeGalGrid .gi img'),gc=document.querySelectorAll('#homeGalGrid .gi-cap');
     D.gallery.slice(0,5).forEach((img,i)=>{if(gi[i])gi[i].src=img.url;if(gc[i])gc[i].textContent=img.cap||'MLF Activity';});
   }
@@ -1241,7 +1275,6 @@ async function submitRegistration(e){
   vols.push(vol);
   saveVols(vols);
   setSession(volId);
-  // Sync to sheets
   const sheetsUrl=localStorage.getItem('mlf_url');
   if(sheetsUrl&&sheetsUrl!=='APNA_APPS_SCRIPT_URL_YAHAN'){
     try{await fetch(sheetsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({tab:'Volunteers',action:'append',row:[vol.id,vol.name,vol.dob,vol.fatherName,vol.motherName,vol.occupation,vol.mobile,vol.aadhaarDisplay,vol.at,vol.post,vol.ps,vol.district,vol.state,vol.pin,vol.joinDate,vol.status]})});}catch(err){}
