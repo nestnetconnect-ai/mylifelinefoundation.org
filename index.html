@@ -180,37 +180,10 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .pfield input:focus,.pfield select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,77,140,.08);}
 .pfield input[readonly]{background:var(--off);color:var(--gray);cursor:not-allowed;}
 .pfield .locked-tag{font-size:11px;color:var(--gray);margin-top:3px;}
-.qr-profile-card{background:var(--white);border-radius:24px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;animation:modalIn .3s both;}
-.qr-profile-header{background:linear-gradient(135deg,var(--blue),var(--green));padding:30px 24px 80px;text-align:center;position:relative;}
-.qr-profile-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--white);clip-path:ellipse(55% 100% at 50% 100%);}
-.qr-profile-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.8);margin-bottom:10px;}
-.qr-profile-photo-def{width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:36px;border:4px solid rgba(255,255,255,.8);margin:0 auto 10px;}
-.qr-profile-header h2{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--white);}
-.qr-profile-body{padding:20px 24px 28px;text-align:center;}
-.qr-vol-id{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--blue);letter-spacing:2px;margin-bottom:6px;}
-.qr-vol-status{display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:var(--green);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:16px;}
-.qr-vol-status::before{content:'✓';font-weight:700;}
-.qr-info-row{display:flex;justify-content:center;gap:20px;font-size:13px;color:var(--gray);margin-bottom:12px;}
-.qr-info-row strong{color:var(--text);}
-.qr-org-badge{background:var(--off);border:1px solid var(--gray-lt);border-radius:10px;padding:10px;font-size:12px;color:var(--gray);margin-top:8px;}
-#id-card-template{position:fixed;left:-9999px;top:-9999px;width:340px;background:linear-gradient(135deg,var(--blue-dk) 0%,var(--blue) 60%,#1B5E20 100%);border-radius:16px;padding:0;overflow:hidden;font-family:'Open Sans',sans-serif;}
-.id-card-inner{padding:20px;}
-.id-card-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:14px;}
-.id-card-logo{width:36px;height:36px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;}
-.id-card-logo img{width:100%;height:100%;object-fit:contain;}
-.id-card-org{color:var(--white);}
-.id-card-org strong{display:block;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;line-height:1.2;}
-.id-card-org span{font-size:8px;color:rgba(255,255,255,.6);}
-.id-card-vol-type{background:var(--orange);color:var(--white);font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:4px;text-align:right;margin-bottom:12px;}
-.id-card-main{display:flex;gap:14px;align-items:flex-start;}
-.id-card-photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,.3);flex-shrink:0;}
-.id-card-photo-def{width:64px;height:64px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid rgba(255,255,255,.3);flex-shrink:0;}
-.id-card-name{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;}
-.id-card-detail{font-size:10px;color:rgba(255,255,255,.7);line-height:1.6;}
-.id-card-detail strong{color:var(--white);}
-.id-card-footer{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:center;}
-.id-card-id{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:#FFDD80;letter-spacing:1.5px;}
-.id-card-qr{width:50px;height:50px;}
+/* ── IMAGE PLACEHOLDER STYLES ── */
+.img-placeholder{width:100%;background:linear-gradient(135deg,var(--gray-lt) 0%,#d1dbe8 100%);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--gray);font-size:13px;font-family:'Poppins',sans-serif;font-weight:500;min-height:200px;}
+.img-placeholder .ph-icon{font-size:36px;opacity:.5;}
+.img-placeholder span{opacity:.6;font-size:12px;}
 .sec{padding:80px 4%;max-width:1200px;margin:0 auto;}
 .bg-off{background:var(--off);}
 .lbl{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px;font-family:'Poppins',sans-serif;}
@@ -241,6 +214,7 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .prg-card{background:var(--white);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);border:1px solid var(--gray-lt);transition:all .4s;}
 .prg-card:hover{transform:translateY(-10px);box-shadow:var(--sh-lg);}
 .prg-img{width:100%;height:200px;object-fit:cover;}
+.prg-img-ph{width:100%;height:200px;background:linear-gradient(135deg,var(--gray-lt),#d1dbe8);display:flex;align-items:center;justify-content:center;font-size:40px;}
 .prg-bar{height:4px;}
 .prg-card:nth-child(1) .prg-bar{background:linear-gradient(90deg,var(--blue),var(--blue-lt));}
 .prg-card:nth-child(2) .prg-bar{background:linear-gradient(90deg,var(--green),var(--green-lt));}
@@ -277,6 +251,7 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .gi{border-radius:var(--r-sm);overflow:hidden;position:relative;}
 .gi img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
 .gi:hover img{transform:scale(1.06);}
+.gi-ph{width:100%;height:100%;background:linear-gradient(135deg,var(--gray-lt),#c8d6e5);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--gray);}
 .gi-ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,77,140,.82) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:12px;}
 .gi:hover .gi-ov{opacity:1;}
 .gi-cap{color:var(--white);font-size:12px;font-weight:600;}
@@ -289,6 +264,7 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .st-card{background:var(--white);border-radius:var(--r);padding:26px;box-shadow:var(--sh-sm);border:1px solid var(--gray-lt);display:flex;gap:16px;align-items:flex-start;transition:all .3s;}
 .st-card:hover{box-shadow:var(--sh-md);transform:translateY(-4px);}
 .st-av{width:58px;height:58px;border-radius:50%;object-fit:cover;border:3px solid var(--orange);flex-shrink:0;}
+.st-av-ph{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid var(--orange);flex-shrink:0;}
 .st-body blockquote{font-size:14px;line-height:1.75;color:var(--gray);font-style:italic;margin-bottom:9px;}
 .st-body cite{font-size:13px;font-weight:700;color:var(--blue);font-style:normal;}
 .st-body .loc{font-size:12px;color:var(--green);margin-top:2px;}
@@ -345,6 +321,9 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 .toast.show{transform:translateX(-50%) translateY(0);}
 .toast.success{background:var(--green);}
 .toast.error{background:#ef4444;}
+/* forgot password link */
+.forgot-link{text-align:center;margin-top:10px;font-size:13px;color:var(--blue);cursor:pointer;text-decoration:underline;}
+.forgot-link:hover{color:var(--orange);}
 @media(max-width:1024px){.imp-grid{grid-template-columns:repeat(2,1fr);}.ft-top{grid-template-columns:1fr 1fr;}.profile-grid{grid-template-columns:1fr;}.profile-card-left{position:static;}.clock-widget{width:200px;}}
 @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.hero-wrap{grid-template-columns:1fr;}.hero-card{display:none;}.about-grid{grid-template-columns:1fr;}.img-float{display:none;}.img-badge{top:14px;left:14px;}.prg-cards{grid-template-columns:1fr;}.gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}.g1,.g2,.g3,.g4,.g5{grid-column:span 1;height:180px;}.g1{grid-column:span 2;}.stories{grid-template-columns:1fr;}.join-cards{grid-template-columns:1fr;}.ft-top{grid-template-columns:1fr;}.ft-bot-in{flex-direction:column;text-align:center;}.hero-btns{flex-direction:column;}.mv-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}.form-row.three{grid-template-columns:1fr 1fr;}.profile-field-row{grid-template-columns:1fr;}.profile-field-row.three{grid-template-columns:1fr 1fr;}.clock-widget{width:190px;right:10px;}.cw-time{font-size:26px;}.modal-body{padding:18px 20px 22px;}.modal-hd{padding:18px 20px 14px;}}
 @media(max-width:480px){.imp-grid{grid-template-columns:1fr 1fr;}.clock-widget{display:none;}}
@@ -416,6 +395,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 .niti-uid{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:6px 16px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:#FFCC80;margin:10px 0 6px;letter-spacing:1px;}
 .prog-detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start;margin-top:20px;}
 .prog-detail-img{width:100%;border-radius:var(--r);box-shadow:var(--sh-md);object-fit:cover;max-height:380px;}
+.prog-detail-img-ph{width:100%;border-radius:var(--r);max-height:380px;background:linear-gradient(135deg,var(--gray-lt),#c8d6e5);display:flex;align-items:center;justify-content:center;font-size:60px;min-height:300px;}
 .prog-detail-body h3{font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;color:var(--blue);margin-bottom:14px;}
 .prog-detail-body p{font-size:15px;line-height:1.8;color:var(--gray);margin-bottom:14px;}
 .featured-prg{background:var(--off);border-left:4px solid var(--green);padding:16px 18px;border-radius:0 12px 12px 0;margin-top:18px;}
@@ -473,6 +453,46 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 .contact-form-card h3{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--blue);margin-bottom:24px;}
 .map-wrap{margin-top:40px;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);}
 @media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+/* ── SUPABASE INFO BOX ── */
+.supabase-info-box{background:linear-gradient(135deg,#1a1a2e,#16213e);color:var(--white);border-radius:var(--r);padding:32px;margin:32px 0;border:1px solid rgba(99,102,241,.3);}
+.supabase-info-box h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:#a5b4fc;margin-bottom:16px;}
+.supabase-step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;}
+.supabase-step-num{width:28px;height:28px;border-radius:50%;background:rgba(99,102,241,.3);border:1px solid #6366f1;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#a5b4fc;flex-shrink:0;}
+.supabase-step-body{font-size:13px;color:rgba(255,255,255,.8);line-height:1.7;}
+.supabase-step-body strong{color:#a5b4fc;}
+.supabase-code{background:rgba(0,0,0,.4);border:1px solid rgba(99,102,241,.2);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:12px;color:#86efac;margin-top:6px;word-break:break-all;}
+/* QR profile card */
+.qr-profile-card{background:var(--white);border-radius:24px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;animation:modalIn .3s both;}
+.qr-profile-header{background:linear-gradient(135deg,var(--blue),var(--green));padding:30px 24px 80px;text-align:center;position:relative;}
+.qr-profile-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--white);clip-path:ellipse(55% 100% at 50% 100%);}
+.qr-profile-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.8);margin-bottom:10px;}
+.qr-profile-photo-def{width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:36px;border:4px solid rgba(255,255,255,.8);margin:0 auto 10px;}
+.qr-profile-header h2{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;color:var(--white);}
+.qr-profile-body{padding:20px 24px 28px;text-align:center;}
+.qr-vol-id{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--blue);letter-spacing:2px;margin-bottom:6px;}
+.qr-vol-status{display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:var(--green);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:16px;}
+.qr-vol-status::before{content:'✓';font-weight:700;}
+.qr-info-row{display:flex;justify-content:center;gap:20px;font-size:13px;color:var(--gray);margin-bottom:12px;}
+.qr-info-row strong{color:var(--text);}
+.qr-org-badge{background:var(--off);border:1px solid var(--gray-lt);border-radius:10px;padding:10px;font-size:12px;color:var(--gray);margin-top:8px;}
+#id-card-template{position:fixed;left:-9999px;top:-9999px;width:340px;background:linear-gradient(135deg,var(--blue-dk) 0%,var(--blue) 60%,#1B5E20 100%);border-radius:16px;padding:0;overflow:hidden;font-family:'Open Sans',sans-serif;}
+.id-card-inner{padding:20px;}
+.id-card-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:14px;}
+.id-card-logo{width:36px;height:36px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;}
+.id-card-logo img{width:100%;height:100%;object-fit:contain;}
+.id-card-org{color:var(--white);}
+.id-card-org strong{display:block;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;line-height:1.2;}
+.id-card-org span{font-size:8px;color:rgba(255,255,255,.6);}
+.id-card-vol-type{background:var(--orange);color:var(--white);font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:4px;text-align:right;margin-bottom:12px;}
+.id-card-main{display:flex;gap:14px;align-items:flex-start;}
+.id-card-photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,.3);flex-shrink:0;}
+.id-card-photo-def{width:64px;height:64px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid rgba(255,255,255,.3);flex-shrink:0;}
+.id-card-name{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.id-card-detail{font-size:10px;color:rgba(255,255,255,.7);line-height:1.6;}
+.id-card-detail strong{color:var(--white);}
+.id-card-footer{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:center;}
+.id-card-id{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:#FFDD80;letter-spacing:1.5px;}
+.id-card-qr{width:50px;height:50px;}
 </style>
 </head>
 <body>
@@ -550,6 +570,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 </div>
 </div>
 
+<!-- HERO SECTION -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-g1"></div>
@@ -578,13 +599,20 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
 </section>
 
+<!-- ABOUT SECTION -->
 <section class="bg-off" id="about">
   <div class="sec">
     <div class="about-grid">
       <div class="img-wrap reveal">
         <div class="img-badge"><strong>500+</strong><span>Families uplifted<br>across Odisha</span></div>
-        <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?w=800&q=80" alt="Rural community" class="img-main">
-        <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69799?w=400&q=80" alt="Health camp" class="img-float">
+        <!-- About main image — admin panel se set hoga -->
+        <div id="about-main-img-wrap">
+          <div class="img-placeholder" style="height:420px;" id="about-main-ph"><div class="ph-icon">🖼️</div><span>Admin Panel se image add karo</span></div>
+        </div>
+        <!-- About float image — admin panel se set hoga -->
+        <div id="about-float-img-wrap" style="position:absolute;bottom:-24px;right:-24px;width:190px;height:140px;display:none;">
+          <img class="img-float" id="about-img-float" src="" alt="">
+        </div>
       </div>
       <div class="reveal d2">
         <div class="lbl">Who We Are</div>
@@ -600,6 +628,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   </div>
 </section>
 
+<!-- PROGRAMS SECTION -->
 <section id="programs">
   <div class="sec">
     <div class="prg-hd reveal">
@@ -609,17 +638,21 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
     </div>
     <div class="prg-cards">
       <div class="prg-card reveal">
-        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" alt="Education" class="prg-img">
+        <!-- Program 1 image — admin se set hoga -->
+        <div class="prg-img-ph" id="prg1-ph">🎓</div>
+        <img src="" alt="Education" class="prg-img" id="prg1-img" style="display:none;">
         <div class="prg-bar"></div>
         <div class="prg-body"><div class="prg-ico">🎓</div><h3>Education Support</h3><p>We help children from rural areas access quality education, learning materials, and academic guidance.</p><a href="#">Learn More →</a></div>
       </div>
       <div class="prg-card reveal d2">
-        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" alt="Health" class="prg-img">
+        <div class="prg-img-ph" id="prg2-ph">🩺</div>
+        <img src="" alt="Health" class="prg-img" id="prg2-img" style="display:none;">
         <div class="prg-bar"></div>
         <div class="prg-body"><div class="prg-ico">🩺</div><h3>Health Awareness</h3><p>We organise health camps and awareness programs to promote better health practices in villages.</p><a href="#">Learn More →</a></div>
       </div>
       <div class="prg-card reveal d3">
-        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=600&q=80" alt="Youth" class="prg-img">
+        <div class="prg-img-ph" id="prg3-ph">👨‍🌾</div>
+        <img src="" alt="Youth" class="prg-img" id="prg3-img" style="display:none;">
         <div class="prg-bar"></div>
         <div class="prg-body"><div class="prg-ico">👨‍🌾</div><h3>Rural Youth Development</h3><p>We guide rural youth with skills, training, and career direction for a better future.</p><a href="#">Learn More →</a></div>
       </div>
@@ -627,6 +660,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   </div>
 </section>
 
+<!-- IMPACT SECTION -->
 <section class="imp-sec">
   <div class="imp-in">
     <div class="imp-hd reveal">
@@ -642,26 +676,44 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   </div>
 </section>
 
+<!-- GALLERY SECTION (homepage) -->
 <section id="gallery">
   <div class="sec">
     <div class="gal-hd reveal">
       <div class="lbl">Real Stories, Real Impact</div>
       <h2 class="sec-title">Changing Lives, <em>One Step</em> at a Time</h2>
     </div>
-    <div class="gal-grid reveal">
-      <div class="gi g1"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" alt="Children"><div class="gi-ov"><span class="gi-cap">Children at our learning centre</span></div></div>
-      <div class="gi g2"><img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69799?w=600&q=80" alt="Health"><div class="gi-ov"><span class="gi-cap">Health awareness camp</span></div></div>
-      <div class="gi g3"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Volunteer"><div class="gi-ov"><span class="gi-cap">Volunteer orientation</span></div></div>
-      <div class="gi g4"><img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=600&q=80" alt="Youth"><div class="gi-ov"><span class="gi-cap">Youth skill workshop</span></div></div>
-      <div class="gi g5"><img src="https://images.unsplash.com/photo-1609220136736-443140cfeaa5?w=400&q=80" alt="Community"><div class="gi-ov"><span class="gi-cap">Community programme</span></div></div>
+    <!-- Gallery images — admin panel se load hongi, placeholder dikhega agar nahi hain -->
+    <div class="gal-grid reveal" id="home-gallery-grid">
+      <div class="gi g1"><div class="gi-ph">📸</div></div>
+      <div class="gi g2"><div class="gi-ph">📸</div></div>
+      <div class="gi g3"><div class="gi-ph">📸</div></div>
+      <div class="gi g4"><div class="gi-ph">📸</div></div>
+      <div class="gi g5"><div class="gi-ph">📸</div></div>
     </div>
+    <!-- Testimonials — admin se set honge -->
     <div class="stories">
-      <div class="st-card reveal"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&q=80" alt="" class="st-av"><div class="st-body"><blockquote>"Because of My Lifeline Foundation, my child is going to school again. They helped us with everything."</blockquote><cite>Mother of a Beneficiary</cite><div class="loc">📍 Kendrapara, Odisha</div></div></div>
-      <div class="st-card reveal d2"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="" class="st-av"><div class="st-body"><blockquote>"The youth development program gave me confidence and a clear direction. I now run my own small business."</blockquote><cite>Youth Programme Graduate</cite><div class="loc">📍 Rural Odisha</div></div></div>
+      <div class="st-card reveal">
+        <div class="st-av-ph" id="story1-av">👤</div>
+        <div class="st-body">
+          <blockquote id="story1-q">"Because of My Lifeline Foundation, my child is going to school again. They helped us with everything."</blockquote>
+          <cite id="story1-name">Mother of a Beneficiary</cite>
+          <div class="loc" id="story1-loc">📍 Kendrapara, Odisha</div>
+        </div>
+      </div>
+      <div class="st-card reveal d2">
+        <div class="st-av-ph" id="story2-av">👤</div>
+        <div class="st-body">
+          <blockquote id="story2-q">"The youth development program gave me confidence and a clear direction. I now run my own small business."</blockquote>
+          <cite id="story2-name">Youth Programme Graduate</cite>
+          <div class="loc" id="story2-loc">📍 Rural Odisha</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- JOIN SECTION -->
 <section class="bg-off" id="volunteer">
   <div class="sec">
     <div class="join-hd reveal">
@@ -698,36 +750,26 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   <div class="sec">
     <div style="text-align:center;margin-bottom:16px;"><div class="lbl" style="justify-content:center;">Our Core Beliefs</div><h2 class="sec-title">What Drives <em>My Lifeline</em> Foundation</h2></div>
     <div class="vmv-grid reveal">
-      <div class="vmv-card"><div class="vmv-ico">🌅</div><h3>Our Vision</h3><p>A society free from poverty through education. Where the people have choice to choose their socio-economic development.</p></div>
-      <div class="vmv-card"><div class="vmv-ico">🎯</div><h3>Our Mission</h3><p>Facilitate to develop skill, Knowledge and attitude of the people. Facilitate the people to identify their local resources and capacities and make optimal use to improve their quality of life.</p></div>
-      <div class="vmv-card"><div class="vmv-ico">💎</div><h3>Our Values</h3><p><strong>P</strong>assion — <strong>H</strong>onesty — <strong>D</strong>etermination<br><br>These three core values — <strong>PhD</strong> — guide every action and decision at My Lifeline Foundation.</p></div>
+      <div class="vmv-card"><div class="vmv-ico">🌅</div><h3>Our Vision</h3><p id="vmv-vision">A society free from poverty through education. Where the people have choice to choose their socio-economic development.</p></div>
+      <div class="vmv-card"><div class="vmv-ico">🎯</div><h3>Our Mission</h3><p id="vmv-mission">Facilitate to develop skill, Knowledge and attitude of the people. Facilitate the people to identify their local resources and capacities and make optimal use to improve their quality of life.</p></div>
+      <div class="vmv-card"><div class="vmv-ico">💎</div><h3>Our Values</h3><p id="vmv-values"><strong>P</strong>assion — <strong>H</strong>onesty — <strong>D</strong>etermination<br><br>These three core values — <strong>PhD</strong> — guide every action and decision at My Lifeline Foundation.</p></div>
     </div>
   </div>
 </div>
 
-<!-- BOARD MEMBERS PAGE -->
+<!-- BOARD MEMBERS PAGE — ALL BLANK, ADMIN SE LOAD HOGA -->
 <div id="page-board" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Board of Trustees</div><h2>👥 Board of Trustees &amp; Advisors</h2></div>
   <section class="bg-off"><div class="sec">
     <div style="text-align:center;margin-bottom:8px;"><div class="lbl" style="justify-content:center;">People Behind MLF</div><h2 class="sec-title">Our Board &amp; <em>Advisory</em> Members</h2></div>
     <p class="bm-intro">MY LIFELINE FOUNDATION is managed by a Board of Trustees, supported by an Advisory Panel of individuals from diverse backgrounds, and a Management Team of experienced professionals.</p>
+    <!-- Board Members — completely admin controlled, no hardcoded entries -->
     <div class="bm-grid reveal" id="bmGridDynamic">
-      <!-- Loaded dynamically from admin panel -->
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/77237044.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. D.K. Parida</div><div class="bm-desig">CEO / Founder</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1419914451.jpg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Jitendra Parida</div><div class="bm-desig">Director</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/816731937.jpg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mahendra Parida</div><div class="bm-desig">Director</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1395415614.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Miss Nibedita Rana</div><div class="bm-desig">Founder Member &amp; Admin In-charge</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/155613272.jpg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Bichitra Behera</div><div class="bm-desig">Organizer</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1219617640.jpg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Miss Suprava Sethi</div><div class="bm-desig">Board Member</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1841260100.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Miss Mamata Jena</div><div class="bm-desig">Board Member</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/941709289.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Kartikeswar Sethi</div><div class="bm-desig">C.C. Member &amp; Co-ordinator</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1876855995.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Susanta Kumar Behera</div><div class="bm-desig">District Co-ordinator / Board Member</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1631139508.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Karandhar Mistry</div><div class="bm-desig">C.C. Member &amp; Co-ordinator</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/2094206640.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Ranjan Kumar Rout</div><div class="bm-desig">C.C. Member</div></div></div>
-      <div class="bm-card"><div class="bm-photo-def">👤</div><div class="bm-info"><div class="bm-name">Mr. Saumyakant Dash</div><div class="bm-desig">Technician / C.C. Member</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/842737398.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Uddhab Charan Rout</div><div class="bm-desig">C.C. Member &amp; Co-ordinator</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/1142837080.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Sabir Kumar Das</div><div class="bm-desig">C.C. Member</div></div></div>
-      <div class="bm-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/board_member/311637914.jpeg" class="bm-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="bm-photo-def" style="display:none;">👤</div><div class="bm-info"><div class="bm-name">Mr. Pradip Behera</div><div class="bm-desig">C.C. Member P. Co-ordinator</div></div></div>
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray);">
+        <div style="font-size:48px;margin-bottom:16px;">👥</div>
+        <h3 style="font-family:Poppins,sans-serif;font-size:18px;color:var(--blue);margin-bottom:8px;">Admin Panel se Board Members add karo</h3>
+        <p style="font-size:14px;">Admin Panel → Board Members → Add karo</p>
+      </div>
     </div>
   </div></section>
 </div>
@@ -755,98 +797,100 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   </div>
 </div>
 
-<!-- EDUCATION -->
+<!-- EDUCATION PAGE -->
 <div id="page-education" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Programs / Education</div><h2>🎓 Education Program</h2></div>
   <div class="sec"><div class="prog-detail-grid reveal">
-    <div><img src="https://mylifelinefoundation.org/aionpanel/uploads/education/1660911291.jpg" class="prog-detail-img" alt="Education" onerror="this.src='https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80'"></div>
+    <!-- Education image — admin se set hoga -->
+    <div id="edu-img-wrap">
+      <div class="prog-detail-img-ph" id="edu-img-ph">🎓</div>
+      <img src="" class="prog-detail-img" id="edu-img" alt="Education" style="display:none;" onerror="this.style.display='none';document.getElementById('edu-img-ph').style.display='flex';">
+    </div>
     <div class="prog-detail-body">
       <div class="lbl">Our Programs</div>
-      <h3>Education Support Initiative</h3>
-      <p>MY LIFELINE FOUNDATION is determined to fulfill the dreams of rural students of Odisha and providing them with right career guidance and study materials for higher education.</p>
-      <p>Education is both the means as well as the end to a better life — it empowers an individual to earn his/her livelihood and increases one's awareness on healthcare, social behavior, rights, and becoming a better citizen.</p>
-      <div class="featured-prg"><h4>🏫 MLF School Initiative</h4><p>MY LIFELINE FOUNDATION School — Beti Bachao Beti Padhao Centre running for underprivileged children.</p></div>
+      <h3 id="edu-title">Education Support Initiative</h3>
+      <p id="edu-p1">MY LIFELINE FOUNDATION is determined to fulfill the dreams of rural students of Odisha and providing them with right career guidance and study materials for higher education.</p>
+      <p id="edu-p2">Education is both the means as well as the end to a better life — it empowers an individual to earn his/her livelihood and increases one's awareness on healthcare, social behavior, rights, and becoming a better citizen.</p>
+      <div class="featured-prg"><h4 id="edu-ft">🏫 MLF School Initiative</h4><p id="edu-fp">MY LIFELINE FOUNDATION School — Beti Bachao Beti Padhao Centre running for underprivileged children.</p></div>
     </div>
   </div></div>
 </div>
 
-<!-- HEALTH -->
+<!-- HEALTH PAGE -->
 <div id="page-health" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Programs / Health</div><h2>🩺 Health Awareness Program</h2></div>
   <div class="sec"><div class="prog-detail-grid reveal">
-    <div><img src="https://mylifelinefoundation.org/aionpanel/uploads/health/1659353896.jpg" class="prog-detail-img" alt="Health" onerror="this.src='https://images.unsplash.com/photo-1594608661623-aa0bd3a69799?w=800&q=80'"></div>
+    <div id="health-img-wrap">
+      <div class="prog-detail-img-ph" id="health-img-ph">🩺</div>
+      <img src="" class="prog-detail-img" id="health-img" alt="Health" style="display:none;" onerror="this.style.display='none';document.getElementById('health-img-ph').style.display='flex';">
+    </div>
     <div class="prog-detail-body">
       <div class="lbl">Health &amp; Wellness</div>
-      <h3>Health Awareness &amp; Care</h3>
-      <p>My Lifeline Foundation seeks to ensure the survival, protection and healthy development of children and the reproductive health of adolescents and adults, especially women of child bearing age.</p>
-      <p>Two-pronged approach — bring quality healthcare services to doorsteps of the needy, and promote healthcare awareness and contemporary healthcare seeking behavior among the underprivileged.</p>
-      <div class="featured-prg"><h4>🧘 Featured Activities</h4><p>MLF Yoga Centre · Blood Donation Camp · SHG Formation and Women Empowerment</p></div>
+      <h3 id="health-title">Health Awareness &amp; Care</h3>
+      <p id="health-p1">My Lifeline Foundation seeks to ensure the survival, protection and healthy development of children and the reproductive health of adolescents and adults, especially women of child bearing age.</p>
+      <p id="health-p2">Two-pronged approach — bring quality healthcare services to doorsteps of the needy, and promote healthcare awareness and contemporary healthcare seeking behavior among the underprivileged.</p>
+      <div class="featured-prg"><h4 id="health-ft">🧘 Featured Activities</h4><p id="health-fp">MLF Yoga Centre · Blood Donation Camp · SHG Formation and Women Empowerment</p></div>
     </div>
   </div></div>
 </div>
 
-<!-- RURAL -->
+<!-- RURAL PAGE -->
 <div id="page-rural" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Programs / Rural Youth Development</div><h2>🌾 Rural Youth Development</h2></div>
   <div class="sec"><div class="prog-detail-grid reveal">
-    <div><img src="https://mylifelinefoundation.org/aionpanel/uploads/rural/1660255979.jpg" class="prog-detail-img" alt="Rural" onerror="this.src='https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80'"></div>
+    <div id="rural-img-wrap">
+      <div class="prog-detail-img-ph" id="rural-img-ph">🌾</div>
+      <img src="" class="prog-detail-img" id="rural-img" alt="Rural" style="display:none;" onerror="this.style.display='none';document.getElementById('rural-img-ph').style.display='flex';">
+    </div>
     <div class="prog-detail-body">
       <div class="lbl">Livelihood &amp; Skills</div>
-      <h3>Rural Youth Development Program</h3>
-      <p>My Lifeline Foundation seeks to increase food security and family disposable income which will enable families to improve their children's welfare.</p>
-      <p>This national level programme trains the poor and underprivileged youth in English Proficiency, Basic Computer Education and Soft Skills for employment in the fast expanding retail, hospitality and BPO sectors.</p>
-      <div class="featured-prg"><h4>🌱 Featured Activities</h4><p>SHG Formation · Demo Farm · Kitchen Garden · Women Empowerment Programs</p></div>
+      <h3 id="rural-title">Rural Youth Development Program</h3>
+      <p id="rural-p1">My Lifeline Foundation seeks to increase food security and family disposable income which will enable families to improve their children's welfare.</p>
+      <p id="rural-p2">This national level programme trains the poor and underprivileged youth in English Proficiency, Basic Computer Education and Soft Skills for employment in the fast expanding retail, hospitality and BPO sectors.</p>
+      <div class="featured-prg"><h4 id="rural-ft">🌱 Featured Activities</h4><p id="rural-fp">SHG Formation · Demo Farm · Kitchen Garden · Women Empowerment Programs</p></div>
     </div>
   </div></div>
 </div>
 
-<!-- ENVIRONMENT -->
+<!-- ENVIRONMENT PAGE -->
 <div id="page-environment" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Programs / Environment</div><h2>🌿 Environment Program</h2></div>
   <div class="sec"><div class="prog-detail-grid reveal">
-    <div><img src="https://mylifelinefoundation.org/aionpanel/uploads/environment/1659355979.png" class="prog-detail-img" alt="Environment" onerror="this.src='https://images.unsplash.com/photo-1609220136736-443140cfeaa5?w=800&q=80'" style="object-fit:contain;background:var(--off);"></div>
+    <div id="env-img-wrap">
+      <div class="prog-detail-img-ph" id="env-img-ph">🌿</div>
+      <img src="" class="prog-detail-img" id="env-img" alt="Environment" style="display:none;" onerror="this.style.display='none';document.getElementById('env-img-ph').style.display='flex';">
+    </div>
     <div class="prog-detail-body">
       <div class="lbl">Planet &amp; People</div>
-      <h3>Environmental Awareness &amp; Action</h3>
-      <p>India faces millions of deaths each year due to the adverse effects of our day-to-day activities on the environment. My Lifeline Foundation works to raise awareness and bring ownership within people to save the environment.</p>
-      <div class="featured-prg"><h4>🌱 NIRA — Nature Is Requesting Action</h4><p>Through NIRA, we work to combat environment degradation, promote sustainability, and help communities with greener, safer, healthier environments across India.</p></div>
-      <div class="featured-prg" style="border-left-color:var(--blue);margin-top:12px;"><h4>🏫 Green Your School</h4><p>Annual program for schools across India — shortlisted schools receive cash awards for implementing green building initiatives.</p></div>
-    </div>
-  </div>
-  <div style="margin-top:32px;">
-    <div class="lbl">Activities</div><h3 class="sec-title">Environment <em>Activities</em></h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;">
-      <div class="prg-card reveal"><div class="prg-bar"></div><div class="prg-body"><div class="prg-ico" style="background:#DCFCE7;">🌳</div><h3>Plantation Drive</h3><p>Plantation at schools, colleges and public places to increase green cover in Odisha.</p></div></div>
-      <div class="prg-card reveal d2"><div class="prg-bar" style="background:linear-gradient(90deg,var(--green),var(--green-lt));"></div><div class="prg-body"><div class="prg-ico" style="background:#DBEAFE;">🧹</div><h3>Cleanliness Drive</h3><p>Village and public place cleanliness campaigns — making communities cleaner and healthier.</p></div></div>
-      <div class="prg-card reveal d3"><div class="prg-bar" style="background:linear-gradient(90deg,var(--orange),#FFA726);"></div><div class="prg-body"><div class="prg-ico" style="background:var(--orange-lt);">⛺</div><h3>Work Camp</h3><p>Community work camps to address local environmental issues through collective action.</p></div></div>
+      <h3 id="env-title">Environmental Awareness &amp; Action</h3>
+      <p id="env-p1">India faces millions of deaths each year due to the adverse effects of our day-to-day activities on the environment. My Lifeline Foundation works to raise awareness and bring ownership within people to save the environment.</p>
+      <div class="featured-prg"><h4 id="env-ft">🌱 NIRA — Nature Is Requesting Action</h4><p id="env-fp">Through NIRA, we work to combat environment degradation, promote sustainability, and help communities with greener, safer, healthier environments across India.</p></div>
     </div>
   </div></div>
 </div>
 
-<!-- COORDINATOR -->
+<!-- COORDINATOR PAGE — ALL BLANK, ADMIN SE LOAD HOGA -->
 <div id="page-coordinator" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Coordinator</div><h2>🤝 Our Coordinators</h2></div>
   <section class="bg-off"><div class="sec">
     <div style="text-align:center;margin-bottom:8px;"><div class="lbl" style="justify-content:center;">Field Leaders</div><h2 class="sec-title">People <em>Driving</em> MLF on Ground</h2></div>
+    <!-- Coordinators — completely admin controlled, no hardcoded entries -->
     <div class="coord-grid reveal" id="coordGridDynamic">
-      <!-- Loaded dynamically from admin panel -->
-      <div class="coord-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/coordinator/1101732696.jpeg" class="coord-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="coord-photo-def" style="display:none;">👤</div><div class="coord-info"><div class="coord-id">MLF124</div><div class="coord-name">Mr. Pradip Kumar Behera</div><div class="coord-role">Project Co-ordinator</div><div class="coord-phone">📞 <a href="tel:+918260539424" style="color:var(--gray);text-decoration:none;">8260539424</a></div><div class="coord-area">📍 Patakura, Kendrapara</div></div></div>
-      <div class="coord-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/coordinator/1090334745.jpeg" class="coord-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="coord-photo-def" style="display:none;">👤</div><div class="coord-info"><div class="coord-name">Mr. Kartikeswar Sethi</div><div class="coord-role">Co-ordinator</div><div class="coord-phone">📞 <a href="tel:7735191909" style="color:var(--gray);text-decoration:none;">7735191909</a></div><div class="coord-area">📍 Pattamundai, Kendrapara</div></div></div>
-      <div class="coord-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/coordinator/1966278453.jpeg" class="coord-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="coord-photo-def" style="display:none;">👤</div><div class="coord-info"><div class="coord-name">Mr. Uddhab Charan Rout</div><div class="coord-role">Co-ordinator</div><div class="coord-phone">📞 <a href="tel:9178972189" style="color:var(--gray);text-decoration:none;">9178972189</a></div><div class="coord-area">📍 Kendrapara</div></div></div>
-      <div class="coord-card"><img src="https://mylifelinefoundation.org/aionpanel/uploads/coordinator/876234235.jpeg" class="coord-photo" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="coord-photo-def" style="display:none;">👤</div><div class="coord-info"><div class="coord-name">Rajkishor Nath</div><div class="coord-role">Co-ordinator</div><div class="coord-phone">📞 <a href="tel:9583093878" style="color:var(--gray);text-decoration:none;">9583093878</a></div></div></div>
-      <div class="coord-card"><div class="coord-photo-def">👤</div><div class="coord-info"><div class="coord-name">Sandhyarani Jena</div><div class="coord-role">Co-ordinator</div><div class="coord-phone">📞 <a href="tel:8658088727" style="color:var(--gray);text-decoration:none;">8658088727</a></div></div></div>
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray);">
+        <div style="font-size:48px;margin-bottom:16px;">🤝</div>
+        <h3 style="font-family:Poppins,sans-serif;font-size:18px;color:var(--blue);margin-bottom:8px;">Admin Panel se Coordinators add karo</h3>
+        <p style="font-size:14px;">Admin Panel → Coordinators → Add karo</p>
+      </div>
     </div>
   </div></section>
 </div>
 
-<!-- FULL GALLERY -->
+<!-- FULL GALLERY PAGE -->
 <div id="page-gallery-full" class="page-section" style="display:none;">
   <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> / Gallery</div><h2>🖼️ Photo Gallery</h2></div>
   <div class="sec">
     <div class="gal-hd reveal"><div class="lbl" style="justify-content:center;">Our Activities in Pictures</div><h2 class="sec-title">Gallery — <em>Moments</em> That Matter</h2><p class="sec-desc" style="max-width:560px;margin:10px auto 0;">MLF has set up two strategic wings: Child Development Center (CDC) and Youth Development Center (YDC).</p></div>
-    <div class="full-gal-grid reveal" id="dynamic-gallery-grid">
-      <!-- Loaded from admin panel. Fallback below if no admin data -->
-    </div>
+    <div class="full-gal-grid reveal" id="dynamic-gallery-grid"></div>
   </div>
 </div>
 
@@ -867,9 +911,6 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
           <li><span>✅</span> NITI Aayog Registered: OR/2020/0255447</li>
           <li><span>✅</span> 100% transparent fund utilization</li>
         </ul>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--gray-lt);">
-          <div class="trust-item"><span>📞</span> <a href="tel:+919337994358" style="color:var(--gray);text-decoration:none;">+91 9337994358</a></div>
-        </div>
       </div>
       <div>
         <div class="bank-card">
@@ -944,16 +985,16 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   <div class="modal-box wide">
     <div class="modal-hd"><div><h2>🤝 Volunteer Registration</h2><span>Join My Lifeline Foundation — All fields are mandatory</span></div><button class="modal-close" onclick="closeModal('modalRegister')">✕</button></div>
     <div class="modal-body">
-      <form id="regForm" onsubmit="submitRegistration(event)">
+      <div id="regForm">
         <div class="form-section-title">👤 Personal Information</div>
-        <div class="form-row"><div class="field"><label>Full Name *</label><input type="text" id="reg-name" placeholder="Enter your full name" required></div><div class="field"><label>Date of Birth *</label><input type="date" id="reg-dob" required></div></div>
-        <div class="form-row"><div class="field"><label>Father's Name *</label><input type="text" id="reg-father" placeholder="Father's full name" required></div><div class="field"><label>Mother's Name *</label><input type="text" id="reg-mother" placeholder="Mother's full name" required></div></div>
-        <div class="form-row"><div class="field"><label>Occupation *</label><input type="text" id="reg-occupation" placeholder="e.g., Student, Farmer, Teacher" required></div><div class="field"><label>Mobile Number *</label><input type="tel" id="reg-mobile" placeholder="10-digit mobile number" maxlength="10" required></div></div>
-        <div class="form-row single"><div class="field"><label>Aadhaar Number * <span style="font-size:10px;color:var(--gray);font-weight:400;">(stored securely, never shown publicly)</span></label><input type="text" id="reg-aadhaar" placeholder="12-digit Aadhaar number" maxlength="12" required><span class="field-note">🔒 Only last 4 digits will be visible. One Aadhaar = One account.</span></div></div>
+        <div class="form-row"><div class="field"><label>Full Name *</label><input type="text" id="reg-name" placeholder="Enter your full name"></div><div class="field"><label>Date of Birth *</label><input type="date" id="reg-dob"></div></div>
+        <div class="form-row"><div class="field"><label>Father's Name *</label><input type="text" id="reg-father" placeholder="Father's full name"></div><div class="field"><label>Mother's Name *</label><input type="text" id="reg-mother" placeholder="Mother's full name"></div></div>
+        <div class="form-row"><div class="field"><label>Occupation *</label><input type="text" id="reg-occupation" placeholder="e.g., Student, Farmer, Teacher"></div><div class="field"><label>Mobile Number *</label><input type="tel" id="reg-mobile" placeholder="10-digit mobile number" maxlength="10"></div></div>
+        <div class="form-row single"><div class="field"><label>Aadhaar Number * <span style="font-size:10px;color:var(--gray);font-weight:400;">(stored securely, never shown publicly)</span></label><input type="text" id="reg-aadhaar" placeholder="12-digit Aadhaar number" maxlength="12"><span class="field-note">🔒 Only last 4 digits will be visible. One Aadhaar = One account.</span></div></div>
         <div class="form-section-title">🏠 Address Details</div>
-        <div class="form-row"><div class="field"><label>AT (Village) *</label><input type="text" id="reg-at" placeholder="Village / Area name" required></div><div class="field"><label>Post *</label><input type="text" id="reg-post" placeholder="Post office name" required></div></div>
-        <div class="form-row"><div class="field"><label>Police Station *</label><input type="text" id="reg-ps" placeholder="Police Station name" required></div><div class="field"><label>District *</label><input type="text" id="reg-district" placeholder="District name" required></div></div>
-        <div class="form-row"><div class="field"><label>State *</label><select id="reg-state" required><option value="">Select State</option><option value="Odisha" selected>Odisha</option><option value="West Bengal">West Bengal</option><option value="Jharkhand">Jharkhand</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Andhra Pradesh">Andhra Pradesh</option><option value="Other">Other</option></select></div><div class="field"><label>PIN Code *</label><input type="text" id="reg-pin" placeholder="6-digit PIN code" maxlength="6" required></div></div>
+        <div class="form-row"><div class="field"><label>AT (Village) *</label><input type="text" id="reg-at" placeholder="Village / Area name"></div><div class="field"><label>Post *</label><input type="text" id="reg-post" placeholder="Post office name"></div></div>
+        <div class="form-row"><div class="field"><label>Police Station *</label><input type="text" id="reg-ps" placeholder="Police Station name"></div><div class="field"><label>District *</label><input type="text" id="reg-district" placeholder="District name"></div></div>
+        <div class="form-row"><div class="field"><label>State *</label><select id="reg-state"><option value="">Select State</option><option value="Odisha" selected>Odisha</option><option value="West Bengal">West Bengal</option><option value="Jharkhand">Jharkhand</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Andhra Pradesh">Andhra Pradesh</option><option value="Other">Other</option></select></div><div class="field"><label>PIN Code *</label><input type="text" id="reg-pin" placeholder="6-digit PIN code" maxlength="6"></div></div>
         <div class="form-section-title">📋 Terms &amp; Conditions</div>
         <div class="tc-box">
           <p>My Lifeline Foundation is a Section 8 non-profit organization registered under the Companies Act 2013.</p>
@@ -963,23 +1004,38 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
           <p>My personal data will be used only for organizational, social, and program-related purposes of My Lifeline Foundation.</p>
         </div>
         <label class="tc-check"><input type="checkbox" id="tcCheckbox" onchange="toggleSubmit()"><span>I have read and agree to the <strong>Terms &amp; Conditions</strong> of My Lifeline Foundation. I confirm all information is accurate.</span></label>
-        <button type="submit" class="btn-submit" id="submitBtn" disabled>🤝 Complete Registration</button>
-      </form>
+        <button class="btn-submit" id="submitBtn" disabled onclick="submitRegistration()">🤝 Complete Registration</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
+<!-- LOGIN MODAL — WITH FORGOT PASSWORD -->
 <div class="modal-overlay" id="modalLogin">
   <div class="modal-box" style="max-width:440px;">
     <div class="modal-hd"><div><h2>🔐 Volunteer Login</h2><span>Access your volunteer profile</span></div><button class="modal-close" onclick="closeModal('modalLogin')">✕</button></div>
     <div class="modal-body">
-      <div class="login-icon">👤</div>
-      <div class="form-row single" style="margin-bottom:14px;"><div class="field"><label>Volunteer ID *</label><input type="text" id="login-id" placeholder="e.g. MLF-OD-000001" style="text-transform:uppercase;"><span class="field-note">Your unique Volunteer ID received on registration</span></div></div>
-      <div class="form-row single" style="margin-bottom:22px;"><div class="field"><label>Registered Mobile Number *</label><input type="tel" id="login-mobile" placeholder="10-digit mobile number" maxlength="10"></div></div>
-      <button class="btn-blue-full" onclick="submitLogin()">🔐 Login to My Profile</button>
-      <div class="login-divider" style="margin-top:20px;">Not registered yet?</div>
-      <button class="btn-submit" style="margin-top:12px;background:var(--green);" onclick="closeModal('modalLogin');openModal('modalRegister')">🤝 Register as Volunteer</button>
+      <div id="loginView">
+        <div class="login-icon">👤</div>
+        <div class="form-row single" style="margin-bottom:14px;"><div class="field"><label>Volunteer ID *</label><input type="text" id="login-id" placeholder="e.g. MLF-OD-000001" style="text-transform:uppercase;"><span class="field-note">Your unique Volunteer ID received on registration</span></div></div>
+        <div class="form-row single" style="margin-bottom:8px;"><div class="field"><label>Registered Mobile Number *</label><input type="tel" id="login-mobile" placeholder="10-digit mobile number" maxlength="10"></div></div>
+        <div class="forgot-link" onclick="showForgotPassword()">🔑 Forgot Volunteer ID?</div>
+        <br>
+        <button class="btn-blue-full" onclick="submitLogin()">🔐 Login to My Profile</button>
+        <div class="login-divider" style="margin-top:20px;">Not registered yet?</div>
+        <button class="btn-submit" style="margin-top:12px;background:var(--green);" onclick="closeModal('modalLogin');openModal('modalRegister')">🤝 Register as Volunteer</button>
+      </div>
+      <!-- FORGOT PASSWORD VIEW -->
+      <div id="forgotView" style="display:none;">
+        <div class="login-icon">🔑</div>
+        <h3 style="text-align:center;font-family:Poppins,sans-serif;font-size:16px;color:var(--blue);margin-bottom:6px;">Volunteer ID Recover karo</h3>
+        <p style="text-align:center;font-size:13px;color:var(--gray);margin-bottom:20px;">Apna registered mobile number enter karo</p>
+        <div class="form-row single" style="margin-bottom:14px;"><div class="field"><label>Registered Mobile Number *</label><input type="tel" id="forgot-mobile" placeholder="10-digit mobile number" maxlength="10"></div></div>
+        <div class="form-row single" style="margin-bottom:14px;"><div class="field"><label>Aadhaar Last 4 Digits *</label><input type="text" id="forgot-aadhaar4" placeholder="e.g. 5678" maxlength="4"><span class="field-note">Security verification ke liye</span></div></div>
+        <button class="btn-blue-full" onclick="submitForgotPassword()">🔍 Mera ID Dhundo</button>
+        <div id="forgot-result" style="margin-top:16px;padding:14px;border-radius:10px;display:none;"></div>
+        <div class="forgot-link" style="margin-top:14px;" onclick="showLoginView()">← Wapas Login pe jao</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1076,49 +1132,559 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 
 <script>
 /* ═══════════════════════════════════════════════
-   ADMIN PANEL DYNAMIC CONTENT LOADER v2.0
-   Automatically loads content from admin panel (localStorage)
+   ADMIN PANEL DYNAMIC CONTENT LOADER v3.0
+   — Sab kuch admin panel se load hota hai
+   — Koi bhi hardcoded image URL nahi
+   — Placeholder dikhta hai agar admin se set nahi hua
 ═══════════════════════════════════════════════ */
-function loadAdminContent(){try{const saved=localStorage.getItem('mlf_st');if(!saved)return;const D=JSON.parse(saved);if(D.hero){const h=D.hero;const badge=document.querySelector('.hero-badge');if(badge&&h.b){const last=badge.lastChild;if(last)last.textContent=' '+h.b;}const h1=document.querySelector('.hero-txt h1');if(h1&&h.h1){const em=h.em||'Education';h1.innerHTML=h.h1.replace(em,'<em>'+em+'</em>');}const hp=document.querySelector('.hero-txt p');if(hp&&h.p)hp.textContent=h.p;if(h.bg){const hbg=document.querySelector('.hero-bg');if(hbg)hbg.style.background="linear-gradient(135deg,rgba(10,77,140,.90) 0%,rgba(10,77,140,.65) 45%,rgba(46,139,87,.70) 100%),url('"+h.bg+"') center/cover no-repeat";}const btns=document.querySelectorAll('.hero-btns button');if(btns[0]&&h.b1)btns[0].innerHTML='❤️ '+h.b1;if(btns[1]&&h.b2)btns[1].innerHTML='🤝 '+h.b2;const hq=document.querySelector('.hero-q p');if(hq&&h.q)hq.textContent=h.q;const hc=document.querySelector('.hero-q cite');if(hc&&h.c)hc.textContent=h.c;const sn=document.querySelectorAll('.h-stat-n'),sl=document.querySelectorAll('.h-stat-l');if(sn[0]&&h.hs1n)sn[0].textContent=h.hs1n;if(sl[0]&&h.hs1l)sl[0].textContent=h.hs1l;if(sn[1]&&h.hs2n)sn[1].textContent=h.hs2n;if(sl[1]&&h.hs2l)sl[1].textContent=h.hs2l;}if(D.about){const a=D.about;const im=document.querySelector('.img-main');if(im&&a.i)im.src=a.i;const ifl=document.querySelector('.img-float');if(ifl&&a.fi)ifl.src=a.fi;const bn=document.querySelector('.img-badge strong');if(bn&&a.bn)bn.textContent=a.bn;const bt=document.querySelector('.img-badge span');if(bt&&a.bl)bt.innerHTML=a.bl;const ads=document.querySelectorAll('#about .sec-desc');if(ads[0]&&a.p1)ads[0].textContent=a.p1;if(ads[1]&&a.p2)ads[1].textContent=a.p2;const mvc=document.querySelectorAll('.mv-card');if(mvc[0]){const mh=mvc[0].querySelector('h4'),mp=mvc[0].querySelector('p');if(mh&&a.mt)mh.textContent='🎯 '+a.mt;if(mp&&a.mp)mp.textContent=a.mp;}if(mvc[1]){const vh=mvc[1].querySelector('h4'),vp=mvc[1].querySelector('p');if(vh&&a.vt)vh.textContent='🌅 '+a.vt;if(vp&&a.vp)vp.textContent=a.vp;}}if(D.programs){const pcs=document.querySelectorAll('.prg-card');[D.programs.c1,D.programs.c2,D.programs.c3].forEach((pc,i)=>{if(!pc||!pcs[i])return;const img=pcs[i].querySelector('.prg-img'),h3=pcs[i].querySelector('h3'),desc=pcs[i].querySelector('p'),lnk=pcs[i].querySelector('a');if(img&&pc.img)img.src=pc.img;if(h3&&pc.t)h3.textContent=pc.t;if(desc&&pc.p)desc.textContent=pc.p;if(lnk&&pc.l)lnk.textContent=pc.l;});}if(D.stats){const ic=document.querySelectorAll('.imp-card');D.stats.slice(0,3).forEach((s,i)=>{if(!ic[i])return;const ne=ic[i].querySelector('.imp-num'),le=ic[i].querySelector('.imp-lbl');if(ne&&s.n){const num=parseInt(s.n);if(!isNaN(num)){ne.dataset.target=num;ne.innerHTML='0<span style="font-size:.55em">+</span>';}else ne.innerHTML=s.n;}if(le&&s.l)le.textContent=s.l;});}if(D.stories){const stc=document.querySelectorAll('.st-card');[D.stories.s1,D.stories.s2].forEach((st,i)=>{if(!st||!stc[i])return;const av=stc[i].querySelector('.st-av'),bq=stc[i].querySelector('blockquote'),ci=stc[i].querySelector('cite'),lo=stc[i].querySelector('.loc');if(av&&st.img)av.src=st.img;if(bq&&st.q)bq.textContent=st.q;if(ci&&st.n)ci.textContent=st.n;if(lo&&st.l)lo.textContent=st.l;});}if(D.join){const j=D.join;const jh=document.querySelector('.join-hd .sec-title');if(jh&&j.h)jh.innerHTML=j.h.replace('Thousands','<em>Thousands</em>');const jp=document.querySelector('.join-hd .sec-desc');if(jp&&j.p)jp.textContent=j.p;const jnc=document.querySelectorAll('.jn-card');if(jnc[0]){const h=jnc[0].querySelector('h3'),p=jnc[0].querySelector('p'),b=jnc[0].querySelector('button');if(h&&j.d1t)h.textContent=j.d1t;if(p&&j.d1p)p.textContent=j.d1p;if(b&&j.d1b)b.textContent=j.d1b;}if(jnc[1]){const h=jnc[1].querySelector('h3'),p=jnc[1].querySelector('p'),b=jnc[1].querySelector('button');if(h&&j.d2t)h.textContent=j.d2t;if(p&&j.d2p)p.textContent=j.d2p;if(b&&j.d2b)b.textContent=j.d2b;}}if(D.vision){const vmc=document.querySelectorAll('.vmv-card');if(vmc[0]&&D.vision.v1)vmc[0].querySelector('p').textContent=D.vision.v1;if(vmc[1]&&D.vision.v2)vmc[1].querySelector('p').textContent=D.vision.v2;if(vmc[2]&&D.vision.v3)vmc[2].querySelector('p').innerHTML=D.vision.v3;}if(D.logo){const l=D.logo;const nn=document.querySelector('.logo-txt strong');if(nn&&l.n)nn.textContent=l.n;const nt=document.querySelector('.logo-txt span');if(nt&&l.t)nt.textContent=l.t;const ni=document.querySelector('.logo-ico img');if(ni&&l.i)ni.src=l.i;const fn=document.querySelector('.ft-logo-txt strong');if(fn&&l.n)fn.textContent=l.n;const ft=document.querySelector('.ft-logo-txt span');if(ft&&l.t)ft.textContent=l.t;const fi=document.querySelector('.ft-logo-ico img');if(fi&&l.i)fi.src=l.i;if(l.tt)document.title=l.tt;}if(D.footer){const f=D.footer;const fa=document.querySelector('.ft-brand p');if(fa&&f.about)fa.textContent=f.about;const socs=document.querySelectorAll('.socials .soc');[f.soc1,f.soc2,f.soc3,f.soc4].forEach((u,i)=>{if(socs[i]&&u&&u!=='#')socs[i].href=u;});const fc=document.querySelector('.ft-bot-in span');if(fc&&f.copy)fc.textContent=f.copy;if(f.reg&&f.pan){const fr=document.querySelector('.ft-reg');if(fr)fr.innerHTML='Incorporated under Section 8, Companies Act 2013<br>Reg. No: <strong>'+f.reg+'</strong><br>PAN: <strong>'+f.pan+'</strong>';}}if(D.legal){const l=D.legal;const lr=document.querySelectorAll('.legal-table tbody tr');if(lr[0]&&l.r)lr[0].querySelector('td:nth-child(3)').textContent='Section 8, Companies Act 2013 — Reg: '+l.r;if(lr[1]&&l.pan)lr[1].querySelector('td:nth-child(3)').textContent='PAN: '+l.pan;if(lr[2]&&l.niti)lr[2].querySelector('td:nth-child(3)').textContent='Unique ID: '+l.niti;const nu=document.querySelector('.niti-uid');if(nu&&l.niti)nu.textContent='UNIQUE ID: '+l.niti;const np=document.querySelector('.niti-sec p');if(np&&l.desc)np.textContent=l.desc;}if(D.progpages){const pp=D.progpages;function upP(sel,data){if(!data)return;const img=document.querySelector(sel+' .prog-detail-img');if(img&&data.img)img.src=data.img;const h3=document.querySelector(sel+' .prog-detail-body h3');if(h3&&data.t)h3.textContent=data.t;const ps=document.querySelectorAll(sel+' .prog-detail-body > p');if(ps[0]&&data.p1)ps[0].textContent=data.p1;if(ps[1]&&data.p2)ps[1].textContent=data.p2;const ft=document.querySelector(sel+' .featured-prg h4');if(ft&&data.ft)ft.textContent=data.ft;const fp=document.querySelector(sel+' .featured-prg p');if(fp&&data.fp)fp.textContent=data.fp;}upP('#page-education',pp.edu);upP('#page-health',pp.health);upP('#page-rural',pp.rural);upP('#page-environment',pp.env);}if(D.contact){const c=D.contact;const cr=document.querySelectorAll('#page-contact-page .ci-row');if(cr[0]&&c.a)cr[0].querySelector('.ci-body').innerHTML='<strong>Office Address</strong>'+c.a;if(cr[1]&&(c.p1||c.p2))cr[1].querySelector('.ci-body').innerHTML='<strong>Phone</strong><a href="tel:'+c.p1+'">'+c.p1+'</a><br><a href="tel:'+c.p2+'">'+c.p2+'</a>';if(cr[4]&&c.w)cr[4].querySelector('.ci-body').innerHTML='<strong>WhatsApp</strong><a href="https://api.whatsapp.com/send?phone='+c.w.replace(/[^0-9]/g,'')+'" target="_blank">'+c.w+' — Join as Volunteer</a>';if(c.m){const mf=document.querySelector('.map-wrap iframe');if(mf)mf.src=c.m;}}if(D.donate){const d=D.donate;const dh=document.querySelector('.donate-info h3');if(dh&&d.h)dh.textContent=d.h;const dps=document.querySelectorAll('.donate-info p');if(dps[0]&&d.p1)dps[0].textContent=d.p1;if(dps[1]&&d.p2)dps[1].innerHTML=d.p2;const brs=document.querySelectorAll('.bank-row');if(brs[0]&&d.org)brs[0].querySelector('.val').textContent=d.org;if(brs[1]&&d.reg)brs[1].querySelector('.val').textContent=d.reg;if(brs[2]&&d.pan)brs[2].querySelector('.val').textContent=d.pan;if(brs[3]&&d.niti)brs[3].querySelector('.val').textContent=d.niti;const up=document.querySelector('.donate-upi p');if(up&&d.upil)up.textContent='💬 '+d.upil;const ui=document.querySelector('.donate-upi .upi-id');if(ui&&d.wa)ui.textContent=d.wa;}if(D.board&&D.board.length){const bmg=document.querySelector('#page-board .bm-grid');if(bmg)bmg.innerHTML=D.board.map(m=>{const ph=m.photo?'<img class="bm-photo" src="'+m.photo+'" alt="'+m.name+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="bm-photo-def" style="display:none">👤</div>':'<div class="bm-photo-def">👤</div>';return '<div class="bm-card">'+ph+'<div class="bm-info"><div class="bm-name">'+m.name+'</div><div class="bm-desig">'+m.desig+'</div></div></div>';}).join('');}if(D.coordinators&&D.coordinators.length){const cog=document.querySelector('#page-coordinator .coord-grid');if(cog)cog.innerHTML=D.coordinators.map(c=>{const ph=c.photo?'<img class="coord-photo" src="'+c.photo+'" alt="'+c.name+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="coord-photo-def" style="display:none">👤</div>':'<div class="coord-photo-def">👤</div>';return '<div class="coord-card">'+ph+'<div class="coord-info">'+(c.id?'<div class="coord-id">'+c.id+'</div>':'')+'<div class="coord-name">'+c.name+'</div><div class="coord-role">'+c.role+'</div>'+(c.phone?'<div class="coord-phone">📞 <a href="tel:'+c.phone+'" style="color:var(--gray);text-decoration:none;">'+c.phone+'</a></div>':'')+'<div class="coord-area">'+(c.area||'')+'</div></div></div>';}).join('');}if(D.gallery&&D.gallery.length){const gg=document.getElementById('dynamic-gallery-grid');if(gg)gg.innerHTML=D.gallery.map(img=>'<div class="fgi"><img src="'+img.url+'" alt="'+(img.cap||'MLF Activity')+'" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="fgi-ov"><span class="fgi-cap">'+(img.cap||'MLF Activity')+'</span></div></div>').join('');const hgi=document.querySelectorAll('.gal-grid .gi img'),hgc=document.querySelectorAll('.gal-grid .gi-cap');D.gallery.slice(0,5).forEach((img,i)=>{if(hgi[i])hgi[i].src=img.url;if(hgc[i])hgc[i].textContent=img.cap||'MLF Activity';});}if(D.notifcal){const nc=D.notifcal;if(nc.festivals&&nc.festivals.length)window.MLF_FESTIVALS_OVERRIDE=nc.festivals;if(nc.ticker&&nc.ticker.length)window.ADMIN_TICKER_ITEMS=nc.ticker;if(nc.birthdayWish)window.ADMIN_BIRTHDAY_WISH=nc.birthdayWish;}}catch(e){console.log('Admin content load:',e);}}
+function setImgOrPlaceholder(imgEl, phEl, src, alt){
+  if(src && src.trim()!==''){
+    imgEl.src = src;
+    imgEl.alt = alt||'';
+    imgEl.style.display = '';
+    if(phEl) phEl.style.display = 'none';
+    imgEl.onerror = function(){
+      this.style.display = 'none';
+      if(phEl) phEl.style.display = 'flex';
+    };
+  } else {
+    imgEl.style.display = 'none';
+    if(phEl) phEl.style.display = 'flex';
+  }
+}
+
+function loadAdminContent(){
+  try{
+    const saved = localStorage.getItem('mlf_st');
+    if(!saved) return;
+    const D = JSON.parse(saved);
+
+    /* ── HERO ── */
+    if(D.hero){
+      const h = D.hero;
+      const badge = document.querySelector('.hero-badge');
+      if(badge && h.b){ const last = badge.lastChild; if(last) last.textContent = ' '+h.b; }
+      const h1el = document.querySelector('.hero-txt h1');
+      if(h1el && h.h1){ const em = h.em||'Education'; h1el.innerHTML = h.h1.replace(em,'<em>'+em+'</em>'); }
+      const hpel = document.querySelector('.hero-txt p');
+      if(hpel && h.p) hpel.textContent = h.p;
+      if(h.bg){ const hbg = document.querySelector('.hero-bg'); if(hbg) hbg.style.background = "linear-gradient(135deg,rgba(10,77,140,.90) 0%,rgba(10,77,140,.65) 45%,rgba(46,139,87,.70) 100%),url('"+h.bg+"') center/cover no-repeat"; }
+      const btns = document.querySelectorAll('.hero-btns button');
+      if(btns[0] && h.b1) btns[0].innerHTML = '❤️ '+h.b1;
+      if(btns[1] && h.b2) btns[1].innerHTML = '🤝 '+h.b2;
+      const hq = document.querySelector('.hero-q p');
+      if(hq && h.q) hq.textContent = h.q;
+      const hc = document.querySelector('.hero-q cite');
+      if(hc && h.c) hc.textContent = h.c;
+      const sn = document.querySelectorAll('.h-stat-n'), sl = document.querySelectorAll('.h-stat-l');
+      if(sn[0] && h.hs1n) sn[0].textContent = h.hs1n;
+      if(sl[0] && h.hs1l) sl[0].textContent = h.hs1l;
+      if(sn[1] && h.hs2n) sn[1].textContent = h.hs2n;
+      if(sl[1] && h.hs2l) sl[1].textContent = h.hs2l;
+    }
+
+    /* ── ABOUT ── */
+    if(D.about){
+      const a = D.about;
+      // Main image
+      const mainWrap = document.getElementById('about-main-img-wrap');
+      const mainPh = document.getElementById('about-main-ph');
+      if(mainWrap){
+        if(a.i && a.i.trim()!==''){
+          mainPh.style.display = 'none';
+          let mainImg = mainWrap.querySelector('img');
+          if(!mainImg){ mainImg = document.createElement('img'); mainImg.className='img-main'; mainWrap.appendChild(mainImg); }
+          mainImg.src = a.i; mainImg.alt = ''; mainImg.style.display = '';
+          mainImg.onerror = function(){ this.style.display='none'; mainPh.style.display='flex'; };
+        } else {
+          mainPh.style.display = 'flex';
+          const mainImg = mainWrap.querySelector('img');
+          if(mainImg) mainImg.style.display = 'none';
+        }
+      }
+      // Float image
+      const floatWrap = document.getElementById('about-float-img-wrap');
+      const floatImg = document.getElementById('about-img-float');
+      if(floatWrap && floatImg){
+        if(a.fi && a.fi.trim()!==''){
+          floatImg.src = a.fi; floatImg.style.display = ''; floatWrap.style.display = '';
+          floatImg.onerror = function(){ this.style.display='none'; floatWrap.style.display='none'; };
+        } else {
+          floatWrap.style.display = 'none';
+        }
+      }
+      const bn = document.querySelector('.img-badge strong');
+      if(bn && a.bn) bn.textContent = a.bn;
+      const bt = document.querySelector('.img-badge span');
+      if(bt && a.bl) bt.innerHTML = a.bl;
+      const ads = document.querySelectorAll('#about .sec-desc');
+      if(ads[0] && a.p1) ads[0].textContent = a.p1;
+      if(ads[1] && a.p2) ads[1].textContent = a.p2;
+      const mvc = document.querySelectorAll('.mv-card');
+      if(mvc[0]){ const mh=mvc[0].querySelector('h4'),mp=mvc[0].querySelector('p'); if(mh&&a.mt)mh.textContent='🎯 '+a.mt; if(mp&&a.mp)mp.textContent=a.mp; }
+      if(mvc[1]){ const vh=mvc[1].querySelector('h4'),vp=mvc[1].querySelector('p'); if(vh&&a.vt)vh.textContent='🌅 '+a.vt; if(vp&&a.vp)vp.textContent=a.vp; }
+    }
+
+    /* ── PROGRAMS CARDS ── */
+    if(D.programs){
+      const pc = D.programs;
+      [['c1','prg1','prg1-ph'],['c2','prg2','prg2-ph'],['c3','prg3','prg3-ph']].forEach(([key,imgId,phId])=>{
+        const card = pc[key];
+        if(!card) return;
+        const imgEl = document.getElementById(imgId+'-img');
+        const phEl = document.getElementById(phId);
+        if(imgEl) setImgOrPlaceholder(imgEl, phEl, card.img, card.t||'');
+        const pcs = document.querySelectorAll('.prg-card');
+        const idx = key==='c1'?0:key==='c2'?1:2;
+        if(pcs[idx]){
+          const h3=pcs[idx].querySelector('h3'),desc=pcs[idx].querySelector('p'),lnk=pcs[idx].querySelector('a');
+          if(h3&&card.t)h3.textContent=card.t;
+          if(desc&&card.p)desc.textContent=card.p;
+          if(lnk&&card.l)lnk.textContent=card.l;
+        }
+      });
+    }
+
+    /* ── STATS ── */
+    if(D.stats){
+      const ic = document.querySelectorAll('.imp-card');
+      D.stats.slice(0,3).forEach((s,i)=>{
+        if(!ic[i]) return;
+        const ne=ic[i].querySelector('.imp-num'),le=ic[i].querySelector('.imp-lbl');
+        if(ne&&s.n){ const num=parseInt(s.n); if(!isNaN(num)){ ne.dataset.target=num; ne.innerHTML='0<span style="font-size:.55em">+</span>'; } else ne.innerHTML=s.n; }
+        if(le&&s.l)le.textContent=s.l;
+      });
+    }
+
+    /* ── GALLERY (home) ── */
+    if(D.gallery && D.gallery.length){
+      const hGrid = document.getElementById('home-gallery-grid');
+      const classes = ['g1','g2','g3','g4','g5'];
+      if(hGrid){
+        hGrid.innerHTML = D.gallery.slice(0,5).map((img,i)=>`
+          <div class="gi ${classes[i]||''}">
+            <img src="${img.url}" alt="${img.cap||'MLF Activity'}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="gi-ph" style="display:none">📸</div>
+            <div class="gi-ov"><span class="gi-cap">${img.cap||'MLF Activity'}</span></div>
+          </div>`).join('');
+      }
+    }
+
+    /* ── STORIES ── */
+    if(D.stories){
+      const s1 = D.stories.s1, s2 = D.stories.s2;
+      if(s1){
+        if(s1.img){ const av1=document.getElementById('story1-av'); if(av1){ av1.outerHTML=`<img src="${s1.img}" class="st-av" id="story1-av" alt="" onerror="this.outerHTML='<div class=st-av-ph id=story1-av>👤</div>'">`; } }
+        if(s1.q){ const q=document.getElementById('story1-q'); if(q)q.textContent=s1.q; }
+        if(s1.n){ const n=document.getElementById('story1-name'); if(n)n.textContent=s1.n; }
+        if(s1.l){ const l=document.getElementById('story1-loc'); if(l)l.textContent=s1.l; }
+      }
+      if(s2){
+        if(s2.img){ const av2=document.getElementById('story2-av'); if(av2){ av2.outerHTML=`<img src="${s2.img}" class="st-av" id="story2-av" alt="" onerror="this.outerHTML='<div class=st-av-ph id=story2-av>👤</div>'">`; } }
+        if(s2.q){ const q=document.getElementById('story2-q'); if(q)q.textContent=s2.q; }
+        if(s2.n){ const n=document.getElementById('story2-name'); if(n)n.textContent=s2.n; }
+        if(s2.l){ const l=document.getElementById('story2-loc'); if(l)l.textContent=s2.l; }
+      }
+    }
+
+    /* ── JOIN SECTION ── */
+    if(D.join){
+      const j = D.join;
+      const jh=document.querySelector('.join-hd .sec-title'); if(jh&&j.h)jh.innerHTML=j.h.replace('Thousands','<em>Thousands</em>');
+      const jp=document.querySelector('.join-hd .sec-desc'); if(jp&&j.p)jp.textContent=j.p;
+      const jnc=document.querySelectorAll('.jn-card');
+      if(jnc[0]){ const h=jnc[0].querySelector('h3'),p=jnc[0].querySelector('p'),b=jnc[0].querySelector('button'); if(h&&j.d1t)h.textContent=j.d1t; if(p&&j.d1p)p.textContent=j.d1p; if(b&&j.d1b)b.textContent=j.d1b; }
+      if(jnc[1]){ const h=jnc[1].querySelector('h3'),p=jnc[1].querySelector('p'),b=jnc[1].querySelector('button'); if(h&&j.d2t)h.textContent=j.d2t; if(p&&j.d2p)p.textContent=j.d2p; if(b&&j.d2b)b.textContent=j.d2b; }
+    }
+
+    /* ── VISION ── */
+    if(D.vision){
+      if(D.vision.v1){ const e=document.getElementById('vmv-vision'); if(e)e.textContent=D.vision.v1; }
+      if(D.vision.v2){ const e=document.getElementById('vmv-mission'); if(e)e.textContent=D.vision.v2; }
+      if(D.vision.v3){ const e=document.getElementById('vmv-values'); if(e)e.innerHTML=D.vision.v3; }
+    }
+
+    /* ── LOGO ── */
+    if(D.logo){
+      const l=D.logo;
+      const nn=document.querySelector('.logo-txt strong'); if(nn&&l.n)nn.textContent=l.n;
+      const nt=document.querySelector('.logo-txt span'); if(nt&&l.t)nt.textContent=l.t;
+      const ni=document.querySelector('.logo-ico img'); if(ni&&l.i)ni.src=l.i;
+      const fn=document.querySelector('.ft-logo-txt strong'); if(fn&&l.n)fn.textContent=l.n;
+      const ft2=document.querySelector('.ft-logo-txt span'); if(ft2&&l.t)ft2.textContent=l.t;
+      const fi=document.querySelector('.ft-logo-ico img'); if(fi&&l.i)fi.src=l.i;
+      if(l.tt)document.title=l.tt;
+    }
+
+    /* ── FOOTER ── */
+    if(D.footer){
+      const f=D.footer;
+      const fa=document.querySelector('.ft-brand p'); if(fa&&f.about)fa.textContent=f.about;
+      const socs=document.querySelectorAll('.socials .soc');
+      [f.soc1,f.soc2,f.soc3,f.soc4].forEach((u,i)=>{ if(socs[i]&&u&&u!=='#')socs[i].href=u; });
+      const fc=document.querySelector('.ft-bot-in span'); if(fc&&f.copy)fc.textContent=f.copy;
+      if(f.reg&&f.pan){ const fr=document.querySelector('.ft-reg'); if(fr)fr.innerHTML='Incorporated under Section 8, Companies Act 2013<br>Reg. No: <strong>'+f.reg+'</strong><br>PAN: <strong>'+f.pan+'</strong>'; }
+    }
+
+    /* ── LEGAL ── */
+    if(D.legal){
+      const l=D.legal;
+      const lr=document.querySelectorAll('.legal-table tbody tr');
+      if(lr[0]&&l.r)lr[0].querySelector('td:nth-child(3)').textContent='Section 8, Companies Act 2013 — Reg: '+l.r;
+      if(lr[1]&&l.pan)lr[1].querySelector('td:nth-child(3)').textContent='PAN: '+l.pan;
+      if(lr[2]&&l.niti)lr[2].querySelector('td:nth-child(3)').textContent='Unique ID: '+l.niti;
+      const nu=document.querySelector('.niti-uid'); if(nu&&l.niti)nu.textContent='UNIQUE ID: '+l.niti;
+      const np=document.querySelector('.niti-sec p'); if(np&&l.desc)np.textContent=l.desc;
+    }
+
+    /* ── PROGRAM PAGES — images + text from admin ── */
+    if(D.progpages){
+      const pp=D.progpages;
+      function upProgPage(imgId, phId, titleId, p1Id, p2Id, ftId, fpId, data){
+        if(!data) return;
+        const imgEl=document.getElementById(imgId), phEl=document.getElementById(phId);
+        if(imgEl) setImgOrPlaceholder(imgEl, phEl, data.img, data.t||'');
+        if(data.t){ const e=document.getElementById(titleId); if(e)e.textContent=data.t; }
+        if(data.p1){ const e=document.getElementById(p1Id); if(e)e.textContent=data.p1; }
+        if(data.p2){ const e=document.getElementById(p2Id); if(e)e.textContent=data.p2; }
+        if(data.ft){ const e=document.getElementById(ftId); if(e)e.textContent=data.ft; }
+        if(data.fp){ const e=document.getElementById(fpId); if(e)e.textContent=data.fp; }
+      }
+      upProgPage('edu-img','edu-img-ph','edu-title','edu-p1','edu-p2','edu-ft','edu-fp',pp.edu);
+      upProgPage('health-img','health-img-ph','health-title','health-p1','health-p2','health-ft','health-fp',pp.health);
+      upProgPage('rural-img','rural-img-ph','rural-title','rural-p1','rural-p2','rural-ft','rural-fp',pp.rural);
+      upProgPage('env-img','env-img-ph','env-title','env-p1',null,'env-ft','env-fp',pp.env);
+    }
+
+    /* ── CONTACT ── */
+    if(D.contact){
+      const c=D.contact;
+      const cr=document.querySelectorAll('#page-contact-page .ci-row');
+      if(cr[0]&&c.a)cr[0].querySelector('.ci-body').innerHTML='<strong>Office Address</strong>'+c.a;
+      if(cr[1]&&(c.p1||c.p2))cr[1].querySelector('.ci-body').innerHTML='<strong>Phone</strong><a href="tel:'+c.p1+'">'+c.p1+'</a><br><a href="tel:'+c.p2+'">'+c.p2+'</a>';
+      if(cr[4]&&c.w)cr[4].querySelector('.ci-body').innerHTML='<strong>WhatsApp</strong><a href="https://api.whatsapp.com/send?phone='+c.w.replace(/[^0-9]/g,'')+'" target="_blank">'+c.w+' — Join as Volunteer</a>';
+      if(c.m){ const mf=document.querySelector('.map-wrap iframe'); if(mf)mf.src=c.m; }
+    }
+
+    /* ── DONATE ── */
+    if(D.donate){
+      const d=D.donate;
+      const dh=document.querySelector('.donate-info h3'); if(dh&&d.h)dh.textContent=d.h;
+      const dps=document.querySelectorAll('.donate-info p');
+      if(dps[0]&&d.p1)dps[0].textContent=d.p1;
+      if(dps[1]&&d.p2)dps[1].innerHTML=d.p2;
+      const brs=document.querySelectorAll('.bank-row');
+      if(brs[0]&&d.org)brs[0].querySelector('.val').textContent=d.org;
+      if(brs[1]&&d.reg)brs[1].querySelector('.val').textContent=d.reg;
+      if(brs[2]&&d.pan)brs[2].querySelector('.val').textContent=d.pan;
+      if(brs[3]&&d.niti)brs[3].querySelector('.val').textContent=d.niti;
+      const up=document.querySelector('.donate-upi p'); if(up&&d.upil)up.textContent='💬 '+d.upil;
+      const ui=document.querySelector('.donate-upi .upi-id'); if(ui&&d.wa)ui.textContent=d.wa;
+    }
+
+    /* ── BOARD MEMBERS — fully from admin, no hardcoded ── */
+    if(D.board && D.board.length){
+      const bmg=document.querySelector('#page-board .bm-grid');
+      if(bmg) bmg.innerHTML=D.board.map(m=>{
+        const ph=m.photo && m.photo.trim()!==''
+          ?`<img class="bm-photo" src="${m.photo}" alt="${m.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bm-photo-def" style="display:none">👤</div>`
+          :`<div class="bm-photo-def">👤</div>`;
+        return `<div class="bm-card">${ph}<div class="bm-info"><div class="bm-name">${m.name}</div><div class="bm-desig">${m.desig||''}</div></div></div>`;
+      }).join('');
+    }
+
+    /* ── COORDINATORS — fully from admin, no hardcoded ── */
+    if(D.coordinators && D.coordinators.length){
+      const cog=document.querySelector('#page-coordinator .coord-grid');
+      if(cog) cog.innerHTML=D.coordinators.map(c=>{
+        const ph=c.photo && c.photo.trim()!==''
+          ?`<img class="coord-photo" src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="coord-photo-def" style="display:none">👤</div>`
+          :`<div class="coord-photo-def">👤</div>`;
+        return `<div class="coord-card">${ph}<div class="coord-info">${c.id?`<div class="coord-id">${c.id}</div>`:''}<div class="coord-name">${c.name}</div><div class="coord-role">${c.role||''}</div>${c.phone?`<div class="coord-phone">📞 <a href="tel:${c.phone}" style="color:var(--gray);text-decoration:none;">${c.phone}</a></div>`:''}<div class="coord-area">${c.area||''}</div></div></div>`;
+      }).join('');
+    }
+
+    /* ── FULL GALLERY ── */
+    if(D.gallery && D.gallery.length){
+      const gg=document.getElementById('dynamic-gallery-grid');
+      if(gg) gg.innerHTML=D.gallery.map(img=>`
+        <div class="fgi">
+          <img src="${img.url}" alt="${img.cap||'MLF Activity'}" loading="lazy" onerror="this.parentElement.style.display='none'">
+          <div class="fgi-ov"><span class="fgi-cap">${img.cap||'MLF Activity'}</span></div>
+        </div>`).join('');
+    }
+
+    /* ── FESTIVAL / TICKER OVERRIDES ── */
+    if(D.notifcal){
+      const nc=D.notifcal;
+      if(nc.festivals&&nc.festivals.length)window.MLF_FESTIVALS_OVERRIDE=nc.festivals;
+      if(nc.ticker&&nc.ticker.length)window.ADMIN_TICKER_ITEMS=nc.ticker;
+      if(nc.birthdayWish)window.ADMIN_BIRTHDAY_WISH=nc.birthdayWish;
+    }
+
+  } catch(e){ console.log('Admin content load:', e); }
+}
 loadAdminContent();
 
 /* ═══ APP STATE ═══ */
-const DB={getVolunteers:()=>JSON.parse(localStorage.getItem('mlf_volunteers')||'[]'),saveVolunteers:(data)=>localStorage.setItem('mlf_volunteers',JSON.stringify(data)),getSession:()=>localStorage.getItem('mlf_session'),setSession:(id)=>localStorage.setItem('mlf_session',id),clearSession:()=>localStorage.removeItem('mlf_session'),getCounter:()=>parseInt(localStorage.getItem('mlf_counter')||'0'),incCounter:()=>{const n=DB.getCounter()+1;localStorage.setItem('mlf_counter',n);return n;}};
-
-/* SHEETS URL — Auto reads from admin panel localStorage */
-const SHEETS_URL = localStorage.getItem('mlf_url') || "APNA_APPS_SCRIPT_URL_YAHAN";
-
-async function sendToSheets(tab,action,data){if(!SHEETS_URL||SHEETS_URL==="APNA_APPS_SCRIPT_URL_YAHAN")return;try{await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({tab,action,...data})});}catch(e){console.log('Sheets sync error:',e);}}
+const DB={
+  getVolunteers:()=>JSON.parse(localStorage.getItem('mlf_volunteers')||'[]'),
+  saveVolunteers:(data)=>localStorage.setItem('mlf_volunteers',JSON.stringify(data)),
+  getSession:()=>localStorage.getItem('mlf_session'),
+  setSession:(id)=>localStorage.setItem('mlf_session',id),
+  clearSession:()=>localStorage.removeItem('mlf_session'),
+  getCounter:()=>parseInt(localStorage.getItem('mlf_counter')||'0'),
+  incCounter:()=>{ const n=DB.getCounter()+1; localStorage.setItem('mlf_counter',n); return n; }
+};
+const SHEETS_URL=localStorage.getItem('mlf_url')||'APNA_APPS_SCRIPT_URL_YAHAN';
+async function sendToSheets(tab,action,data){if(!SHEETS_URL||SHEETS_URL==='APNA_APPS_SCRIPT_URL_YAHAN')return;try{await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({tab,action,...data})});}catch(e){console.log('Sheets sync:',e);}}
 function getCurrentVolunteer(){const sid=DB.getSession();if(!sid)return null;return DB.getVolunteers().find(v=>v.id===sid)||null;}
 function generateVolunteerId(){const n=DB.incCounter();return 'MLF-OD-'+String(n).padStart(6,'0');}
-function updateNav(){const vol=getCurrentVolunteer();const navAuth=document.getElementById('navAuthButtons');const mobAuth=document.getElementById('mobAuthButtons');if(vol){navAuth.innerHTML=`<a class="nav-btn-profile" onclick="openProfile()">👤 My Profile</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a><a style="color:var(--gray);font-size:13px;padding:8px 10px;" onclick="logoutVolunteer()">Logout</a>`;mobAuth.innerHTML=`<a onclick="openProfile();toggleMenu()" style="background:var(--blue);color:white;font-weight:700;border-radius:10px;">👤 My Profile</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;">❤️ Donate</a><a onclick="logoutVolunteer()" style="background:#ef4444;color:white;font-weight:700;border-radius:10px;">🚪 Logout</a>`;}else{navAuth.innerHTML=`<a class="nav-btn-login" onclick="openModal('modalLogin')">🔐 Login</a><a class="nav-btn-volunteer" onclick="handleVolunteerBtn()">🤝 Join Volunteer</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a>`;mobAuth.innerHTML=`<a onclick="openModal('modalLogin');toggleMenu()">🔐 Login</a><a onclick="handleVolunteerBtn();toggleMenu()" style="background:var(--green);color:white;font-weight:700;border-radius:10px;">🤝 Join as Volunteer</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;">❤️ Donate Now</a>`;}}
+
+function updateNav(){
+  const vol=getCurrentVolunteer();
+  const navAuth=document.getElementById('navAuthButtons');
+  const mobAuth=document.getElementById('mobAuthButtons');
+  if(vol){
+    navAuth.innerHTML=`<a class="nav-btn-profile" onclick="openProfile()">👤 My Profile</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a><a style="color:var(--gray);font-size:13px;padding:8px 10px;" onclick="logoutVolunteer()">Logout</a>`;
+    mobAuth.innerHTML=`<a onclick="openProfile();toggleMenu()" style="background:var(--blue);color:white;font-weight:700;border-radius:10px;">👤 My Profile</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;">❤️ Donate</a><a onclick="logoutVolunteer()" style="background:#ef4444;color:white;font-weight:700;border-radius:10px;">🚪 Logout</a>`;
+  } else {
+    navAuth.innerHTML=`<a class="nav-btn-login" onclick="openModal('modalLogin')">🔐 Login</a><a class="nav-btn-volunteer" onclick="handleVolunteerBtn()">🤝 Join Volunteer</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a>`;
+    mobAuth.innerHTML=`<a onclick="openModal('modalLogin');toggleMenu()">🔐 Login</a><a onclick="handleVolunteerBtn();toggleMenu()" style="background:var(--green);color:white;font-weight:700;border-radius:10px;">🤝 Join as Volunteer</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;">❤️ Donate Now</a>`;
+  }
+}
 function handleVolunteerBtn(){if(getCurrentVolunteer()){openProfile();}else{openModal('modalRegister');}}
-function handleDonate(){showToast('Redirecting to Donation Page... 💝','success');}
+function handleDonate(){showPage('donate');}
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
 document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id);});});
 function toggleSubmit(){const cb=document.getElementById('tcCheckbox');document.getElementById('submitBtn').disabled=!cb.checked;}
-function submitRegistration(e){e.preventDefault();const aadhaar=document.getElementById('reg-aadhaar').value.trim();const mobile=document.getElementById('reg-mobile').value.trim();if(aadhaar.length!==12||!/^\d+$/.test(aadhaar)){showToast('Please enter a valid 12-digit Aadhaar number','error');return;}if(mobile.length!==10||!/^\d+$/.test(mobile)){showToast('Please enter a valid 10-digit mobile number','error');return;}const pin=document.getElementById('reg-pin').value.trim();if(pin.length!==6||!/^\d+$/.test(pin)){showToast('Please enter a valid 6-digit PIN code','error');return;}const volunteers=DB.getVolunteers();const isDup=volunteers.some(v=>v.aadhaarKey===aadhaar.substring(0,8)+aadhaar.slice(-4));if(isDup){showToast('An account with this Aadhaar already exists!','error');return;}const volId=generateVolunteerId();const today=new Date().toISOString().split('T')[0];const volunteer={id:volId,name:document.getElementById('reg-name').value.trim(),dob:document.getElementById('reg-dob').value,fatherName:document.getElementById('reg-father').value.trim(),motherName:document.getElementById('reg-mother').value.trim(),occupation:document.getElementById('reg-occupation').value.trim(),mobile:mobile,aadhaarDisplay:'**** **** '+aadhaar.slice(-4),aadhaarKey:aadhaar.substring(0,8)+aadhaar.slice(-4),at:document.getElementById('reg-at').value.trim(),post:document.getElementById('reg-post').value.trim(),ps:document.getElementById('reg-ps').value.trim(),district:document.getElementById('reg-district').value.trim(),state:document.getElementById('reg-state').value,pin:pin,joinDate:today,status:'Active',photo:'',rating:0};volunteers.push(volunteer);DB.saveVolunteers(volunteers);DB.setSession(volId);const isFirst=volunteers.length===1;if(isFirst){sendToSheets('Volunteers','write',{rows:[['Volunteer ID','Name','DOB','Father Name','Mother Name','Occupation','Mobile','Aadhaar (masked)','Village','Post','Police Station','District','State','PIN','Join Date','Status'],[volunteer.id,volunteer.name,volunteer.dob,volunteer.fatherName,volunteer.motherName,volunteer.occupation,volunteer.mobile,volunteer.aadhaarDisplay,volunteer.at,volunteer.post,volunteer.ps,volunteer.district,volunteer.state,volunteer.pin,volunteer.joinDate,volunteer.status]]});}else{sendToSheets('Volunteers','append',{row:[volunteer.id,volunteer.name,volunteer.dob,volunteer.fatherName,volunteer.motherName,volunteer.occupation,volunteer.mobile,volunteer.aadhaarDisplay,volunteer.at,volunteer.post,volunteer.ps,volunteer.district,volunteer.state,volunteer.pin,volunteer.joinDate,volunteer.status]});}closeModal('modalRegister');document.getElementById('regForm').reset();document.getElementById('tcCheckbox').checked=false;document.getElementById('submitBtn').disabled=true;document.getElementById('successIdBadge').textContent=volId;document.getElementById('successScreen').classList.add('open');document.body.style.overflow='hidden';updateNav();buildNotices();}
-function submitLogin(){const inputId=document.getElementById('login-id').value.trim().toUpperCase();const inputMobile=document.getElementById('login-mobile').value.trim();if(!inputId||!inputMobile){showToast('Please enter your Volunteer ID and Mobile Number','error');return;}const volunteers=DB.getVolunteers();const vol=volunteers.find(v=>v.id===inputId&&v.mobile===inputMobile);if(!vol){showToast('Invalid Volunteer ID or Mobile Number','error');return;}DB.setSession(vol.id);closeModal('modalLogin');document.getElementById('login-id').value='';document.getElementById('login-mobile').value='';updateNav();showToast('Welcome back, '+vol.name+'! 👋','success');setTimeout(()=>openProfile(),800);}
-function logoutVolunteer(){DB.clearSession();document.getElementById('profileDashboard').classList.remove('open');document.body.style.overflow='';updateNav();showToast('You have been logged out 👋','');}
+
+/* ── FORGOT PASSWORD ── */
+function showForgotPassword(){
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('forgotView').style.display='block';
+  document.getElementById('forgot-result').style.display='none';
+  document.getElementById('forgot-mobile').value='';
+  document.getElementById('forgot-aadhaar4').value='';
+}
+function showLoginView(){
+  document.getElementById('forgotView').style.display='none';
+  document.getElementById('loginView').style.display='block';
+}
+function submitForgotPassword(){
+  const mobile=document.getElementById('forgot-mobile').value.trim();
+  const aadhaar4=document.getElementById('forgot-aadhaar4').value.trim();
+  const resultEl=document.getElementById('forgot-result');
+  if(mobile.length!==10||!/^\d+$/.test(mobile)){ showToast('Valid 10-digit mobile number enter karo','error'); return; }
+  if(aadhaar4.length!==4||!/^\d+$/.test(aadhaar4)){ showToast('Aadhaar ke aakhri 4 digits enter karo','error'); return; }
+  const volunteers=DB.getVolunteers();
+  const vol=volunteers.find(v=>v.mobile===mobile && v.aadhaarDisplay && v.aadhaarDisplay.slice(-4)===aadhaar4);
+  resultEl.style.display='block';
+  if(vol){
+    resultEl.style.background='#DCFCE7';
+    resultEl.style.border='1px solid #86EFAC';
+    resultEl.style.color='#166534';
+    resultEl.innerHTML=`<div style="font-weight:700;font-size:14px;margin-bottom:6px;">✅ Account mila!</div>
+    <div style="font-size:13px;line-height:1.8;">
+      <strong>Naam:</strong> ${vol.name}<br>
+      <strong>Volunteer ID:</strong> <span style="font-family:Poppins,sans-serif;font-size:15px;font-weight:800;color:#0A4D8C;">${vol.id}</span><br>
+      <strong>Mobile:</strong> ${vol.mobile}
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:#166534;">Ye ID copy karo aur login karo 👆</div>`;
+  } else {
+    resultEl.style.background='#FEF2F2';
+    resultEl.style.border='1px solid #FECACA';
+    resultEl.style.color='#991B1B';
+    resultEl.innerHTML=`<div style="font-weight:700;font-size:14px;margin-bottom:4px;">❌ Account nahi mila</div>
+    <div style="font-size:13px;">Mobile number ya Aadhaar digits galat hain. Agar registered nahi hain toh pehle register karo.</div>`;
+  }
+}
+
+/* ── REGISTRATION ── */
+function submitRegistration(){
+  const aadhaar=document.getElementById('reg-aadhaar').value.trim();
+  const mobile=document.getElementById('reg-mobile').value.trim();
+  const name=document.getElementById('reg-name').value.trim();
+  const dob=document.getElementById('reg-dob').value;
+  const father=document.getElementById('reg-father').value.trim();
+  const mother=document.getElementById('reg-mother').value.trim();
+  const occupation=document.getElementById('reg-occupation').value.trim();
+  const at=document.getElementById('reg-at').value.trim();
+  const post=document.getElementById('reg-post').value.trim();
+  const ps=document.getElementById('reg-ps').value.trim();
+  const district=document.getElementById('reg-district').value.trim();
+  const state=document.getElementById('reg-state').value;
+  const pin=document.getElementById('reg-pin').value.trim();
+  if(!name||!dob||!father||!mother||!occupation||!at||!post||!ps||!district||!state||!pin){showToast('Sab fields fill karo','error');return;}
+  if(aadhaar.length!==12||!/^\d+$/.test(aadhaar)){showToast('Valid 12-digit Aadhaar enter karo','error');return;}
+  if(mobile.length!==10||!/^\d+$/.test(mobile)){showToast('Valid 10-digit mobile enter karo','error');return;}
+  if(pin.length!==6||!/^\d+$/.test(pin)){showToast('Valid 6-digit PIN enter karo','error');return;}
+  const volunteers=DB.getVolunteers();
+  const isDup=volunteers.some(v=>v.aadhaarKey===aadhaar.substring(0,8)+aadhaar.slice(-4));
+  if(isDup){showToast('Is Aadhaar se account already exist karta hai!','error');return;}
+  const volId=generateVolunteerId();
+  const today=new Date().toISOString().split('T')[0];
+  const volunteer={id:volId,name,dob,fatherName:father,motherName:mother,occupation,mobile,aadhaarDisplay:'**** **** '+aadhaar.slice(-4),aadhaarKey:aadhaar.substring(0,8)+aadhaar.slice(-4),at,post,ps,district,state,pin,joinDate:today,status:'Active',photo:'',rating:0};
+  volunteers.push(volunteer);
+  DB.saveVolunteers(volunteers);
+  DB.setSession(volId);
+  const isFirst=volunteers.length===1;
+  if(isFirst){sendToSheets('Volunteers','write',{rows:[['Volunteer ID','Name','DOB','Father Name','Mother Name','Occupation','Mobile','Aadhaar (masked)','Village','Post','Police Station','District','State','PIN','Join Date','Status'],[volunteer.id,volunteer.name,volunteer.dob,volunteer.fatherName,volunteer.motherName,volunteer.occupation,volunteer.mobile,volunteer.aadhaarDisplay,volunteer.at,volunteer.post,volunteer.ps,volunteer.district,volunteer.state,volunteer.pin,volunteer.joinDate,volunteer.status]]});}
+  else{sendToSheets('Volunteers','append',{row:[volunteer.id,volunteer.name,volunteer.dob,volunteer.fatherName,volunteer.motherName,volunteer.occupation,volunteer.mobile,volunteer.aadhaarDisplay,volunteer.at,volunteer.post,volunteer.ps,volunteer.district,volunteer.state,volunteer.pin,volunteer.joinDate,volunteer.status]});}
+  closeModal('modalRegister');
+  // Reset form
+  ['reg-name','reg-dob','reg-father','reg-mother','reg-occupation','reg-mobile','reg-aadhaar','reg-at','reg-post','reg-ps','reg-district','reg-pin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('reg-state').value='Odisha';
+  document.getElementById('tcCheckbox').checked=false;
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('successIdBadge').textContent=volId;
+  document.getElementById('successScreen').classList.add('open');
+  document.body.style.overflow='hidden';
+  updateNav();buildNotices();
+}
+
+/* ── LOGIN ── */
+function submitLogin(){
+  const inputId=document.getElementById('login-id').value.trim().toUpperCase();
+  const inputMobile=document.getElementById('login-mobile').value.trim();
+  if(!inputId||!inputMobile){showToast('Volunteer ID aur Mobile dono enter karo','error');return;}
+  const vol=DB.getVolunteers().find(v=>v.id===inputId&&v.mobile===inputMobile);
+  if(!vol){showToast('Invalid Volunteer ID ya Mobile Number','error');return;}
+  DB.setSession(vol.id);
+  closeModal('modalLogin');
+  document.getElementById('login-id').value='';
+  document.getElementById('login-mobile').value='';
+  updateNav();
+  showToast('Welcome back, '+vol.name+'! 👋','success');
+  setTimeout(()=>openProfile(),800);
+}
+function logoutVolunteer(){DB.clearSession();document.getElementById('profileDashboard').classList.remove('open');document.body.style.overflow='';updateNav();showToast('Logged out 👋','');}
 function gotoProfile(){document.getElementById('successScreen').classList.remove('open');document.body.style.overflow='';openProfile();}
-function openProfile(){const vol=getCurrentVolunteer();if(!vol){openModal('modalLogin');return;}document.getElementById('p-name').value=vol.name||'';document.getElementById('p-dob').value=vol.dob||'';document.getElementById('p-father').value=vol.fatherName||'';document.getElementById('p-mother').value=vol.motherName||'';document.getElementById('p-occupation').value=vol.occupation||'';document.getElementById('p-mobile').value=vol.mobile||'';document.getElementById('p-aadhaar').value=vol.aadhaarDisplay||'';document.getElementById('p-at').value=vol.at||'';document.getElementById('p-post').value=vol.post||'';document.getElementById('p-ps').value=vol.ps||'';document.getElementById('p-district').value=vol.district||'';document.getElementById('p-state').value=vol.state||'';document.getElementById('p-pin').value=vol.pin||'';document.getElementById('p-volid').value=vol.id||'';document.getElementById('p-joined').value=formatDate(vol.joinDate);document.getElementById('displayName').textContent=vol.name;document.getElementById('displayVolId').textContent=vol.id;const photoEl=document.getElementById('profilePhotoDisplay');if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="profile-photo" id="profilePhotoDisplay" alt="Profile">`;}else{if(photoEl.tagName==='IMG'){photoEl.outerHTML=`<div class="profile-photo-default" id="profilePhotoDisplay">👤</div>`;}document.getElementById('profilePhotoDisplay').textContent='👤';}const qrDiv=document.getElementById('profile-qr-code');qrDiv.innerHTML='';const qrData=`${window.location.href.split('?')[0]}?volunteer=${vol.id}`;try{new QRCode(qrDiv,{text:qrData,width:120,height:120,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(e){}document.getElementById('profileDashboard').classList.add('open');document.body.style.overflow='hidden';}
-function saveProfileChanges(){const vol=getCurrentVolunteer();if(!vol)return;const volunteers=DB.getVolunteers();const idx=volunteers.findIndex(v=>v.id===vol.id);if(idx===-1)return;volunteers[idx].name=document.getElementById('p-name').value.trim();volunteers[idx].dob=document.getElementById('p-dob').value;volunteers[idx].fatherName=document.getElementById('p-father').value.trim();volunteers[idx].motherName=document.getElementById('p-mother').value.trim();volunteers[idx].occupation=document.getElementById('p-occupation').value.trim();volunteers[idx].mobile=document.getElementById('p-mobile').value.trim();volunteers[idx].at=document.getElementById('p-at').value.trim();volunteers[idx].post=document.getElementById('p-post').value.trim();volunteers[idx].ps=document.getElementById('p-ps').value.trim();volunteers[idx].district=document.getElementById('p-district').value.trim();volunteers[idx].state=document.getElementById('p-state').value;volunteers[idx].pin=document.getElementById('p-pin').value.trim();DB.saveVolunteers(volunteers);document.getElementById('displayName').textContent=volunteers[idx].name;showToast('Profile updated successfully! ✅','success');buildNotices();}
-function handlePhotoUpload(event){const file=event.target.files[0];if(!file)return;if(file.size>2*1024*1024){showToast('Image must be under 2MB','error');return;}const reader=new FileReader();reader.onload=(e)=>{const base64=e.target.result;const vol=getCurrentVolunteer();if(!vol)return;const volunteers=DB.getVolunteers();const idx=volunteers.findIndex(v=>v.id===vol.id);if(idx>-1){volunteers[idx].photo=base64;DB.saveVolunteers(volunteers);}const oldEl=document.getElementById('profilePhotoDisplay');const newImg=document.createElement('img');newImg.src=base64;newImg.className='profile-photo';newImg.id='profilePhotoDisplay';newImg.alt='Profile';oldEl.replaceWith(newImg);showToast('Profile photo updated! 📷','success');};reader.readAsDataURL(file);}
-async function downloadIDCard(){const vol=getCurrentVolunteer();if(!vol)return;showToast('Preparing your ID Card... ⏳','');document.getElementById('idCardName').textContent=vol.name;document.getElementById('idCardOcc').textContent=vol.occupation;document.getElementById('idCardDist').textContent=vol.district;document.getElementById('idCardState').textContent=vol.state;document.getElementById('idCardMob').textContent=vol.mobile;document.getElementById('idCardVolId').textContent=vol.id;const photoEl=document.getElementById('idCardPhoto');if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="id-card-photo" id="idCardPhoto" alt="Photo">`;}else{if(document.getElementById('idCardPhoto').tagName==='IMG'){document.getElementById('idCardPhoto').outerHTML=`<div class="id-card-photo-def" id="idCardPhoto">👤</div>`;}}const idCardQR=document.getElementById('idCardQR');idCardQR.innerHTML='';const qrData=window.location.href.split('?')[0]+'?volunteer='+vol.id;try{new QRCode(idCardQR,{text:qrData,width:50,height:50,colorDark:'#FFFFFF',colorLight:'transparent',correctLevel:QRCode.CorrectLevel.L});}catch(e){}await new Promise(r=>setTimeout(r,600));const card=document.getElementById('id-card-template');card.style.left='0';card.style.top='0';card.style.position='fixed';card.style.zIndex='-1';try{const canvas=await html2canvas(card,{scale:3,backgroundColor:null,useCORS:true});const imgData=canvas.toDataURL('image/png');const{jsPDF}=window.jspdf;const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:[90,55]});pdf.addImage(imgData,'PNG',0,0,90,55);pdf.save(`MLF-Volunteer-ID-${vol.id}.pdf`);showToast('ID Card downloaded! 📄','success');}catch(err){showToast('Download failed. Try again.','error');}card.style.left='-9999px';card.style.top='-9999px';card.style.position='fixed';card.style.zIndex='';}
-function showQRProfile(volId){const volunteers=DB.getVolunteers();const vol=volunteers.find(v=>v.id===volId);if(!vol)return;document.getElementById('qrPublicName').textContent=vol.name;document.getElementById('qrPublicId').textContent=vol.id;document.getElementById('qrPublicDistrict').textContent=vol.district;document.getElementById('qrPublicState').textContent=vol.state;const photoDiv=document.getElementById('qrPublicPhoto');if(vol.photo){photoDiv.innerHTML=`<img src="${vol.photo}" class="qr-profile-photo" alt="${vol.name}">`;}else{photoDiv.innerHTML=`<div class="qr-profile-photo-def">👤</div>`;}openModal('modalQRProfile');}
-function checkQRParam(){const params=new URLSearchParams(window.location.search);const volParam=params.get('volunteer');if(volParam){setTimeout(()=>showQRProfile(volParam.toUpperCase()),500);}}
+function openProfile(){
+  const vol=getCurrentVolunteer();
+  if(!vol){openModal('modalLogin');return;}
+  document.getElementById('p-name').value=vol.name||'';
+  document.getElementById('p-dob').value=vol.dob||'';
+  document.getElementById('p-father').value=vol.fatherName||'';
+  document.getElementById('p-mother').value=vol.motherName||'';
+  document.getElementById('p-occupation').value=vol.occupation||'';
+  document.getElementById('p-mobile').value=vol.mobile||'';
+  document.getElementById('p-aadhaar').value=vol.aadhaarDisplay||'';
+  document.getElementById('p-at').value=vol.at||'';
+  document.getElementById('p-post').value=vol.post||'';
+  document.getElementById('p-ps').value=vol.ps||'';
+  document.getElementById('p-district').value=vol.district||'';
+  document.getElementById('p-state').value=vol.state||'';
+  document.getElementById('p-pin').value=vol.pin||'';
+  document.getElementById('p-volid').value=vol.id||'';
+  document.getElementById('p-joined').value=formatDate(vol.joinDate);
+  document.getElementById('displayName').textContent=vol.name;
+  document.getElementById('displayVolId').textContent=vol.id;
+  const photoEl=document.getElementById('profilePhotoDisplay');
+  if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="profile-photo" id="profilePhotoDisplay" alt="Profile">`;}
+  else{if(photoEl.tagName==='IMG'){photoEl.outerHTML=`<div class="profile-photo-default" id="profilePhotoDisplay">👤</div>`;}else{photoEl.textContent='👤';}}
+  const qrDiv=document.getElementById('profile-qr-code');
+  qrDiv.innerHTML='';
+  const qrData=`${window.location.href.split('?')[0]}?volunteer=${vol.id}`;
+  try{new QRCode(qrDiv,{text:qrData,width:120,height:120,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(e){}
+  document.getElementById('profileDashboard').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function saveProfileChanges(){
+  const vol=getCurrentVolunteer();
+  if(!vol)return;
+  const volunteers=DB.getVolunteers();
+  const idx=volunteers.findIndex(v=>v.id===vol.id);
+  if(idx===-1)return;
+  volunteers[idx].name=document.getElementById('p-name').value.trim();
+  volunteers[idx].dob=document.getElementById('p-dob').value;
+  volunteers[idx].fatherName=document.getElementById('p-father').value.trim();
+  volunteers[idx].motherName=document.getElementById('p-mother').value.trim();
+  volunteers[idx].occupation=document.getElementById('p-occupation').value.trim();
+  volunteers[idx].mobile=document.getElementById('p-mobile').value.trim();
+  volunteers[idx].at=document.getElementById('p-at').value.trim();
+  volunteers[idx].post=document.getElementById('p-post').value.trim();
+  volunteers[idx].ps=document.getElementById('p-ps').value.trim();
+  volunteers[idx].district=document.getElementById('p-district').value.trim();
+  volunteers[idx].state=document.getElementById('p-state').value;
+  volunteers[idx].pin=document.getElementById('p-pin').value.trim();
+  DB.saveVolunteers(volunteers);
+  document.getElementById('displayName').textContent=volunteers[idx].name;
+  showToast('Profile updated! ✅','success');
+  buildNotices();
+}
+function handlePhotoUpload(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(file.size>2*1024*1024){showToast('Image 2MB se kam honi chahiye','error');return;}
+  const reader=new FileReader();
+  reader.onload=(e)=>{
+    const base64=e.target.result;
+    const vol=getCurrentVolunteer();
+    if(!vol)return;
+    const volunteers=DB.getVolunteers();
+    const idx=volunteers.findIndex(v=>v.id===vol.id);
+    if(idx>-1){volunteers[idx].photo=base64;DB.saveVolunteers(volunteers);}
+    const oldEl=document.getElementById('profilePhotoDisplay');
+    const newImg=document.createElement('img');
+    newImg.src=base64;newImg.className='profile-photo';newImg.id='profilePhotoDisplay';newImg.alt='Profile';
+    oldEl.replaceWith(newImg);
+    showToast('Photo updated! 📷','success');
+  };
+  reader.readAsDataURL(file);
+}
+async function downloadIDCard(){
+  const vol=getCurrentVolunteer();
+  if(!vol)return;
+  showToast('Preparing ID Card... ⏳','');
+  document.getElementById('idCardName').textContent=vol.name;
+  document.getElementById('idCardOcc').textContent=vol.occupation;
+  document.getElementById('idCardDist').textContent=vol.district;
+  document.getElementById('idCardState').textContent=vol.state;
+  document.getElementById('idCardMob').textContent=vol.mobile;
+  document.getElementById('idCardVolId').textContent=vol.id;
+  const photoEl=document.getElementById('idCardPhoto');
+  if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="id-card-photo" id="idCardPhoto" alt="Photo">`;}
+  else{if(document.getElementById('idCardPhoto').tagName==='IMG'){document.getElementById('idCardPhoto').outerHTML=`<div class="id-card-photo-def" id="idCardPhoto">👤</div>`;}}
+  const idCardQR=document.getElementById('idCardQR');
+  idCardQR.innerHTML='';
+  const qrData=window.location.href.split('?')[0]+'?volunteer='+vol.id;
+  try{new QRCode(idCardQR,{text:qrData,width:50,height:50,colorDark:'#FFFFFF',colorLight:'transparent',correctLevel:QRCode.CorrectLevel.L});}catch(e){}
+  await new Promise(r=>setTimeout(r,600));
+  const card=document.getElementById('id-card-template');
+  card.style.left='0';card.style.top='0';card.style.position='fixed';card.style.zIndex='-1';
+  try{
+    const canvas=await html2canvas(card,{scale:3,backgroundColor:null,useCORS:true});
+    const imgData=canvas.toDataURL('image/png');
+    const{jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:[90,55]});
+    pdf.addImage(imgData,'PNG',0,0,90,55);
+    pdf.save(`MLF-Volunteer-ID-${vol.id}.pdf`);
+    showToast('ID Card downloaded! 📄','success');
+  }catch(err){showToast('Download failed. Try again.','error');}
+  card.style.left='-9999px';card.style.top='-9999px';card.style.position='fixed';card.style.zIndex='';
+}
+function showQRProfile(volId){
+  const vol=DB.getVolunteers().find(v=>v.id===volId);
+  if(!vol)return;
+  document.getElementById('qrPublicName').textContent=vol.name;
+  document.getElementById('qrPublicId').textContent=vol.id;
+  document.getElementById('qrPublicDistrict').textContent=vol.district;
+  document.getElementById('qrPublicState').textContent=vol.state;
+  const photoDiv=document.getElementById('qrPublicPhoto');
+  if(vol.photo){photoDiv.innerHTML=`<img src="${vol.photo}" class="qr-profile-photo" alt="${vol.name}">`;}
+  else{photoDiv.innerHTML=`<div class="qr-profile-photo-def">👤</div>`;}
+  openModal('modalQRProfile');
+}
+function checkQRParam(){const params=new URLSearchParams(window.location.search);const vp=params.get('volunteer');if(vp){setTimeout(()=>showQRProfile(vp.toUpperCase()),500);}}
 
-/* ═══ FESTIVALS DATABASE ═══ */
-const MLF_FESTIVALS=[{month:1,day:14,name:"ମକର ସଂକ୍ରାନ୍ତି / ମକର ମେଳା",emoji:"🪁🌊",wish:"ମକର ସଂକ୍ରାନ୍ତିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ମହାପ୍ରଭୁ ଶ୍ରୀଜଗନ୍ନାଥଙ୍କ ଆଶୀର୍ବାଦ ଆପଣଙ୍କ ଉପରେ ବର୍ଷୁ। — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:1,day:26,name:"ଗଣତନ୍ତ୍ର ଦିବସ",emoji:"🇮🇳🎺",wish:"ଗଣତନ୍ତ୍ର ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ହିନ୍ଦ, ଜୟ ଓଡ଼ିଶା। — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:3,day:30,name:"ଉତ୍କଳ ଦିବସ — ଓଡ଼ିଶା ଦିବସ",emoji:"🏵️🌺",wish:"ଉତ୍କଳ ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ଓଡ଼ିଶା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:4,day:14,name:"ମହା ବିଷୁବ ସଂକ୍ରାନ୍ତି — ଓଡ଼ିଆ ନବ ବର୍ଷ",emoji:"🌅🎊",wish:"ଓଡ଼ିଆ ନବ ବର୍ଷର ଅଭିନନ୍ଦନ! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:6,day:27,name:"ରଥ ଯାତ୍ରା — ପୁରୀ",emoji:"🏆🎪",wish:"ଜୟ ଜଗନ୍ନାଥ! ପୁରୀ ରଥ ଯାତ୍ରାର ଶୁଭେଚ୍ଛା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:8,day:15,name:"ସ୍ୱାଧୀନତା ଦିବସ",emoji:"🇮🇳🎆",wish:"ସ୍ୱାଧୀନତା ଦିବସର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ହିନ୍ଦ! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:8,day:19,name:"ରକ୍ଷା ବନ୍ଧନ",emoji:"🧡🪢",wish:"ରକ୍ଷା ବନ୍ଧନର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:9,day:22,name:"ନୁଆଖାଇ ଜୁହାର",emoji:"🌾🎉",wish:"ନୁଆଖାଇ ଜୁହାର! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:10,day:2,name:"ଗାନ୍ଧୀ ଜୟନ୍ତୀ",emoji:"🕊️🇮🇳",wish:"ଗାନ୍ଧୀ ଜୟନ୍ତୀ ଅବସରରେ ରାଷ୍ଟ୍ରପିତାଙ୍କୁ ଶ୍ରଦ୍ଧାଞ୍ଜଳି। — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:10,day:13,name:"ବିଜୟ ଦଶମୀ — ଦଶହରା",emoji:"🏹🎊",wish:"ବିଜୟ ଦଶମୀର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! ଜୟ ଶ୍ରୀ ରାମ! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:11,day:5,name:"ଦୀପାବଳି",emoji:"🪔✨",wish:"ଦୀପାବଳିର ଆଲୋକ ଭରା ଶୁଭେଚ୍ଛା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:11,day:5,name:"ବୋଇତ ବନ୍ଦନା",emoji:"🚢🕯️",wish:"ବୋଇତ ବନ୍ଦନାର ଶୁଭେଚ୍ଛା! ଜୟ ଓଡ଼ିଶା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:12,day:25,name:"ବଡ଼ ଦିନ — ଖ୍ରୀଷ୍ଟ ଜୟନ୍ତୀ",emoji:"🎄⭐",wish:"ଖ୍ରୀଷ୍ଟ ଜୟନ୍ତୀ ଅର୍ଥାତ ବଡ଼ ଦିନର ଶୁଭେଚ୍ଛା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:12,day:31,name:"ନବ ବର୍ଷ ଅଭ୍ୟର୍ଥନା",emoji:"🎆🥂",wish:"ନୂଆ ବର୍ଷ ୨୦୨୬ ର ଅଭ୍ୟର୍ଥନା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"}];
+/* ═══ FESTIVALS ═══ */
+const MLF_FESTIVALS=[{month:1,day:14,name:"ମକର ସଂକ୍ରାନ୍ତି / ମକର ମେଳା",emoji:"🪁🌊",wish:"ମକର ସଂକ୍ରାନ୍ତିର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା! — ମାଇ ଲାଇଫ୍‌ଲାଇନ୍ ଫାଉଣ୍ଡେସନ୍"},{month:1,day:26,name:"ଗଣତନ୍ତ୍ର ଦିବସ",emoji:"🇮🇳🎺",wish:"ଗଣତନ୍ତ୍ର ଦିବସର ଶୁଭେଚ୍ଛା! ଜୟ ହିନ୍ଦ — MLF"},{month:3,day:30,name:"ଉତ୍କଳ ଦିବସ",emoji:"🏵️🌺",wish:"ଉତ୍କଳ ଦିବସ ଶୁଭେଚ୍ଛା! ଜୟ ଓଡ଼ିଶା — MLF"},{month:4,day:14,name:"ଓଡ଼ିଆ ନବ ବର୍ଷ",emoji:"🌅🎊",wish:"ଓଡ଼ିଆ ନବ ବର୍ଷ ଅଭିନନ୍ଦନ! — MLF"},{month:6,day:27,name:"ରଥ ଯାତ୍ରା",emoji:"🏆🎪",wish:"ଜୟ ଜଗନ୍ନାଥ! — MLF"},{month:8,day:15,name:"ସ୍ୱାଧୀନତା ଦିବସ",emoji:"🇮🇳🎆",wish:"ଜୟ ହିନ୍ଦ! — MLF"},{month:8,day:19,name:"ରକ୍ଷା ବନ୍ଧନ",emoji:"🧡🪢",wish:"ରକ୍ଷା ବନ୍ଧନ ଶୁଭେଚ୍ଛା — MLF"},{month:9,day:22,name:"ନୁଆଖାଇ",emoji:"🌾🎉",wish:"ନୁଆଖାଇ ଜୁହାର — MLF"},{month:10,day:2,name:"ଗାନ୍ଧୀ ଜୟନ୍ତୀ",emoji:"🕊️🇮🇳",wish:"ବାପୁଙ୍କୁ ଶ୍ରଦ୍ଧାଞ୍ଜଳି — MLF"},{month:11,day:5,name:"ଦୀପାବଳି",emoji:"🪔✨",wish:"ଦୀପାବଳି ଶୁଭେଚ୍ଛା — MLF"},{month:12,day:25,name:"ବଡ଼ ଦିନ",emoji:"🎄⭐",wish:"ଖ୍ରୀଷ୍ଟ ଜୟନ୍ତୀ ଶୁଭେଚ୍ଛା — MLF"},{month:12,day:31,name:"ନବ ବର୍ଷ",emoji:"🎆🥂",wish:"ନୂଆ ବର୍ଷ ଅଭ୍ୟର୍ଥନା — MLF"}];
 const ODIA_MONTHS=['ବୈଶାଖ','ଜ୍ୟେଷ୍ଠ','ଆଷାଢ଼','ଶ୍ରାବଣ','ଭାଦ୍ରବ','ଆଶ୍ୱିନ','କାର୍ତ୍ତିକ','ମାର୍ଗଶିର','ପୌଷ','ମାଘ','ଫାଲ୍ଗୁନ','ଚୈତ୍ର'];
-
-/* Uses admin override if set */
 function getTodayFestivals(){const src=(window.MLF_FESTIVALS_OVERRIDE&&window.MLF_FESTIVALS_OVERRIDE.length)?window.MLF_FESTIVALS_OVERRIDE:MLF_FESTIVALS;const n=new Date();return src.filter(f=>f.month===n.getMonth()+1&&f.day===n.getDate());}
 function getUpcomingFestivals(count){const src=(window.MLF_FESTIVALS_OVERRIDE&&window.MLF_FESTIVALS_OVERRIDE.length)?window.MLF_FESTIVALS_OVERRIDE:MLF_FESTIVALS;const now=new Date();const yr=now.getFullYear();return src.map(f=>{let d=new Date(yr,f.month-1,f.day);if(d<=now)d=new Date(yr+1,f.month-1,f.day);return{...f,daysLeft:Math.ceil((d-now)/864e5)};}).sort((a,b)=>a.daysLeft-b.daysLeft).slice(0,count||6);}
-
 function startClock(){function tick(){const n=new Date();document.getElementById('cwTime').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;document.getElementById('cwDate').textContent=`${String(n.getDate()).padStart(2,'0')}/${String(n.getMonth()+1).padStart(2,'0')}/${n.getFullYear()}`;const odiaEl=document.getElementById('cwOdiaMonth');if(odiaEl)odiaEl.textContent='🪄 '+ODIA_MONTHS[(n.getMonth()+9)%12]+' ମାସ';}tick();if(!window.clockInterval)window.clockInterval=setInterval(tick,1000);}
-
 let tickerIdx=0,tickerTimer=null,tickerItems=[];
 function buildNotices(){
   const today=getTodayFestivals();
@@ -1132,61 +1698,82 @@ function buildNotices(){
   upcoming.forEach(f=>tickerItems.push({type:'festival',isToday:false,...f}));
   const bdWishTemplate=window.ADMIN_BIRTHDAY_WISH||null;
   vols.forEach(v=>{
-    if(v.dob){const dp=v.dob.split('-');if(parseInt(dp[1])===now.getMonth()+1&&parseInt(dp[2])===now.getDate()){const bdText=bdWishTemplate?bdWishTemplate.replace('{name}',v.name):`ଜନ୍ମଦିନ ଶୁଭେଚ୍ଛା ${v.name}! MLF ପରିବାର ତଙ୍କୁ ଶୁଭେଚ୍ଛା ଜଣାଉଛି 🎉`;tickerItems.unshift({type:'other',tag:'birthday',label:'🎂 Birthday',text:bdText});}}
+    if(v.dob){const dp=v.dob.split('-');if(parseInt(dp[1])===now.getMonth()+1&&parseInt(dp[2])===now.getDate()){const bdText=bdWishTemplate?bdWishTemplate.replace('{name}',v.name):`ଜନ୍ମଦିନ ଶୁଭେଚ୍ଛା ${v.name}! 🎉`;tickerItems.unshift({type:'other',tag:'birthday',label:'🎂 Birthday',text:bdText});}}
     const jd=new Date(v.joinDate).toDateString();
     if(jd===todayStr||jd===yestStr)tickerItems.push({type:'other',tag:'welcome',label:'🤝 Welcome',text:`ସ୍ୱାଗତ ${v.name} (${v.district||'ଓଡ଼ିଶା'}) — MLF ପରିବାରରେ ଯୋଗ ଦେଇଛନ୍ତି 🌱`});
   });
-  /* Ticker notices — use admin override if set */
   if(window.ADMIN_TICKER_ITEMS&&window.ADMIN_TICKER_ITEMS.length){
     window.ADMIN_TICKER_ITEMS.forEach(t=>tickerItems.push({type:'other',tag:t.tag||'program',label:t.label||'📋',text:t.text}));
-  }else{
+  } else {
     tickerItems.push({type:'other',tag:'program',label:'📋 Program',text:'ମାଗଣା ସ୍ୱାସ୍ଥ୍ୟ ଶିବିର — ଶୀଘ୍ର ହେବ, କେନ୍ଦ୍ରାପଡ଼ା'});
-    tickerItems.push({type:'other',tag:'program',label:'📋 Program',text:'ଯୁବ କୌଶଳ ତାଲିମ — ଭ୍ୟାଚ୍ ୪ ଭର୍ତ୍ତି ଚାଲୁ'});
-    tickerItems.push({type:'other',tag:'rating',label:'⭐ Rating',text:'ଫାଉଣ୍ଡେସନ୍ ୯୧ ଉପଭୋକ୍ତାଙ୍କ ଦ୍ୱାରା ★★★★★ ରେଟିଙ୍ଗ ପ୍ରାପ୍ତ'});
+    tickerItems.push({type:'other',tag:'rating',label:'⭐ Rating',text:'ଫାଉଣ୍ଡେସନ୍ ★★★★★ ରେଟିଙ୍ଗ ପ୍ରାପ୍ତ'});
   }
   renderNotices();
   setupTodayBanner(today);
 }
-
 function renderNotices(){const scroll=document.getElementById('cwScroll');const dots=document.getElementById('cwDots');if(!scroll||!dots)return;scroll.innerHTML=tickerItems.map(item=>{if(item.type==='festival'){const cls=item.isToday?'tag-festival':'tag-event';const lbl=item.isToday?'🎉 ଆଜିର ଉତ୍ସବ':`🗓️ ${item.daysLeft} ଦିନ ବାକି`;return `<div class="cw-notice-item"><span class="cw-notice-tag ${cls}">${lbl}</span><div class="cw-notice-text">${item.emoji} ${item.name}</div></div>`;}else{return `<div class="cw-notice-item"><span class="cw-notice-tag tag-${item.tag}">${item.label}</span><div class="cw-notice-text">${item.text}</div></div>`;}}).join('');dots.innerHTML=tickerItems.map((_,i)=>`<div class="cw-dot${i===0?' active':''}" onclick="goNotice(${i})"></div>`).join('');tickerIdx=0;if(tickerTimer)clearInterval(tickerTimer);tickerTimer=setInterval(nextNotice,3500);}
 function nextNotice(){if(!tickerItems.length)return;tickerIdx=(tickerIdx+1)%tickerItems.length;updateNoticeScroll();}
 function goNotice(i){tickerIdx=i;updateNoticeScroll();}
 function updateNoticeScroll(){const scroll=document.getElementById('cwScroll');if(scroll)scroll.style.transform=`translateY(-${tickerIdx*68}px)`;document.querySelectorAll('.cw-dot').forEach((d,i)=>d.classList.toggle('active',i===tickerIdx));const lbl=document.getElementById('cwNoticeLabel');const lblTxt=document.getElementById('cwLabelText');if(!lbl||!lblTxt)return;const item=tickerItems[tickerIdx];if(item&&item.type==='festival'&&item.isToday){lbl.className='cw-notice-label cw-label-today';lblTxt.textContent='ଆଜିର ଉତ୍ସବ';}else{lbl.className='cw-notice-label cw-label-upcoming';lblTxt.textContent='ଆସନ୍ତା ଉତ୍ସବ';}}
 function setupTodayBanner(todayFests){const b=document.getElementById('cwTodayBanner');if(!b)return;if(todayFests.length>0){const f=todayFests[0];const emoji=document.getElementById('cwTodayEmoji');const wish=document.getElementById('cwTodayWish');if(emoji)emoji.textContent=f.emoji;if(wish)wish.textContent=f.wish.substring(0,80)+'...';b.classList.add('show');}else{b.classList.remove('show');}}
-
 let popupShown=false;
 function showFestivalPopup(f){if(popupShown)return;popupShown=true;const popup=document.getElementById('festivalPopup');if(!popup)return;document.getElementById('popupEmojiRow').textContent=f.emoji;document.getElementById('popupTitle').textContent=f.name;document.getElementById('popupWishText').textContent=f.wish;const bar=document.getElementById('popupProgressFill');bar.style.animation='none';bar.offsetHeight;bar.style.animation='ppShrink 9s linear forwards';setTimeout(()=>popup.classList.add('popup-show'),600);setTimeout(()=>hideFestivalPopup(),9800);launchConfetti();}
 function hideFestivalPopup(){const popup=document.getElementById('festivalPopup');if(popup)popup.classList.remove('popup-show');}
 const _popupCloseBtn=document.getElementById('popupCloseBtn');if(_popupCloseBtn)_popupCloseBtn.addEventListener('click',hideFestivalPopup);
 function launchConfetti(){const c=document.getElementById('mlfConfetti');if(!c)return;c.style.display='block';c.innerHTML='';const cols=['#FF6B1A','#F5C842','#2ECC71','#E74C3C','#9B59B6','#FF69B4'];for(let i=0;i<55;i++){const p=document.createElement('div');p.className='conf-p';p.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%cols.length]};width:${Math.random()*6+5}px;height:${Math.random()*6+5}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-delay:${Math.random()*1.5}s;animation-duration:${Math.random()*2+2.5}s`;c.appendChild(p);}setTimeout(()=>{c.style.display='none';c.innerHTML='';},5000);}
-
 let clockInNavbar=false;
 function handleClockVisibility(){const widget=document.getElementById('clockWidget');const navSlot=document.getElementById('navClockSlot');const heroSlot=document.getElementById('hero-clock-slot');if(!widget||!navSlot||!heroSlot)return;const shouldMove=window.scrollY>window.innerHeight*0.7;if(shouldMove&&!clockInNavbar){clockInNavbar=true;widget.classList.add('clock-moving');setTimeout(()=>{navSlot.appendChild(widget);widget.classList.remove('clock-moving');},250);}if(!shouldMove&&clockInNavbar){clockInNavbar=false;widget.classList.add('clock-moving');setTimeout(()=>{heroSlot.appendChild(widget);widget.classList.remove('clock-moving');},250);}}
-
 function startCounter(el,target){let cur=0;const step=target/80;const tick=()=>{cur=Math.min(cur+step,target);el.childNodes[0].textContent=Math.floor(cur).toLocaleString('en-IN');if(cur<target)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 const cntObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){startCounter(e.target,parseInt(e.target.dataset.target));cntObs.unobserve(e.target);}});},{threshold:.5});
 document.querySelectorAll('.imp-num[data-target]').forEach(el=>cntObs.observe(el));
 const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
-
 let toastTimer;
 function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);}
 function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');}
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);handleClockVisibility();});
 document.addEventListener('click',e=>{const menu=document.getElementById('mobMenu');if(menu.classList.contains('open')&&!menu.contains(e.target)&&!document.querySelector('.hamburger').contains(e.target))menu.classList.remove('open');});
 function formatDate(dateStr){if(!dateStr)return'';const d=new Date(dateStr);return`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;}
-
-function loadDynamicGallery(){const grid=document.getElementById('dynamic-gallery-grid');if(!grid)return;try{const saved=localStorage.getItem('mlf_st');if(!saved){showEmptyGallery(grid);return;}const data=JSON.parse(saved);const photos=data.gallery||[];if(!photos.length){showEmptyGallery(grid);return;}grid.innerHTML=photos.map(img=>'<div class="fgi"><img src="'+img.url+'" alt="'+(img.cap||'MLF Activity')+'" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="fgi-ov"><span class="fgi-cap">'+(img.cap||'MLF Activity')+'</span></div></div>').join('');}catch(e){showEmptyGallery(grid);}}
-function showEmptyGallery(grid){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray);"><div style="font-size:48px;margin-bottom:16px;">📸</div><h3 style="font-family:Poppins,sans-serif;font-size:18px;color:var(--blue);margin-bottom:8px;">Abhi koi photo nahi</h3><p style="font-size:14px;">Admin Panel mein jaake Gallery mein photos upload karo</p></div>';}
-
+function showEmptyGallery(grid){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray);"><div style="font-size:48px;margin-bottom:16px;">📸</div><h3 style="font-family:Poppins,sans-serif;font-size:18px;color:var(--blue);margin-bottom:8px;">Koi photo nahi</h3><p style="font-size:14px;">Admin Panel → Gallery → Upload karo</p></div>';}
+function loadDynamicGallery(){const grid=document.getElementById('dynamic-gallery-grid');if(!grid)return;try{const saved=localStorage.getItem('mlf_st');if(!saved){showEmptyGallery(grid);return;}const data=JSON.parse(saved);const photos=data.gallery||[];if(!photos.length){showEmptyGallery(grid);return;}grid.innerHTML=photos.map(img=>`<div class="fgi"><img src="${img.url}" alt="${img.cap||'MLF Activity'}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="fgi-ov"><span class="fgi-cap">${img.cap||'MLF Activity'}</span></div></div>`).join('');}catch(e){showEmptyGallery(grid);}}
 startClock();updateNav();buildNotices();checkQRParam();
-
-/* Festival popup — uses admin override */
 (function(){const todayFests=getTodayFestivals();if(todayFests.length>0){setTimeout(()=>showFestivalPopup(todayFests[0]),2000);}})();
-
 const PAGE_MAP={'vision':'page-vision','board':'page-board','legal':'page-legal','education':'page-education','health':'page-health','rural':'page-rural','environment':'page-environment','coordinator':'page-coordinator','gallery-full':'page-gallery-full','donate':'page-donate','contact-page':'page-contact-page'};
-function showPage(page){document.querySelectorAll('.page-section').forEach(el=>{el.style.display='none';});if(PAGE_MAP[page]){document.querySelectorAll('body > section:not(.page-section)').forEach(el=>{el.style.display='none';});const heroEl=document.querySelector('.hero');if(heroEl)heroEl.style.display='none';const pg=document.getElementById(PAGE_MAP[page]);if(pg){pg.style.display='block';window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>pg.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')),120);}const footer=document.querySelector('footer');if(footer)footer.style.display='';}else{document.querySelectorAll('body > section:not(.page-section)').forEach(el=>{el.style.display='';});const heroEl=document.querySelector('.hero');if(heroEl)heroEl.style.display='';window.scrollTo({top:0,behavior:'smooth'});if(page==='gallery-full')loadDynamicGallery();if(page==='about'){setTimeout(()=>{const el=document.getElementById('about');if(el)el.scrollIntoView({behavior:'smooth'});},200);}else if(page==='programs'){setTimeout(()=>{const el=document.getElementById('programs');if(el)el.scrollIntoView({behavior:'smooth'});},200);}else if(page==='gallery'){setTimeout(()=>{const el=document.getElementById('gallery');if(el)el.scrollIntoView({behavior:'smooth'});},200);}else if(page==='contact'){setTimeout(()=>{const el=document.querySelector('footer');if(el)el.scrollIntoView({behavior:'smooth'});},200);}}document.body.style.overflow='';}
-function submitContactForm(){const name=document.getElementById('msg-name').value.trim();const phone=document.getElementById('msg-phone').value.trim();const subject=document.getElementById('msg-subject').value.trim();const body=document.getElementById('msg-body').value.trim();if(!name||!phone||!subject||!body){showToast('Please fill all fields','error');return;}const today=new Date().toISOString().split('T')[0];const time=new Date().toLocaleTimeString('en-IN');sendToSheets('Contact_Messages','append',{row:[name,phone,subject,body,today,time]});showToast('Message sent successfully! We will contact you soon. 📨','success');document.getElementById('msg-name').value='';document.getElementById('msg-phone').value='';document.getElementById('msg-subject').value='';document.getElementById('msg-body').value='';}
+function showPage(page){
+  document.querySelectorAll('.page-section').forEach(el=>{el.style.display='none';});
+  if(PAGE_MAP[page]){
+    document.querySelectorAll('body > section:not(.page-section)').forEach(el=>{el.style.display='none';});
+    const heroEl=document.querySelector('.hero');if(heroEl)heroEl.style.display='none';
+    const pg=document.getElementById(PAGE_MAP[page]);
+    if(pg){pg.style.display='block';window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>pg.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')),120);}
+    const footer=document.querySelector('footer');if(footer)footer.style.display='';
+  } else {
+    document.querySelectorAll('body > section:not(.page-section)').forEach(el=>{el.style.display='';});
+    const heroEl=document.querySelector('.hero');if(heroEl)heroEl.style.display='';
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(page==='gallery-full')loadDynamicGallery();
+    if(page==='about'){setTimeout(()=>{const el=document.getElementById('about');if(el)el.scrollIntoView({behavior:'smooth'});},200);}
+    else if(page==='programs'){setTimeout(()=>{const el=document.getElementById('programs');if(el)el.scrollIntoView({behavior:'smooth'});},200);}
+    else if(page==='gallery'){setTimeout(()=>{const el=document.getElementById('gallery');if(el)el.scrollIntoView({behavior:'smooth'});},200);}
+    else if(page==='contact'){setTimeout(()=>{const el=document.querySelector('footer');if(el)el.scrollIntoView({behavior:'smooth'});},200);}
+  }
+  document.body.style.overflow='';
+}
+function submitContactForm(){
+  const name=document.getElementById('msg-name').value.trim();
+  const phone=document.getElementById('msg-phone').value.trim();
+  const subject=document.getElementById('msg-subject').value.trim();
+  const body=document.getElementById('msg-body').value.trim();
+  if(!name||!phone||!subject||!body){showToast('Sab fields fill karo','error');return;}
+  const today=new Date().toISOString().split('T')[0];
+  const time=new Date().toLocaleTimeString('en-IN');
+  sendToSheets('Contact_Messages','append',{row:[name,phone,subject,body,today,time]});
+  showToast('Message sent! We will contact you soon. 📨','success');
+  document.getElementById('msg-name').value='';
+  document.getElementById('msg-phone').value='';
+  document.getElementById('msg-subject').value='';
+  document.getElementById('msg-body').value='';
+}
 </script>
 </body>
 </html>
