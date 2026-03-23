@@ -1861,6 +1861,46 @@ function showToast(msg, type) {
 
 // ── HELPERS ──
 function v(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+  
+const SUPABASE_URL = "https://mvkbczobozlbdigkecwr.supabase.co";
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12a2Jjem9ib3psYmRpZ2tlY3dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNDk0MzksImV4cCI6MjA4OTgyNTQzOX0.QzrmLBzKyA3NzQTKFnTSiGHiEnIeD0DwH5fCULhDUTM";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function handleImageUpload(input, previewId, hiddenId, folder) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const fileName = folder + Date.now() + "-" + file.name;
+
+  // upload to supabase
+  const { data, error } = await supabase.storage
+    .from('mlf-images')
+    .upload(fileName, file);
+
+  if (error) {
+    console.error(error);
+    alert("❌ Upload failed: " + error.message);
+    return;
+  }
+
+  // get public URL
+  const { data: publicUrlData } = supabase.storage
+    .from('mlf-images')
+    .getPublicUrl(fileName);
+
+  const publicUrl = publicUrlData.publicUrl;
+
+  // show preview
+  document.getElementById(previewId).src = publicUrl;
+  document.getElementById(previewId).style.display = "block";
+
+  // save URL
+  document.getElementById(hiddenId).value = publicUrl;
+
+  alert("✅ Image uploaded successfully");
+}
 </script>
 </body>
 </html>
