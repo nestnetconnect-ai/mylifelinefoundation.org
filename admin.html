@@ -204,6 +204,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--text);di
         <div><strong style="font-size:12px;color:var(--gray);display:block;margin-bottom:4px;">PROJECT URL</strong><code style="font-size:11px;background:var(--off);padding:4px 8px;border-radius:6px;word-break:break-all;">https://mvkbczobozlbdigkecwr.supabase.co</code></div>
         <div><strong style="font-size:12px;color:var(--gray);display:block;margin-bottom:4px;">BUCKET</strong><code style="font-size:12px;background:var(--off);padding:4px 8px;border-radius:6px;">mlf-images (public)</code></div>
       </div>
+      <div class="warn-box" style="margin-top:16px;">
+        <strong>⚠️ Image Upload Fix Required (One-time setup)</strong><br>
+        Go to: <strong>supabase.com → Your Project → Storage → Files → MLF-IMAGES → New Policy</strong><br>
+        → Click <strong>"For full customization"</strong> → Tick <strong>INSERT</strong> → Target roles: <strong>anon</strong> → USING expression: <strong>true</strong> → WITH CHECK: <strong>true</strong> → Save<br><br>
+        <strong>OR</strong> run this SQL in <strong>Supabase → SQL Editor</strong>:<br>
+        <code style="background:#1a2234;color:#7dd3fc;padding:8px 12px;border-radius:6px;display:block;margin-top:8px;font-size:12px;">CREATE POLICY "allow_all_uploads" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'mlf-images');<br>CREATE POLICY "allow_all_select" ON storage.objects FOR SELECT TO anon USING (bucket_id = 'mlf-images');</code>
+        <br><strong>Note:</strong> Even without this, images save as base64 locally (works fine for small sites)
+      </div>
     </div>
   </div>
 </div>
@@ -780,8 +788,8 @@ async function checkSupabase(){
   const el=document.getElementById('sbStatus');
   try{
     const r=await fetch(`${SB_URL}/storage/v1/object/list/${SB_BUCKET}`,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json'},body:JSON.stringify({prefix:'',limit:1})});
-    if(r.ok||r.status===200){el.className='info-box';el.innerHTML='✅ Supabase connected! Bucket <strong>mlf-images</strong> is accessible and ready for image uploads.';}
-    else{el.className='warn-box';el.innerHTML=`⚠️ Supabase status ${r.status}. Go to Supabase → Storage → mlf-images → Policies → add allow_all policy for inserts.`;}
+    if(r.ok||r.status===200){el.className='info-box';el.innerHTML='✅ Supabase connected! Bucket <strong>mlf-images</strong> ready. <strong>To enable image uploads:</strong> Go to Supabase → Storage → Policies → New Policy → INSERT → anon → Save.';}
+    else{el.className='warn-box';el.innerHTML=`⚠️ Supabase status ${r.status}. <strong>Fix:</strong> Supabase Dashboard → Storage → Files → MLF-IMAGES → New Policy → For full customization → Check INSERT → Target: anon → USING: true → Save. Then refresh this page.`;}
   }catch{el.className='warn-box';el.innerHTML='⚠️ Cannot reach Supabase. Check internet connection.';}
 }
 
@@ -1186,13 +1194,18 @@ function saveSection(sec){
   else if(sec==='footer'){st.footer={about:g('ft-about'),reg:g('ft-reg'),pan:g('ft-pan'),copy:g('ft-copy'),soc1:g('soc1'),soc2:g('soc2'),soc3:g('soc3'),soc4:g('soc4')};}
   else if(sec==='legal'){st.legal={r:g('leg-r'),pan:g('leg-pan'),niti:g('leg-niti'),desc:g('leg-desc')};}
   else if(sec==='progpages'){st.progpages={edu:{img:g('edu-img'),t:g('edu-t'),p1:g('edu-p1'),p2:g('edu-p2'),ft:g('edu-ft'),fp:g('edu-fp')},health:{img:g('health-img'),t:g('health-t'),p1:g('health-p1'),p2:g('health-p2'),ft:g('health-ft'),fp:g('health-fp')},rural:{img:g('rural-img'),t:g('rural-t'),p1:g('rural-p1'),p2:g('rural-p2'),ft:g('rural-ft'),fp:g('rural-fp')},env:{img:g('env-img'),t:g('env-t'),p1:g('env-p1'),ft:g('env-ft'),fp:g('env-fp')}};}
-  DB.setSt(st);showToast('✅ Saved!','success');
+  DB.setSt(st);
+  // Force storage event for website tab auto-update
+  const _d=DB.getSt();localStorage.setItem('mlf_st',JSON.stringify(_d));
+  showToast('✅ Saved! Website will auto-update.','success');
 }
 function saveAllData(){
   ['hero','about','programs','stats','stories','join','vision','donate','contact','logo','footer','legal','progpages'].forEach(saveSection);
   saveBdayWish();
   checkStorageSpace();
-  showToast('✅ All changes saved!','success');
+  // Force storage event broadcast
+  localStorage.setItem('mlf_st',JSON.stringify(DB.getSt()));
+  showToast('✅ All changes saved! Open website to see changes.','success');
 }
 
 function loadAllFields(){
