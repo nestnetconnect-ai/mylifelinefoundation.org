@@ -922,7 +922,11 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 const ODIA_MONTHS=['ବୈଶାଖ','ଜ୍ୟେଷ୍ଠ','ଆଷାଢ଼','ଶ୍ରାବଣ','ଭାଦ୍ରବ','ଆଶ୍ୱିନ','କାର୍ତ୍ତିକ','ମାର୍ଗଶିର','ପୌଷ','ମାଘ','ଫାଲ୍ଗୁନ','ଚୈତ୍ର'];
 
 // ── DATA ACCESS ──
-function getSt(){try{return JSON.parse(localStorage.getItem('mlf_st')||'{}');}catch{return{};}}
+const _SB_URL='https://mvkbczobozlbdigkecwr.supabase.co';
+const _SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12a2Jjem9ib3psYmRpZ2tlY3dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNDk0MzksImV4cCI6MjA4OTgyNTQzOX0.QzrmLBzKyA3NzQTKFnTSiGHiEnIeD0DwH5fCULhDUTM';
+let _sbCache=null;
+async function _loadSb(){try{const r=await fetch(`${_SB_URL}/rest/v1/mlf_content?id=eq.main&select=data`,{headers:{'apikey':_SB_KEY,'Authorization':`Bearer ${_SB_KEY}`}});if(r.ok){const rows=await r.json();if(rows&&rows.length>0&&rows[0].data){_sbCache=rows[0].data;try{localStorage.setItem('mlf_st',JSON.stringify(_sbCache));}catch(e){}}}}catch(e){}if(!_sbCache){try{_sbCache=JSON.parse(localStorage.getItem('mlf_st')||'{}');}catch{_sbCache={};}}return _sbCache;}
+function getSt(){if(_sbCache)return _sbCache;try{return JSON.parse(localStorage.getItem('mlf_st')||'{}');}catch{return{};}}
 function getVols(){return JSON.parse(localStorage.getItem('mlf_volunteers')||'[]');}
 function saveVols(a){localStorage.setItem('mlf_volunteers',JSON.stringify(a));}
 function getSession(){return localStorage.getItem('mlf_session');}
@@ -1391,12 +1395,14 @@ window.addEventListener('scroll',()=>{document.getElementById('navbar').classLis
 document.addEventListener('click',e=>{const menu=document.getElementById('mobMenu');if(menu.classList.contains('open')&&!menu.contains(e.target)&&!document.querySelector('.hamburger').contains(e.target))menu.classList.remove('open');});
 
 // ── INIT ──
-loadAdminContent();
-startClock();
-updateNav();
-buildNotices();
-checkQRParam();
-(function(){const tf=getTodayFestivals();if(tf.length>0)setTimeout(()=>showFestivalPopup(tf[0]),2000);})();
+_loadSb().then(()=>{
+  loadAdminContent();
+  startClock();
+  updateNav();
+  buildNotices();
+  checkQRParam();
+  (function(){const tf=getTodayFestivals();if(tf.length>0)setTimeout(()=>showFestivalPopup(tf[0]),2000);})();
+});
 
 // ── AUTO-UPDATE FROM ADMIN (storage event) ──
 // When admin saves in another tab, website auto-refreshes content
