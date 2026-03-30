@@ -1232,10 +1232,25 @@ function updateNav(){
 
 function handleVolunteerBtn(){getCurrentVol()?openProfile():openModal('modalRegister');}
 function handleDonate(){showPage('donate');}
-function toggleSubmit(){document.getElementById('submitBtn').disabled=!document.getElementById('tcCheckbox').checked;}
+function toggleSubmit(){
+  const checked=document.getElementById('tcCheckbox').checked;
+  document.getElementById('submitBtn').disabled=!checked;
+  if(checked){
+    document.getElementById('submitBtn').style.background='var(--green)';
+  }
+}
 
 async function submitRegistration(e){
   e.preventDefault();
+  // Double-check T&C
+  if(!document.getElementById('tcCheckbox').checked){
+    document.getElementById('tcCheckLabel').style.border='2px solid red';
+    document.getElementById('tcCheckLabel').style.borderRadius='8px';
+    document.getElementById('tcCheckLabel').style.padding='8px';
+    document.getElementById('tcCheckLabel').scrollIntoView({behavior:'smooth',block:'center'});
+    showToast('Please agree to Terms & Conditions first','error');
+    return;
+  }
   const aadhaar=document.getElementById('regAadhaar').value.trim();
   const mobile=document.getElementById('regMobile').value.trim();
   const pin=document.getElementById('regPin').value.trim();
@@ -1382,6 +1397,24 @@ updateNav();
 buildNotices();
 checkQRParam();
 (function(){const tf=getTodayFestivals();if(tf.length>0)setTimeout(()=>showFestivalPopup(tf[0]),2000);})();
+
+// ── AUTO-UPDATE FROM ADMIN (storage event) ──
+// When admin saves in another tab, website auto-refreshes content
+window.addEventListener('storage', function(e) {
+  if(e.key === 'mlf_st') {
+    loadAdminContent();
+    buildNotices();
+    // Re-observe counters for animation reset
+    document.querySelectorAll('.imp-num[data-target]').forEach(el => {
+      el.innerHTML = '0<span style="font-size:.55em">+</span>';
+      cntObs.observe(el);
+    });
+  }
+  if(e.key === 'mlf_volunteers') {
+    buildNotices();
+    updateNav();
+  }
+});
 </script>
 </body>
 </html>
