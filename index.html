@@ -46,7 +46,7 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 #navAuthButtons{display:flex;align-items:center;gap:6px;margin-left:8px;flex-shrink:0;}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1002;position:relative;}
 .hamburger span{width:24px;height:2px;background:var(--blue);border-radius:2px;}
-.mob-menu{display:none;position:fixed;top:60px;left:0;right:0;z-index:1001;background:var(--white);border-bottom:1px solid var(--gray-lt);padding:16px 4% 20px;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(10,77,140,.15);max-height:80vh;overflow-y:auto;}
+.mob-menu{display:none;position:fixed;top:70px;left:0;right:0;z-index:1001;background:var(--white);border-bottom:1px solid var(--gray-lt);padding:16px 4% 20px;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(10,77,140,.15);max-height:80vh;overflow-y:auto;}
 .mob-menu.open{display:flex;}
 .mob-menu a{text-decoration:none;color:var(--text);font-weight:500;padding:12px 16px;border-radius:10px;font-size:15px;cursor:pointer;display:block;-webkit-tap-highlight-color:rgba(10,77,140,.1);touch-action:manipulation;user-select:none;}
 .mob-menu a:hover,.mob-menu a:active{background:var(--off);}
@@ -121,8 +121,8 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .clock-moving{opacity:0;transition:opacity .25s;}
 
 /* MODALS */
-.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(7,58,107,0.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;}
-.modal-overlay.open{display:flex;}
+.modal-overlay,.modal-ov{position:fixed;inset:0;z-index:2000;background:rgba(7,58,107,0.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open,.modal-ov.open{display:flex;}
 .modal-box{background:var(--white);border-radius:24px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lg);animation:modalIn .3s cubic-bezier(.34,1.56,.64,1) both;}
 .modal-box.wide{max-width:760px;}
 @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
@@ -428,7 +428,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 .id-card-detail strong{color:var(--white);}
 .id-card-footer{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:center;}
 .id-card-id{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:#FFDD80;letter-spacing:1.5px;}
-.id-card-qr{width:50px;height:50px;}
+.id-card-qr{width:72px;height:72px;}
 .qr-profile-card{background:var(--white);border-radius:24px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;}
 .qr-profile-header{background:linear-gradient(135deg,var(--blue),var(--green));padding:30px 24px 80px;text-align:center;position:relative;}
 .qr-profile-header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--white);clip-path:ellipse(55% 100% at 50% 100%);}
@@ -492,6 +492,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
   .mob-menu .nav-btn-login,.mob-menu .nav-btn-volunteer,.mob-menu .nav-btn-donate,.mob-menu .nav-btn-profile{
     display:block;width:100%;text-align:center;padding:12px 16px!important;font-size:14px!important;border-radius:10px!important;
   }
+  .mob-menu{top:60px;}
 }
 @media(max-width:480px){
   .clock-widget{display:none;}
@@ -547,20 +548,20 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 </nav>
 
 <div class="mob-menu" id="mobMenu">
-  <a onclick="showPage('home');toggleMenu()">🏠 Home</a>
-  <a onclick="showPage('about');toggleMenu()">ℹ️ About Foundation</a>
-  <a onclick="showPage('vision');toggleMenu()">🎯 Vision &amp; Mission</a>
-  <a onclick="showPage('board');toggleMenu()">👥 Board Members</a>
-  <a onclick="showPage('legal');toggleMenu()">📋 Legal Documents</a>
-  <a onclick="showPage('education');toggleMenu()">🎓 Education</a>
-  <a onclick="showPage('health');toggleMenu()">🩺 Health</a>
-  <a onclick="showPage('rural');toggleMenu()">🌾 Rural Youth Dev.</a>
-  <a onclick="showPage('environment');toggleMenu()">🌿 Environment</a>
-  <a onclick="showPage('coordinator');toggleMenu()">🤝 Coordinator</a>
-  <a onclick="showPage('gallery-full');toggleMenu()">🖼️ Gallery</a>
-  <a onclick="showPage('donate');toggleMenu()">❤️ Donate</a>
-  <a onclick="showPage('contact-page');toggleMenu()">📞 Contact</a>
-  <div id="mobAuthButtons" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;"></div>
+  <a onclick="showPage('home')">🏠 Home</a>
+  <a onclick="showPage('about')">ℹ️ About Foundation</a>
+  <a onclick="showPage('vision')">🎯 Vision &amp; Mission</a>
+  <a onclick="showPage('board')">👥 Board Members</a>
+  <a onclick="showPage('legal')">📋 Legal Documents</a>
+  <a onclick="showPage('education')">🎓 Education</a>
+  <a onclick="showPage('health')">🩺 Health</a>
+  <a onclick="showPage('rural')">🌾 Rural Youth Dev.</a>
+  <a onclick="showPage('environment')">🌿 Environment</a>
+  <a onclick="showPage('coordinator')">🤝 Coordinator</a>
+  <a onclick="showPage('gallery-full')">🖼️ Gallery</a>
+  <a onclick="showPage('donate')">❤️ Donate</a>
+  <a onclick="showPage('contact-page')">📞 Contact</a>
+  <div id="mobAuthButtons" style="display:flex;flex-direction:column;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray-lt);"></div>
 </div>
 
 <div id="hero-clock-slot">
@@ -831,6 +832,15 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
     <div class="modal-hd"><div><h2>🤝 Volunteer Registration</h2><span>Join My Lifeline Foundation — All fields are mandatory</span></div><button class="modal-close" onclick="closeModal('modalRegister')">✕</button></div>
     <div class="modal-body">
       <form id="regForm" onsubmit="submitRegistration(event)">
+        <div class="form-row"><div class="field"><label>Registration Type *</label>
+          <select id="regType" style="padding:10px 14px;border:1.5px solid var(--gray-lt);border-radius:9px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;outline:none;width:100%;">
+            <option value="V">🤝 Volunteer</option>
+            <option value="C">📍 Coordinator</option>
+            <option value="S">⭐ Supporter</option>
+          </select>
+        </div><div class="field" style="display:flex;align-items:flex-end;padding-bottom:4px;">
+          <p style="font-size:12px;color:var(--gray);line-height:1.5;">Your ID will be auto-generated.<br>Example: <strong>MLF-V-01426</strong> (V=Type, 01=Serial, 4=Month, 26=Year)</p>
+        </div></div>
         <div class="form-section-title">👤 Personal Information</div>
         <div class="form-row"><div class="field"><label>Full Name *</label><input type="text" id="regName" placeholder="Enter your full name" required></div><div class="field"><label>Date of Birth *</label><input type="date" id="regDob" required></div></div>
         <div class="form-row"><div class="field"><label>Father's Name *</label><input type="text" id="regFather" placeholder="Father's full name" required></div><div class="field"><label>Mother's Name *</label><input type="text" id="regMother" placeholder="Mother's full name" required></div></div>
@@ -856,16 +866,33 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 </div>
 
 <!-- LOGIN MODAL -->
-<div class="modal-overlay" id="modalLogin">
-  <div class="modal-box" style="max-width:440px;">
-    <div class="modal-hd"><div><h2>🔐 Volunteer Login</h2><span>Access your volunteer profile</span></div><button class="modal-close" onclick="closeModal('modalLogin')">✕</button></div>
-    <div class="modal-body">
-      <div class="login-icon">👤</div>
-      <div class="form-row single" style="margin-bottom:14px;"><div class="field"><label>Volunteer ID *</label><input type="text" id="loginId" placeholder="e.g. MLF-OD-000001" style="text-transform:uppercase;"><span class="field-note">Your unique Volunteer ID received on registration</span></div></div>
-      <div class="form-row single" style="margin-bottom:22px;"><div class="field"><label>Registered Mobile Number *</label><input type="tel" id="loginMobile" placeholder="10-digit mobile number" maxlength="10"></div></div>
-      <button class="btn-blue-full" onclick="submitLogin()">🔐 Login to My Profile</button>
-      <div class="login-divider" style="margin-top:20px;">Not registered yet?</div>
-      <button class="btn-submit" style="margin-top:12px;background:var(--green);" onclick="closeModal('modalLogin');openModal('modalRegister')">🤝 Register as Volunteer</button>
+<div class="modal-ov" id="modalLogin">
+  <div class="modal-box" style="max-width:460px;">
+    <div class="modal-hd">
+      <div><h2>🔐 Member Login</h2><span>My Lifeline Foundation Portal</span></div>
+      <button class="modal-close" onclick="closeModal('modalLogin')">✕</button>
+    </div>
+    <div class="modal-body" style="padding-top:12px;">
+      <!-- Type Tabs -->
+      <div style="display:flex;border:1.5px solid var(--gray-lt);border-radius:10px;overflow:hidden;margin-bottom:20px;">
+        <button id="loginTabV" onclick="switchLoginTab('V')" style="flex:1;padding:11px;border:none;background:var(--blue);color:white;font-weight:700;font-size:13px;cursor:pointer;touch-action:manipulation;">🤝 Volunteer</button>
+        <button id="loginTabC" onclick="switchLoginTab('C')" style="flex:1;padding:11px;border:none;background:var(--off);color:var(--gray);font-weight:600;font-size:13px;cursor:pointer;touch-action:manipulation;">📍 Coordinator</button>
+      </div>
+      <div id="loginTypeLabel" style="text-align:center;font-size:30px;margin-bottom:6px;">🤝</div>
+      <p id="loginTypeDesc" style="text-align:center;font-size:12px;color:var(--gray);margin-bottom:16px;">Login with your Volunteer ID and registered mobile number</p>
+      <div class="field" style="margin-bottom:14px;">
+        <label id="loginIdLabel">Volunteer ID *</label>
+        <input type="text" id="loginId" placeholder="e.g. MLF-V-01426" style="text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:11px 14px;border:1.5px solid var(--gray-lt);border-radius:9px;font-size:14px;width:100%;outline:none;font-family:inherit;" onkeydown="if(event.key==='Enter')submitLogin()">
+        <span style="font-size:11px;color:var(--gray);margin-top:4px;display:block;">Your unique ID received after registration (e.g. MLF-V-01426)</span>
+      </div>
+      <div class="field" style="margin-bottom:22px;">
+        <label>Registered Mobile Number *</label>
+        <input type="tel" id="loginMobile" placeholder="10-digit mobile number" maxlength="10" style="padding:11px 14px;border:1.5px solid var(--gray-lt);border-radius:9px;font-size:14px;width:100%;outline:none;font-family:inherit;" onkeydown="if(event.key==='Enter')submitLogin()">
+      </div>
+      <button style="width:100%;padding:13px;background:var(--blue);color:white;border:none;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;" onclick="submitLogin()">🔐 Login</button>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--gray);">Not registered yet?</p>
+      <button style="width:100%;margin-top:8px;padding:12px;background:var(--green);color:white;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;" onclick="closeModal('modalLogin');openModal('modalRegister')">🤝 Register as Volunteer</button>
+      <button style="width:100%;margin-top:8px;padding:10px;background:var(--off);color:var(--gray);border:1px solid var(--gray-lt);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation;" onclick="showForgotId()">🔍 Forgot your ID?</button>
     </div>
   </div>
 </div>
@@ -916,7 +943,8 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
         <div class="profile-id-tag" id="displayVolId">MLF-OD-000001</div>
         <div class="profile-status">Active Volunteer</div>
         <div class="qr-wrapper"><div id="profileQrCode" style="display:flex;justify-content:center;"></div><p>Scan to view public profile</p></div>
-        <button class="btn-download-id" onclick="downloadIDCard()">⬇️ Download Digital ID Card</button>
+        <button class="btn-download-id" onclick="downloadIDCard('png')" style="margin-bottom:8px;">🖼️ Download PNG (Print Quality)</button>
+        <button class="btn-download-id" style="background:var(--green);" onclick="downloadIDCard('pdf')">📄 Download PDF</button>
       </div>
       <div class="profile-card-right">
         <div class="profile-section-title">👤 Personal Information</div>
@@ -952,7 +980,7 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
         <div class="id-card-detail"><strong>Occupation:</strong> <span id="idCardOcc">-</span><br><strong>District:</strong> <span id="idCardDist">-</span><br><strong>State:</strong> <span id="idCardState">-</span><br><strong>Mobile:</strong> <span id="idCardMob">-</span><br><strong>Status:</strong> <span style="color:#86EFAC;">Active Volunteer</span></div>
       </div>
     </div>
-    <div class="id-card-footer"><div><div class="id-card-id" id="idCardVolId">MLF-OD-000001</div><div style="font-size:8px;color:rgba(255,255,255,.5);margin-top:2px;">Reg: U85100OR2020NPL032868</div></div><div id="idCardQR" class="id-card-qr"></div></div>
+    <div class="id-card-footer"><div><div class="id-card-id" id="idCardVolId">MLF-OD-000001</div><div style="font-size:8px;color:rgba(255,255,255,.5);margin-top:2px;">Reg: U85100OR2020NPL032868</div></div><div id="idCardQR" class="id-card-qr" style="background:white;padding:3px;border-radius:4px;"></div></div>
   </div>
 </div>
 
@@ -976,7 +1004,16 @@ function clearSession(){localStorage.removeItem('mlf_session');}
 function getCounter(){return parseInt(localStorage.getItem('mlf_counter')||'0');}
 function incCounter(){const n=getCounter()+1;localStorage.setItem('mlf_counter',n);return n;}
 function getCurrentVol(){const sid=getSession();if(!sid)return null;return getVols().find(v=>v.id===sid)||null;}
-function generateId(){return 'MLF-OD-'+String(incCounter()).padStart(6,'0');}
+function generateId(desigCode){
+  const n=incCounter();
+  const now=new Date();
+  const month=now.getMonth()+1;        // 1-12 (no padding)
+  const year=String(now.getFullYear()).slice(-2); // 26
+  const emp=String(n).padStart(2,'0'); // 01, 02...
+  const dc=(desigCode||'V').toUpperCase();
+  // MLF-V-01426 → Volunteer emp#01, April, 2026
+  return `MLF-${dc}-${emp}${month}${year}`;
+}
 
 // ── ADMIN CONTENT LOADER ──
 function loadAdminContent(){
@@ -1095,26 +1132,28 @@ function loadAdminContent(){
 // ── PAGE NAVIGATION ──
 const PAGES={vision:'page-vision',board:'page-board',legal:'page-legal',education:'page-education',health:'page-health',rural:'page-rural',environment:'page-environment',coordinator:'page-coordinator','gallery-full':'page-gallery-full',donate:'page-donate','contact-page':'page-contact-page'};
 function showPage(page){
+  // Close mobile menu FIRST - always
+  const mm=document.getElementById('mobMenu');
+  if(mm){mm.classList.remove('open');}
+  document.body.style.overflow='';
+
   document.querySelectorAll('.page-section').forEach(el=>el.style.display='none');
   const mainSecs=['#home','#about','#programs','.imp-sec','#gallery','#volunteer'];
   if(PAGES[page]){
     mainSecs.forEach(sel=>{const el=document.querySelector(sel);if(el)el.style.display='none';});
     const pg=document.getElementById(PAGES[page]);
     if(pg){pg.style.display='block';setTimeout(()=>pg.querySelectorAll('.reveal').forEach(e=>e.classList.add('visible')),120);}
-    document.querySelector('footer').style.display='';
+    const ft=document.querySelector('footer');if(ft)ft.style.display='';
   }else{
     mainSecs.forEach(sel=>{const el=document.querySelector(sel);if(el)el.style.display='';});
-    document.querySelector('footer').style.display='';
+    const ft=document.querySelector('footer');if(ft)ft.style.display='';
     if(page==='gallery-full'){loadGallery();}
     if(page==='programs'){setTimeout(()=>{const el=document.getElementById('programs');if(el)el.scrollIntoView({behavior:'smooth'});},100);}
     else if(page==='about'){setTimeout(()=>{const el=document.getElementById('about');if(el)el.scrollIntoView({behavior:'smooth'});},100);}
     else if(page==='gallery'){setTimeout(()=>{const el=document.getElementById('gallery');if(el)el.scrollIntoView({behavior:'smooth'});},100);}
-    else if(page==='contact'){setTimeout(()=>{const el=document.querySelector('footer');if(el)el.scrollIntoView({behavior:'smooth'});},100);}
+    else if(page==='contact'){setTimeout(()=>{const ft2=document.querySelector('footer');if(ft2)ft2.scrollIntoView({behavior:'smooth'});},100);}
   }
   window.scrollTo({top:0,behavior:'smooth'});
-  document.body.style.overflow='';
-  const mm=document.getElementById('mobMenu');
-  if(mm){mm.classList.remove('open');}
 }
 function loadGallery(){
   const g=document.getElementById('dynamicGalleryGrid');
@@ -1276,11 +1315,21 @@ function updateNav(){
   const navAuth=document.getElementById('navAuthButtons');
   const mobAuth=document.getElementById('mobAuthButtons');
   if(vol){
-    navAuth.innerHTML=`<a class="nav-btn-profile" onclick="openProfile()">👤 My Profile</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a><a style="color:var(--gray);font-size:13px;padding:8px 10px;cursor:pointer;" onclick="logoutVolunteer()">Logout</a>`;
-    mobAuth.innerHTML=`<a onclick="openProfile();toggleMenu()" style="background:var(--blue);color:white;font-weight:700;border-radius:10px;padding:12px 16px;text-align:center;">👤 My Profile</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;padding:12px 16px;text-align:center;">❤️ Donate</a><a onclick="logoutVolunteer()" style="background:#ef4444;color:white;font-weight:700;border-radius:10px;padding:12px 16px;text-align:center;">🚪 Logout</a>`;
+    // Logged in: show Profile + Logout only in navbar
+    navAuth.innerHTML=`<a class="nav-btn-profile" onclick="openProfile()">👤 My Profile</a><a class="nav-btn-login" style="background:#fee2e2;color:#dc2626;border:none;" onclick="logoutVolunteer()">Logout</a>`;
+    // Mobile: Profile, Donate, Logout
+    mobAuth.innerHTML=`
+      <a onclick="closeMobMenu();setTimeout(()=>openProfile(),150)" style="background:var(--blue);color:white;font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;touch-action:manipulation;">👤 My Profile</a>
+      <a onclick="closeMobMenu();setTimeout(()=>handleDonate(),150)" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;touch-action:manipulation;">❤️ Donate</a>
+      <a onclick="closeMobMenu();setTimeout(()=>logoutVolunteer(),150)" style="background:#fee2e2;color:#dc2626;font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;touch-action:manipulation;">🚪 Logout</a>`;
   }else{
-    navAuth.innerHTML=`<a class="nav-btn-login" onclick="openModal('modalLogin')">🔐 Login</a><a class="nav-btn-volunteer" onclick="handleVolunteerBtn()">🤝 Join Volunteer</a><a class="nav-btn-donate" onclick="handleDonate()">❤️ Donate</a>`;
-    mobAuth.innerHTML=`<a onclick="openModal('modalLogin');toggleMenu()" style="border:1.5px solid var(--blue);color:var(--blue);font-weight:600;border-radius:10px;padding:12px 16px;text-align:center;">🔐 Login</a><a onclick="handleVolunteerBtn();toggleMenu()" style="background:var(--green);color:white;font-weight:700;border-radius:10px;padding:12px 16px;text-align:center;">🤝 Join as Volunteer</a><a onclick="handleDonate();toggleMenu()" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;padding:12px 16px;text-align:center;">❤️ Donate Now</a>`;
+    // NOT logged in: ONLY Login button in navbar (no Donate, no Join)
+    navAuth.innerHTML=`<a class="nav-btn-login" onclick="openModal('modalLogin')">🔐 Login</a>`;
+    // Mobile: Login + Join + Donate
+    mobAuth.innerHTML=`
+      <a onclick="closeMobMenu();setTimeout(()=>openModal('modalLogin'),150)" style="border:2px solid var(--blue);color:var(--blue);font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;background:white;touch-action:manipulation;">🔐 Login</a>
+      <a onclick="closeMobMenu();setTimeout(()=>handleVolunteerBtn(),150)" style="background:var(--green);color:white;font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;touch-action:manipulation;">🤝 Join as Volunteer</a>
+      <a onclick="closeMobMenu();setTimeout(()=>handleDonate(),150)" style="background:var(--orange);color:white;font-weight:700;border-radius:10px;padding:13px 16px;text-align:center;touch-action:manipulation;">❤️ Donate Now</a>`;
   }
 }
 
@@ -1313,8 +1362,9 @@ async function submitRegistration(e){
   if(pin.length!==6||!/^\d+$/.test(pin)){showToast('Please enter a valid 6-digit PIN code','error');return;}
   const vols=getVols();
   if(vols.some(v=>v.aadhaarKey===aadhaar.substring(0,8)+aadhaar.slice(-4))){showToast('An account with this Aadhaar already exists!','error');return;}
-  const volId=generateId();
-  const vol={id:volId,name:document.getElementById('regName').value.trim(),dob:document.getElementById('regDob').value,fatherName:document.getElementById('regFather').value.trim(),motherName:document.getElementById('regMother').value.trim(),occupation:document.getElementById('regOccupation').value.trim(),mobile,aadhaarDisplay:'**** **** '+aadhaar.slice(-4),aadhaarKey:aadhaar.substring(0,8)+aadhaar.slice(-4),at:document.getElementById('regAt').value.trim(),post:document.getElementById('regPost').value.trim(),ps:document.getElementById('regPs').value.trim(),district:document.getElementById('regDistrict').value.trim(),state:document.getElementById('regState').value,pin,joinDate:new Date().toISOString().split('T')[0],status:'Active',photo:''};
+  const regType=document.getElementById('regType')?document.getElementById('regType').value:'V';
+  const volId=generateId(regType);
+  const vol={id:volId,type:regType,name:document.getElementById('regName').value.trim(),dob:document.getElementById('regDob').value,fatherName:document.getElementById('regFather').value.trim(),motherName:document.getElementById('regMother').value.trim(),occupation:document.getElementById('regOccupation').value.trim(),mobile,aadhaarDisplay:'**** **** '+aadhaar.slice(-4),aadhaarKey:aadhaar.substring(0,8)+aadhaar.slice(-4),at:document.getElementById('regAt').value.trim(),post:document.getElementById('regPost').value.trim(),ps:document.getElementById('regPs').value.trim(),district:document.getElementById('regDistrict').value.trim(),state:document.getElementById('regState').value,pin,joinDate:new Date().toISOString().split('T')[0],status:'Active',photo:''};
   vols.push(vol);
   saveVols(vols);
   setSession(volId);
@@ -1333,18 +1383,60 @@ async function submitRegistration(e){
   updateNav();buildNotices();
 }
 
+function switchLoginTab(type){
+  const tabV=document.getElementById('loginTabV');
+  const tabC=document.getElementById('loginTabC');
+  const label=document.getElementById('loginIdLabel');
+  const desc=document.getElementById('loginTypeDesc');
+  const icon=document.getElementById('loginTypeLabel');
+  const input=document.getElementById('loginId');
+  if(type==='V'){
+    if(tabV){tabV.style.background='var(--blue)';tabV.style.color='white';}
+    if(tabC){tabC.style.background='var(--off)';tabC.style.color='var(--gray)';}
+    if(label)label.textContent='Volunteer ID *';
+    if(desc)desc.textContent='Login with your Volunteer ID and registered mobile number';
+    if(icon)icon.textContent='🤝';
+    if(input)input.placeholder='e.g. MLF-V-01426';
+  } else {
+    if(tabC){tabC.style.background='var(--blue)';tabC.style.color='white';}
+    if(tabV){tabV.style.background='var(--off)';tabV.style.color='var(--gray)';}
+    if(label)label.textContent='Coordinator ID *';
+    if(desc)desc.textContent='Login with your Coordinator ID and registered mobile number';
+    if(icon)icon.textContent='📍';
+    if(input)input.placeholder='e.g. MLF-C-01426';
+  }
+}
+function showForgotId(){
+  closeModal('modalLogin');
+  // Show forgot ID UI - search by mobile+aadhaar
+  const name=prompt('Enter your registered mobile number to find your ID:');
+  if(!name)return;
+  const vol=getVols().find(v=>v.mobile===name.trim());
+  if(vol){alert('✅ Your ID is: '+vol.id+'\n\nName: '+vol.name+'\nType: '+(vol.type||'V'));
+  }else{alert('❌ No account found for this mobile number.\n\nPlease contact admin: +91 9337994358');}
+}
 function submitLogin(){
   const inputId=document.getElementById('loginId').value.trim().toUpperCase();
   const inputMobile=document.getElementById('loginMobile').value.trim();
-  if(!inputId||!inputMobile){showToast('Please enter your Volunteer ID and Mobile Number','error');return;}
+  if(!inputId){showToast('Please enter your ID (e.g. MLF-V-01426)','error');return;}
+  if(!inputMobile||inputMobile.length!==10){showToast('Enter valid 10-digit mobile number','error');return;}
   const vol=getVols().find(v=>v.id===inputId&&v.mobile===inputMobile);
-  if(!vol){showToast('Invalid Volunteer ID or Mobile Number','error');return;}
+  if(!vol){
+    showToast('❌ ID or mobile not found. Check and try again.','error');
+    document.getElementById('loginId').style.borderColor='#ef4444';
+    document.getElementById('loginMobile').style.borderColor='#ef4444';
+    return;
+  }
+  document.getElementById('loginId').style.borderColor='';
+  document.getElementById('loginMobile').style.borderColor='';
   setSession(vol.id);
   closeModal('modalLogin');
   document.getElementById('loginId').value='';
   document.getElementById('loginMobile').value='';
-  updateNav();showToast('Welcome back, '+vol.name+'! 👋','success');
-  setTimeout(()=>openProfile(),800);
+  const typeGreet={'V':'Volunteer','C':'Coordinator','E':'Employee','S':'Supporter'};
+  updateNav();
+  showToast('Welcome back '+vol.name+'! ('+( typeGreet[vol.type||'V']||'Member')+') 👋','success');
+  setTimeout(()=>openProfile(),600);
 }
 
 function logoutVolunteer(){clearSession();document.getElementById('profileDashboard').classList.remove('open');document.body.style.overflow='';updateNav();showToast('You have been logged out 👋','');}
@@ -1361,7 +1453,7 @@ function openProfile(){
   if(vol.photo){const newImg=document.createElement('img');newImg.src=vol.photo;newImg.className='profile-photo';newImg.id='profilePhotoDisplay';newImg.alt='Profile';photoEl.replaceWith(newImg);}
   else{if(photoEl.tagName==='IMG'){const div=document.createElement('div');div.className='profile-photo-default';div.id='profilePhotoDisplay';div.textContent='👤';photoEl.replaceWith(div);}}
   const qrDiv=document.getElementById('profileQrCode');qrDiv.innerHTML='';
-  try{new QRCode(qrDiv,{text:`${window.location.href.split('?')[0]}?volunteer=${vol.id}`,width:120,height:120,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}catch(ex){}
+  try{new QRCode(qrDiv,{text:`${window.location.href.split('?')[0]}?volunteer=${vol.id}`,width:160,height:160,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});}catch(ex){}
   document.getElementById('profileDashboard').classList.add('open');document.body.style.overflow='hidden';
 }
 
@@ -1385,22 +1477,50 @@ function handlePhotoUpload(event){
   };reader.readAsDataURL(file);
 }
 
-async function downloadIDCard(){
+async async function downloadIDCard(fmt='png'){
   const vol=getCurrentVol();if(!vol)return;
-  showToast('Preparing your ID Card... ⏳','');
-  document.getElementById('idCardName').textContent=vol.name;document.getElementById('idCardOcc').textContent=vol.occupation;document.getElementById('idCardDist').textContent=vol.district;document.getElementById('idCardState').textContent=vol.state;document.getElementById('idCardMob').textContent=vol.mobile;document.getElementById('idCardVolId').textContent=vol.id;
+  showToast('Preparing ID Card... ⏳','');
+  // Fill card data
+  const setT=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v||'';};
+  setT('idCardName',vol.name);setT('idCardOcc',vol.occupation);
+  setT('idCardDist',vol.district);setT('idCardState',vol.state);
+  setT('idCardMob',vol.mobile);setT('idCardVolId',vol.id);
+  // Type badge
+  const typeMap={'V':'Volunteer','C':'Coordinator','E':'Employee','S':'Supporter'};
+  const typeBadge=document.getElementById('idCardTypeBadge');
+  if(typeBadge)typeBadge.textContent=typeMap[vol.type||'V']||'Volunteer';
+  // Photo
   const photoEl=document.getElementById('idCardPhoto');
-  if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="id-card-photo" id="idCardPhoto" alt="Photo">`;}
-  else{if(document.getElementById('idCardPhoto')?.tagName==='IMG')document.getElementById('idCardPhoto').outerHTML=`<div class="id-card-photo-def" id="idCardPhoto">👤</div>`;}
+  if(photoEl){
+    if(vol.photo){photoEl.outerHTML=`<img src="${vol.photo}" class="id-card-photo" id="idCardPhoto" alt="Photo">`;}
+    else if(photoEl.tagName==='IMG'){photoEl.outerHTML=`<div class="id-card-photo-def" id="idCardPhoto">👤</div>`;}
+  }
+  // QR - high quality, clear, scannable
   const idQR=document.getElementById('idCardQR');idQR.innerHTML='';
-  try{new QRCode(idQR,{text:window.location.href.split('?')[0]+'?volunteer='+vol.id,width:50,height:50,colorDark:'#FFFFFF',colorLight:'transparent',correctLevel:QRCode.CorrectLevel.L});}catch(ex){}
-  await new Promise(r=>setTimeout(r,600));
-  const card=document.getElementById('id-card-template');card.style.left='0';card.style.top='0';card.style.position='fixed';card.style.zIndex='-1';
+  try{new QRCode(idQR,{text:window.location.href.split('?')[0]+'?volunteer='+vol.id,width:128,height:128,colorDark:'#000000',colorLight:'#FFFFFF',correctLevel:QRCode.CorrectLevel.H});}catch(ex){}
+  await new Promise(r=>setTimeout(r,800));
+  // Render card
+  const card=document.getElementById('id-card-template');
+  const prev={left:card.style.left,top:card.style.top,pos:card.style.position,z:card.style.zIndex};
+  card.style.cssText='position:fixed;left:0;top:0;z-index:-1;';
   try{
-    const canvas=await html2canvas(card,{scale:3,backgroundColor:null,useCORS:true});
-    const imgData=canvas.toDataURL('image/png');const{jsPDF}=window.jspdf;const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:[90,55]});pdf.addImage(imgData,'PNG',0,0,90,55);pdf.save(`MLF-Volunteer-ID-${vol.id}.pdf`);showToast('ID Card downloaded! 📄','success');
-  }catch(err){showToast('Download failed. Try again.','error');}
-  card.style.left='-9999px';card.style.top='-9999px';card.style.position='fixed';card.style.zIndex='';
+    const canvas=await html2canvas(card,{scale:4,backgroundColor:null,useCORS:true,allowTaint:true,logging:false});
+    if(fmt==='pdf'){
+      const imgData=canvas.toDataURL('image/png',1.0);
+      const{jsPDF}=window.jspdf;
+      const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:[90,55]});
+      pdf.addImage(imgData,'PNG',0,0,90,55);
+      pdf.save('MLF-ID-'+vol.id+'.pdf');
+      showToast('✅ PDF downloaded! Print-ready.','success');
+    } else {
+      // PNG - high quality for printing
+      const imgData=canvas.toDataURL('image/png',1.0);
+      const a=document.createElement('a');
+      a.href=imgData;a.download='MLF-ID-'+vol.id+'.png';a.click();
+      showToast('✅ PNG downloaded! High quality for printing.','success');
+    }
+  }catch(err){console.error(err);showToast('Download failed. Try again.','error');}
+  card.style.left=prev.left;card.style.top=prev.top;card.style.position=prev.pos;card.style.zIndex=prev.z;
 }
 
 function showQRProfile(volId){
@@ -1431,7 +1551,19 @@ function submitContactForm(){
 
 // ── MODALS ──
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function openQRProfile(volId){
+  const vol=getVols().find(v=>v.id===volId)||getCurrentVol();
+  if(!vol)return;
+  const m=document.getElementById('modalQRProfile');if(!m)return;
+  const nameEl=document.getElementById('qrPublicName');if(nameEl)nameEl.textContent=vol.name;
+  const idEl=document.getElementById('qrPublicId');if(idEl)idEl.textContent=vol.id;
+  const photoEl=document.getElementById('qrPublicPhoto');
+  if(photoEl){if(vol.photo)photoEl.innerHTML=`<img src="${vol.photo}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">`;else photoEl.innerHTML='<div style="width:70px;height:70px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:32px;">👤</div>';}
+  const qrDiv=document.getElementById('qrPublicCode');if(qrDiv){qrDiv.innerHTML='';
+  try{new QRCode(qrDiv,{text:window.location.href.split('?')[0]+'?volunteer='+vol.id,width:200,height:200,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});}catch(ex){}}
+  openModal('modalQRProfile');
+}
+function closeModal(id){const m=document.getElementById(id);if(m){m.classList.remove('open');document.body.style.overflow='';}}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id);}));
 
 // ── TOAST ──
@@ -1443,6 +1575,11 @@ function toggleMenu(){
   const m=document.getElementById('mobMenu');
   m.classList.toggle('open');
   document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
+function closeMobMenu(){
+  const m=document.getElementById('mobMenu');
+  if(m){m.classList.remove('open');}
+  document.body.style.overflow='';
 }
 function formatDate(d){if(!d)return'';const dt=new Date(d);return`${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;}
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);handleClockVisibility();});
