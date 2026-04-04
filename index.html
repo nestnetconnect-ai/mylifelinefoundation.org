@@ -33,17 +33,16 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 .logo-ico img{width:100%;height:100%;object-fit:contain;}
 .logo-txt strong{display:block;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--blue);line-height:1.1;}
 .logo-txt span{font-size:10px;color:var(--gray);letter-spacing:.3px;text-transform:uppercase;}
-.nav-links{display:flex;gap:4px;align-items:center;margin-left:auto;}
-.nav-links a{text-decoration:none;color:var(--text);font-size:13px;font-weight:500;padding:8px 12px;border-radius:8px;transition:all .2s;cursor:pointer;display:inline-block;}
+.nav-links{display:flex;gap:2px;align-items:center;margin-left:auto;flex-shrink:1;overflow:hidden;}
+.nav-links a{text-decoration:none;color:var(--text);font-size:13px;font-weight:500;padding:7px 10px;border-radius:8px;transition:all .2s;cursor:pointer;display:inline-block;white-space:nowrap;}
 .nav-links a:hover{background:var(--gray-lt);color:var(--blue);}
-.nav-btn-login{border:1.5px solid var(--blue)!important;color:var(--blue)!important;border-radius:9px!important;padding:7px 14px!important;font-size:12.5px!important;white-space:nowrap!important;}
+.nav-btn-login{border:1.5px solid var(--blue)!important;color:var(--blue)!important;border-radius:9px!important;padding:7px 16px!important;font-size:13px!important;white-space:nowrap!important;font-weight:700!important;background:white!important;}
 .nav-btn-login:hover{background:var(--blue)!important;color:var(--white)!important;}
 .nav-btn-volunteer{background:var(--green)!important;color:var(--white)!important;border-radius:9px!important;font-weight:600!important;padding:7px 14px!important;font-size:12.5px!important;white-space:nowrap!important;}
 .nav-btn-volunteer:hover{background:var(--green-lt)!important;}
 .nav-btn-donate{background:var(--orange)!important;color:var(--white)!important;border-radius:9px!important;font-weight:700!important;padding:7px 14px!important;font-size:12.5px!important;white-space:nowrap!important;}
 .nav-btn-donate:hover{background:#d96d00!important;}
 .nav-btn-profile{background:var(--blue)!important;color:var(--white)!important;border-radius:9px!important;font-weight:600!important;padding:7px 14px!important;font-size:12.5px!important;white-space:nowrap!important;}
-#navAuthButtons{display:flex;align-items:center;gap:6px;margin-left:8px;flex-shrink:0;}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1002;position:relative;}
 .hamburger span{width:24px;height:2px;background:var(--blue);border-radius:2px;}
 .mob-menu{display:none;position:fixed;top:70px;left:0;right:0;z-index:1001;background:var(--white);border-bottom:1px solid var(--gray-lt);padding:16px 4% 20px;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(10,77,140,.15);max-height:80vh;overflow-y:auto;}
@@ -84,8 +83,8 @@ body{font-family:'Open Sans',sans-serif;color:var(--text);background:var(--white
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
 /* CLOCK */
-.clock-widget{width:230px;background:rgba(10,40,80,0.55);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.22);border-radius:18px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,0.35);color:var(--white);}
-#hero-clock-slot{position:fixed;top:80px;right:16px;z-index:990;}
+.clock-widget{width:230px;background:rgba(7,36,71,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.25);border-radius:18px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,0.45);color:var(--white);}
+#hero-clock-slot{position:fixed;top:82px;right:16px;z-index:990;}
 #navClockSlot{display:flex;align-items:center;padding:0 10px 0 6px;flex-shrink:0;}
 #navClockSlot .clock-widget{width:190px;padding:8px 12px;background:rgba(7,58,107,0.92);border:1.5px solid rgba(10,77,140,.4);border-radius:14px;box-shadow:0 2px 12px rgba(10,77,140,.25);}
 #navClockSlot .cw-time{font-size:22px;letter-spacing:1px;}
@@ -541,8 +540,8 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
     <a onclick="showPage('gallery-full')">Gallery</a>
     <a onclick="showPage('donate')">Donate</a>
     <a onclick="showPage('contact-page')">Contact</a>
-    <span id="navAuthButtons"></span>
   </div>
+  <span id="navAuthButtons" style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;"></span>
   <div id="navClockSlot"></div>
   <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
@@ -566,8 +565,8 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 
 <div id="hero-clock-slot">
 <div class="clock-widget" id="clockWidget">
-  <div class="cw-time" id="cwTime">00:00:00</div>
-  <div class="cw-date" id="cwDate">--/--/----</div>
+  <div class="cw-time" id="cwTime">--:--:--</div>
+  <div class="cw-date" id="cwDate">Loading...</div>
   <div class="cw-odia-month" id="cwOdiaMonth"></div>
   <div class="cw-divider"></div>
   <span class="cw-notice-label cw-label-upcoming"><span id="cwLabelText">ଆସନ୍ତା ଉତ୍ସବ</span></span>
@@ -1168,14 +1167,23 @@ function loadGallery(){
 function startClock(){
   function tick(){
     const n=new Date();
+    const H=String(n.getHours()).padStart(2,'0');
+    const M=String(n.getMinutes()).padStart(2,'0');
+    const S=String(n.getSeconds()).padStart(2,'0');
+    const D=String(n.getDate()).padStart(2,'0');
+    const Mo=String(n.getMonth()+1).padStart(2,'0');
+    const Y=n.getFullYear();
     const cwTime=document.getElementById('cwTime');
     const cwDate=document.getElementById('cwDate');
     const cwOM=document.getElementById('cwOdiaMonth');
-    if(cwTime)cwTime.textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
-    if(cwDate)cwDate.textContent=`${String(n.getDate()).padStart(2,'0')}/${String(n.getMonth()+1).padStart(2,'0')}/${n.getFullYear()}`;
-    if(cwOM)cwOM.textContent='🪄 '+ODIA_MONTHS[(n.getMonth()+9)%12]+' ମାସ';
+    if(cwTime)cwTime.textContent=H+':'+M+':'+S;
+    if(cwDate)cwDate.textContent=D+'/'+Mo+'/'+Y;
+    if(cwOM){
+      const odiaM=ODIA_MONTHS[(n.getMonth()+9)%12]||'';
+      cwOM.textContent='🪄 '+odiaM+' ମାସ';
+    }
   }
-  tick();
+  tick(); // run immediately
   setInterval(tick,1000);
 }
 
@@ -1587,12 +1595,19 @@ window.addEventListener('resize',()=>{handleClockVisibility();});
 document.addEventListener('click',e=>{const menu=document.getElementById('mobMenu');if(menu.classList.contains('open')&&!menu.contains(e.target)&&!document.querySelector('.hamburger').contains(e.target))menu.classList.remove('open');});
 
 // ── INIT ──
-loadAdminContent();
-startClock();
-updateNav();
-buildNotices();
-checkQRParam();
-(function(){const tf=getTodayFestivals();if(tf.length>0)setTimeout(()=>showFestivalPopup(tf[0]),2000);})();
+function initApp(){
+  loadAdminContent();
+  startClock();
+  updateNav();
+  buildNotices();
+  checkQRParam();
+  (function(){const tf=getTodayFestivals();if(tf.length>0)setTimeout(()=>showFestivalPopup(tf[0]),2000);})();
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 // ── AUTO-UPDATE FROM ADMIN (storage event) ──
 // When admin saves in another tab, website auto-refreshes content
