@@ -965,12 +965,39 @@ function saveMember(type){
   }else{
     const name=document.getElementById('c-name').value.trim();
     const role=document.getElementById('c-role').value.trim();
+    const cid=document.getElementById('c-id').value.trim();
+    const cphone=document.getElementById('c-phone').value.trim();
     if(!name||!role){showToast('Name and Role required','error');return;}
     if(!st.coordinators)st.coordinators=[];
     const idx=document.getElementById('coord-edit-idx').value;
-    const obj={name,role,id:document.getElementById('c-id').value.trim(),phone:document.getElementById('c-phone').value.trim(),area:document.getElementById('c-area').value.trim(),photo:document.getElementById('c-photo-url').value};
+    const obj={name,role,id:cid,phone:cphone,area:document.getElementById('c-area').value.trim(),photo:document.getElementById('c-photo-url').value};
     if(idx!=='')st.coordinators[parseInt(idx)]=obj;else st.coordinators.push(obj);
-    DB.setSt(st);renderCoords();closeModal('modal-coord');showToast('✅ Coordinator saved!','success');
+    DB.setSt(st);renderCoords();closeModal('modal-coord');
+
+    // ALSO register coordinator in mlf_volunteers so they can log in on website
+    if(cid&&cphone){
+      const mobile=cphone.replace(/\D/g,'').slice(-10);
+      if(mobile.length===10){
+        const vols=JSON.parse(localStorage.getItem('mlf_volunteers')||'[]');
+        const existIdx=vols.findIndex(v=>v.id===cid.toUpperCase());
+        const coordVol={
+          id:cid.toUpperCase(),type:'C',name,dob:'',fatherName:'',motherName:'',
+          occupation:role,mobile,
+          aadhaarDisplay:'**** **** (admin)',aadhaarKey:'admin_'+cid,
+          at:document.getElementById('c-area').value.trim(),post:'',ps:'',
+          district:document.getElementById('c-area').value.trim(),state:'Odisha',pin:'',
+          joinDate:new Date().toISOString().split('T')[0],
+          status:'Active',photo:document.getElementById('c-photo-url').value
+        };
+        if(existIdx>-1)vols[existIdx]=coordVol;else vols.push(coordVol);
+        localStorage.setItem('mlf_volunteers',JSON.stringify(vols));
+        showToast('✅ Coordinator saved! They can now login with ID: '+cid.toUpperCase(),'success');
+      } else {
+        showToast('✅ Coordinator saved! (Add valid 10-digit phone for login)','success');
+      }
+    } else {
+      showToast('✅ Coordinator saved! (Add ID + Phone to enable login)','success');
+    }
   }
 }
 function deleteMember(type,idx){
@@ -1149,9 +1176,15 @@ function saveSection(sec){
   else if(sec==='footer'){st.footer={about:g('ft-about'),reg:g('ft-reg'),pan:g('ft-pan'),copy:g('ft-copy'),soc1:g('soc1'),soc2:g('soc2'),soc3:g('soc3'),soc4:g('soc4')};}
   else if(sec==='legal'){st.legal={r:g('leg-r'),pan:g('leg-pan'),niti:g('leg-niti'),desc:g('leg-desc')};}
   else if(sec==='progpages'){st.progpages={edu:{img:g('edu-img'),t:g('edu-t'),p1:g('edu-p1'),p2:g('edu-p2'),ft:g('edu-ft'),fp:g('edu-fp')},health:{img:g('health-img'),t:g('health-t'),p1:g('health-p1'),p2:g('health-p2'),ft:g('health-ft'),fp:g('health-fp')},rural:{img:g('rural-img'),t:g('rural-t'),p1:g('rural-p1'),p2:g('rural-p2'),ft:g('rural-ft'),fp:g('rural-fp')},env:{img:g('env-img'),t:g('env-t'),p1:g('env-p1'),p2:g('env-p2'),ft:g('env-ft'),fp:g('env-fp')}};}
-  // This triggers the storage event in any open index.html tab
+  // Triggers storage event (HTTP) + BroadcastChannel (file://) + polling fallback
   DB.setSt(st);
-  showToast('✅ Saved! Website auto-updates if open in another tab.','success');
+  // BroadcastChannel works on file:// where storage event may not
+  try{
+    const bc=new BroadcastChannel('mlf_admin_update');
+    bc.postMessage({key:'mlf_st',ts:Date.now()});
+    bc.close();
+  }catch(e){}
+  showToast('✅ Saved! Public website will update within 3 seconds.','success');
 }
 
 function saveAllData(){
