@@ -2028,6 +2028,14 @@ try{
   };
 }catch(e){}
 
+
+// Re-load admin content when user switches back to this tab
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden){
+    try{loadAdminContent();}catch(e){}
+    try{buildNotices();}catch(e){}
+  }
+});
 // Method 3: Polling fallback (works for local file:// usage too)
 // Checks every 3 seconds if admin has saved new data
 (function(){
@@ -2046,7 +2054,7 @@ try{
       try{buildNotices();}catch(err){}
       try{updateNav();}catch(err){}
     }
-  },3000);
+  },1500);
 })();
 </script>
 </body>
