@@ -177,6 +177,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--text);di
     <button class="topbar-btn topbar-btn-green" onclick="saveAllData()">💾 Save All Changes</button>
     <button class="topbar-btn topbar-btn-primary" onclick="window.open('index.html','_blank')">🌐 View Website</button>
     <span class="admin-badge">👤 Admin</span>
+    <span id="lastSavedBadge" style="font-size:11px;color:var(--gray);background:var(--off);border:1px solid var(--gray-lt);border-radius:20px;padding:5px 12px;"></span>
     <button class="topbar-btn topbar-btn-danger" onclick="doLogout()">Logout</button>
   </div>
 </div>
@@ -805,7 +806,9 @@ async function handleImageUpload(input,previewId,urlId,folder){
       const prev=previewId?document.getElementById(previewId):null;
       if(prev){prev.src=url;prev.style.display='';}
       showToast('✅ Uploaded to Supabase CDN!','success');
-      input.value='';return;
+      input.value='';
+      autoSaveSection(folder);
+      return;
     }
   }catch(e){}
   // Fallback: base64
@@ -814,6 +817,7 @@ async function handleImageUpload(input,previewId,urlId,folder){
   const prev=previewId?document.getElementById(previewId):null;
   if(prev){prev.src=b64;prev.style.display='';}
   showToast('✅ Image ready! (stored locally)','success');
+  autoSaveSection(folder);
   input.value='';
 }
 
@@ -1160,6 +1164,25 @@ function saveDonor(){
 function deleteDonor(idx){if(!confirm('Delete?'))return;const d=getDonors();d.splice(idx,1);setDonors(d);renderDonors();}
 function selectDType(el,type){document.querySelectorAll('.dtype-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('donor-type').value=type;}
 
+
+// Auto-save section when image is uploaded - maps folder to section key
+function autoSaveSection(folder){
+  const map={
+    'hero/':'hero','hero-backgrounds/':'hero',
+    'about/':'about',
+    'programs/':'programs',
+    'stories/':'stories',
+    'branding/':'logo',
+    'board_members/':'board_members',
+    'coordinators/':'coordinator_display',
+    'education/':'progpages','health/':'progpages',
+    'rural/':'progpages','environment/':'progpages',
+  };
+  const sec=map[folder];
+  if(sec&&['hero','about','programs','stories','logo','progpages'].includes(sec)){
+    try{saveSection(sec);}catch(e){}
+  }
+}
 // ── SAVE SECTIONS — broadcasts storage event to index.html ──
 function saveSection(sec){
   const st=DB.getSt();
@@ -1185,12 +1208,16 @@ function saveSection(sec){
     bc.close();
   }catch(e){}
   showToast('✅ Saved! Public website will update within 3 seconds.','success');
+  const lb=document.getElementById('lastSavedBadge');
+  if(lb){const t=new Date();lb.textContent='✅ Saved at '+t.getHours()+':'+String(t.getMinutes()).padStart(2,'0')+':'+String(t.getSeconds()).padStart(2,'0');}
 }
 
 function saveAllData(){
   ['hero','about','programs','stats','stories','join','vision','donate','contact','logo','footer','legal','progpages'].forEach(saveSection);
   saveBdayWish();
-  showToast('✅ All changes saved!','success');
+  const lb=document.getElementById('lastSavedBadge');
+  if(lb){const t=new Date();lb.textContent='✅ All saved at '+t.getHours()+':'+String(t.getMinutes()).padStart(2,'0')+':'+String(t.getSeconds()).padStart(2,'0');}
+  showToast('✅ All changes saved! Website updating...','success');
 }
 
 function loadAllFields(){
