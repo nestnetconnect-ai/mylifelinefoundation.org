@@ -734,8 +734,9 @@ const DB={
   set:(k,v)=>localStorage.setItem(k,JSON.stringify(v)),
   getSt:()=>DB.get('mlf_st')||{},
   setSt:d=>{
-    // CRITICAL: use setItem directly so storage event fires in website tab
     localStorage.setItem('mlf_st',JSON.stringify(d));
+    // Broadcast to index.html tab immediately via BroadcastChannel
+    try{const bc=new BroadcastChannel('mlf_sync');bc.postMessage('mlf_st');bc.close();}catch(e){}
   }
 };
 function getVols(){return JSON.parse(localStorage.getItem('mlf_volunteers')||'[]');}
@@ -1199,17 +1200,10 @@ function saveSection(sec){
   else if(sec==='footer'){st.footer={about:g('ft-about'),reg:g('ft-reg'),pan:g('ft-pan'),copy:g('ft-copy'),soc1:g('soc1'),soc2:g('soc2'),soc3:g('soc3'),soc4:g('soc4')};}
   else if(sec==='legal'){st.legal={r:g('leg-r'),pan:g('leg-pan'),niti:g('leg-niti'),desc:g('leg-desc')};}
   else if(sec==='progpages'){st.progpages={edu:{img:g('edu-img'),t:g('edu-t'),p1:g('edu-p1'),p2:g('edu-p2'),ft:g('edu-ft'),fp:g('edu-fp')},health:{img:g('health-img'),t:g('health-t'),p1:g('health-p1'),p2:g('health-p2'),ft:g('health-ft'),fp:g('health-fp')},rural:{img:g('rural-img'),t:g('rural-t'),p1:g('rural-p1'),p2:g('rural-p2'),ft:g('rural-ft'),fp:g('rural-fp')},env:{img:g('env-img'),t:g('env-t'),p1:g('env-p1'),p2:g('env-p2'),ft:g('env-ft'),fp:g('env-fp')}};}
-  // Triggers storage event (HTTP) + BroadcastChannel (file://) + polling fallback
   DB.setSt(st);
-  // BroadcastChannel works on file:// where storage event may not
-  try{
-    const bc=new BroadcastChannel('mlf_admin_update');
-    bc.postMessage({key:'mlf_st',ts:Date.now()});
-    bc.close();
-  }catch(e){}
-  showToast('✅ Saved! Public website will update within 3 seconds.','success');
   const lb=document.getElementById('lastSavedBadge');
   if(lb){const t=new Date();lb.textContent='✅ Saved at '+t.getHours()+':'+String(t.getMinutes()).padStart(2,'0')+':'+String(t.getSeconds()).padStart(2,'0');}
+  showToast('✅ Saved! Website updating now...','success');
 }
 
 function saveAllData(){
