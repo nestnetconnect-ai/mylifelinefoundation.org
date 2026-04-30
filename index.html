@@ -1030,20 +1030,27 @@ async function fetchConfigFromSupabase(){
         'Accept':'application/json'
       }
     });
-    if(!resp.ok)return;
+    if(!resp.ok)return null;
     const rows=await resp.json();
     if(rows&&rows.length>0&&rows[0].data){
-      const newData=JSON.stringify(rows[0].data);
+      const sbData=rows[0].data;
+      // ✅ CRITICAL: Only use Supabase data if it has actual content (not empty {})
+      const hasContent=sbData&&Object.keys(sbData).length>0;
+      if(!hasContent){
+        console.warn('Supabase data is empty — keeping localStorage data');
+        return null;
+      }
+      const newData=JSON.stringify(sbData);
       const oldData=localStorage.getItem('mlf_st')||'{}';
       if(newData!==oldData){
         localStorage.setItem('mlf_st',newData);
         console.log('✅ Config loaded from Supabase');
       }
-      return rows[0].data;
+      return sbData;
     }
   }catch(e){console.warn('Supabase fetch failed, using localStorage:',e);}
   return null;
-}}
+}
 function getVols(){try{return JSON.parse(localStorage.getItem('mlf_volunteers')||'[]');}catch{return[];}}
 function saveVols(a){localStorage.setItem('mlf_volunteers',JSON.stringify(a));}
 function getSession(){return localStorage.getItem('mlf_session');}
@@ -1354,7 +1361,7 @@ document.addEventListener('click',function(e){var menu=document.getElementById('
 
 // ── INIT ──
 async function initApp(){
-  // 1. Show page immediately with localStorage (instant, no flash)
+  // 1. ALWAYS render from localStorage first (instant load, no blank page)
   try{loadAdminContent();}catch(e){console.warn('Admin content load:',e);}
   try{startClock();}catch(e){}
   try{updateNav();}catch(e){}
@@ -1362,14 +1369,12 @@ async function initApp(){
   try{checkQRParam();}catch(e){}
   try{var tf=getTodayFestivals();if(tf.length>0)setTimeout(function(){showFestivalPopup(tf[0]);},2000);}catch(e){}
 
-  // 2. Then fetch LIVE data from Supabase and re-apply if changed
+  // 2. Fetch from Supabase — ONLY update if Supabase has real content
   try{
     var fresh=await fetchConfigFromSupabase();
-    if(fresh){
-      // Re-apply fresh data to the page
+    if(fresh&&Object.keys(fresh).length>0){
       try{loadAdminContent();}catch(e){}
       try{buildNotices();}catch(e){}
-      // Re-trigger counters
       document.querySelectorAll('.impact-num[data-target]').forEach(function(el){
         el.innerHTML='0<span style="font-size:.55em">+</span>';
         cntObs.observe(el);
@@ -1377,11 +1382,11 @@ async function initApp(){
     }
   }catch(e){console.warn('Supabase init fetch failed:',e);}
 
-  // 3. Poll Supabase every 30s for live updates (when admin saves)
+  // 3. Poll Supabase every 30s for live admin updates
   setInterval(async function(){
     try{
       var fresh=await fetchConfigFromSupabase();
-      if(fresh){
+      if(fresh&&Object.keys(fresh).length>0){
         try{loadAdminContent();}catch(e){}
         try{buildNotices();}catch(e){}
       }
