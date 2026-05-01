@@ -1599,7 +1599,7 @@ function handlePhotoUpload(event){
   };reader.readAsDataURL(file);
 }
 
-async async function downloadIDCard(fmt='png'){
+async function downloadIDCard(fmt='png'){
   const vol=getCurrentVol();if(!vol)return;
   showToast('Preparing ID Card... ⏳','');
   // Fill card data
