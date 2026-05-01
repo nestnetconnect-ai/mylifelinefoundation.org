@@ -77,7 +77,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--text);di
 .modal-hd{padding:18px 22px 14px;border-bottom:1px solid var(--gray-lt);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1;}
 .modal-hd h3{font-family:'Poppins',sans-serif;font-size:16px;font-weight:700;color:var(--blue);}
 .modal-close{width:30px;height:30px;border:none;background:var(--gray-lt);border-radius:7px;cursor:pointer;font-size:14px;}
-.modal-body{padding:20px 22px 24px;}
 .toast{position:fixed;bottom:24px;right:24px;z-index:1000;background:var(--blue-dk);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--sh-md);transform:translateY(80px);transition:transform .3s;}
 .toast.show{transform:translateY(0);}.toast.success{background:var(--green);}.toast.error{background:var(--red);}
 #loginScreen{position:fixed;inset:0;z-index:2000;background:linear-gradient(135deg,var(--blue-dk) 0%,#0d4f30 100%);display:flex;align-items:center;justify-content:center;}
@@ -129,6 +128,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--text);di
     <div class="logo-big">🌱</div>
     <h2>MLF Admin Panel</h2>
     <p>My Lifeline Foundation — Secure Admin Login</p>
+    <div id="loginLoadingMsg" style="font-size:12px;color:var(--gray);margin-bottom:8px;min-height:18px;">⏳ Loading credentials...</div>
     <div class="field"><label>Username</label><input type="text" id="loginUser" value="admin"></div>
     <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div id="loginErr" style="color:#ef4444;font-size:12px;margin-bottom:10px;display:none;">Invalid credentials. Please try again.</div>
@@ -171,7 +171,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--text);di
     <div class="sb-item" onclick="showPage('forgot')"><span class="ico">🔓</span> Volunteer Lookup</div>
     <div class="sb-item" onclick="showPage('sheets')"><span class="ico">📊</span> Google Sheets</div>
   </nav>
-  <div class="sb-footer">MLF Admin Panel v3.1 ✨</div>
+  <div class="sb-footer">MLF Admin Panel v3.2 ✨</div>
 </aside>
 
 <div class="topbar">
@@ -627,6 +627,9 @@ insert into site_config (id, data) values (1, '{}') on conflict (id) do nothing;
 <div class="page" id="page-password">
   <div class="card" style="max-width:480px;"><div class="card-hd"><h3>🔑 Change Admin Password</h3></div>
     <div class="card-body">
+      <div class="info-box" style="background:#dcfce7;border-color:#86efac;color:#166534;">
+        ✅ <strong>Password is stored in Supabase</strong> — works on all computers/devices automatically.
+      </div>
       <div class="field"><label>Current Password</label><input type="password" id="pw-cur"></div>
       <div class="field"><label>New Password</label><input type="password" id="pw-new" placeholder="Min 6 characters"></div>
       <div class="field"><label>Confirm New Password</label><input type="password" id="pw-confirm"></div>
@@ -733,7 +736,6 @@ insert into site_config (id, data) values (1, '{}') on conflict (id) do nothing;
   </div>
 </div>
 
-<!-- VOLUNTEER DETAIL MODAL -->
 <div class="modal-ov" id="modal-vol-detail">
   <div class="modal-box"><div class="modal-hd"><h3>👤 Volunteer Details</h3><button class="modal-close" onclick="closeModal('modal-vol-detail')">✕</button></div>
     <div class="modal-body" id="volDetailBody"></div>
@@ -744,22 +746,74 @@ insert into site_config (id, data) values (1, '{}') on conflict (id) do nothing;
 
 <script>
 /* ═══════════════════════════════════════
-   MLF Admin Panel v3.1 — COMPLETE REBUILD
-   All fixes applied:
-   - Gallery: inline caption input (no more browser prompt)
-   - Dashboard: birthday widget + correct photo count
-   - Donors: CSV export
-   - Board edit: photo pre-fill fix
-   - Volunteer detail: proper modal (no alert)
-   - Login: no credential hint
-   - Coordinator: phone validation
+   MLF Admin Panel v3.2
+   KEY CHANGE: Admin password now stored
+   in Supabase — works on ALL computers!
 ═══════════════════════════════════════ */
 const SB_URL='https://mvkbczobozlbdigkecwr.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12a2Jjem9ib3psYmRpZ2tlY3dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNDk0MzksImV4cCI6MjA4OTgyNTQzOX0.QzrmLBzKyA3NzQTKFnTSiGHiEnIeD0DwH5fCULhDUTM';
 const SB_BUCKET='mlf-images';
+const DEFAULT_USER='admin';
+const DEFAULT_PASS='mlf@2024';
 
-let adminCreds=JSON.parse(localStorage.getItem('mlf_admin_creds')||'{"user":"admin","pass":"mlf@2024"}');
+// ── ADMIN CREDENTIALS (Supabase-backed) ──
+let adminCreds={user:DEFAULT_USER,pass:DEFAULT_PASS};
 
+// Load admin creds from Supabase, fallback to localStorage, fallback to default
+async function loadAdminCreds(){
+  const loadingMsg=document.getElementById('loginLoadingMsg');
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=data`,{
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Accept':'application/json'}
+    });
+    if(r.ok){
+      const rows=await r.json();
+      if(rows&&rows.length>0&&rows[0].data&&rows[0].data._adminCreds){
+        adminCreds=rows[0].data._adminCreds;
+        // Sync to localStorage as backup
+        localStorage.setItem('mlf_admin_creds',JSON.stringify(adminCreds));
+        if(loadingMsg)loadingMsg.textContent='✅ Ready';
+        console.log('✅ Admin creds loaded from Supabase');
+        return;
+      }
+    }
+  }catch(e){console.warn('Supabase creds load failed:',e);}
+  // Fallback: localStorage
+  try{
+    const lc=localStorage.getItem('mlf_admin_creds');
+    if(lc){adminCreds=JSON.parse(lc);}
+  }catch{}
+  if(loadingMsg)loadingMsg.textContent='✅ Ready (offline mode)';
+}
+
+// Save admin creds to Supabase + localStorage
+async function saveAdminCredsToSupabase(creds){
+  // Always save locally first
+  localStorage.setItem('mlf_admin_creds',JSON.stringify(creds));
+  try{
+    // Fetch current site_config data
+    const r=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=data`,{
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Accept':'application/json'}
+    });
+    let currentData={};
+    if(r.ok){const rows=await r.json();if(rows&&rows[0])currentData=rows[0].data||{};}
+    // Merge creds into existing data (don't overwrite other content)
+    currentData._adminCreds=creds;
+    // Push back to Supabase
+    const resp=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1`,{
+      method:'PATCH',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({data:currentData,updated_at:new Date().toISOString()})
+    });
+    if(resp.ok){
+      console.log('✅ Admin creds saved to Supabase');
+      return true;
+    }
+  }catch(e){console.warn('Supabase creds save failed (saved locally):',e);}
+  return false;
+}
+
+// ── LOGIN / LOGOUT ──
 function doLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
@@ -772,7 +826,10 @@ function doLogin(){
     document.getElementById('loginPass').select();
   }
 }
-function doLogout(){document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('loginPass').value='';}
+function doLogout(){
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginPass').value='';
+}
 
 // DB helpers
 const DB={
@@ -782,38 +839,33 @@ const DB={
   setSt:d=>{
     localStorage.setItem('mlf_st',JSON.stringify(d));
     try{const bc=new BroadcastChannel('mlf_sync');bc.postMessage('mlf_st');bc.close();}catch(e){}
-    // ── SUPABASE SYNC: Push to DB so public website sees changes ──
     DB.pushToSupabase(d);
   },
   pushToSupabase:async(d)=>{
     try{
-      // ✅ Don't push if data is empty
-      if(!d||Object.keys(d).length===0){console.warn('Skipping empty push to Supabase');return;}
-      // upsert into site_config table — single row with id=1
+      if(!d||Object.keys(d).length===0){return;}
+      // Preserve _adminCreds when pushing content
+      const r=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=data`,{
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Accept':'application/json'}
+      });
+      let existing={};
+      if(r.ok){const rows=await r.json();if(rows&&rows[0])existing=rows[0].data||{};}
+      // Merge: keep _adminCreds from Supabase, update rest with new content
+      const merged=Object.assign({},existing,d);
+      if(existing._adminCreds)merged._adminCreds=existing._adminCreds;
       const resp=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1`,{
         method:'PATCH',
-        headers:{
-          'apikey':SB_KEY,
-          'Authorization':`Bearer ${SB_KEY}`,
-          'Content-Type':'application/json',
-          'Prefer':'resolution=merge-duplicates,return=minimal'
-        },
-        body:JSON.stringify({id:1,data:d,updated_at:new Date().toISOString()})
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify({id:1,data:merged,updated_at:new Date().toISOString()})
       });
-      // If row doesn't exist yet (404), insert it
-      if(resp.status===404||resp.status===0||(await resp.text()).includes('0 rows')){
+      if(resp.status===404||(await resp.text()).includes('0 rows')){
         await fetch(`${SB_URL}/rest/v1/site_config`,{
           method:'POST',
-          headers:{
-            'apikey':SB_KEY,
-            'Authorization':`Bearer ${SB_KEY}`,
-            'Content-Type':'application/json',
-            'Prefer':'resolution=merge-duplicates,return=minimal'
-          },
-          body:JSON.stringify({id:1,data:d,updated_at:new Date().toISOString()})
+          headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+          body:JSON.stringify({id:1,data:merged,updated_at:new Date().toISOString()})
         });
       }
-    }catch(e){console.warn('Supabase sync failed (offline?):',e);}
+    }catch(e){console.warn('Supabase sync failed:',e);}
   },
   pullFromSupabase:async()=>{
     try{
@@ -823,8 +875,12 @@ const DB={
       if(resp.ok){
         const rows=await resp.json();
         if(rows&&rows.length>0&&rows[0].data){
-          localStorage.setItem('mlf_st',JSON.stringify(rows[0].data));
-          console.log('✅ Pulled config from Supabase DB');
+          const d=rows[0].data;
+          // Don't store _adminCreds in mlf_st — keep it separate
+          const {_adminCreds,...contentData}=d;
+          if(Object.keys(contentData).length>0)
+            localStorage.setItem('mlf_st',JSON.stringify(contentData));
+          console.log('✅ Pulled config from Supabase');
         }
       }
     }catch(e){console.warn('Supabase pull failed:',e);}
@@ -891,20 +947,17 @@ async function checkSupabase(){
       el.innerHTML=`⚠️ Supabase status ${r.status}. Check connection.`;
     }
   }catch{el.className='warn-box';el.innerHTML='⚠️ Cannot reach Supabase. Changes saved locally only.';}
-  // Also ensure site_config row exists in DB
   await ensureSiteConfigRow();
 }
 
 async function ensureSiteConfigRow(){
   try{
-    // Check if row exists
     const r=await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=id`,{
       headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Accept':'application/json'}
     });
     if(!r.ok)return;
     const rows=await r.json();
     if(!rows||rows.length===0){
-      // Row doesn't exist — create it with current localStorage data
       const currentData=DB.getSt();
       await fetch(`${SB_URL}/rest/v1/site_config`,{
         method:'POST',
@@ -912,13 +965,10 @@ async function ensureSiteConfigRow(){
         body:JSON.stringify({id:1,data:currentData,updated_at:new Date().toISOString()})
       });
       console.log('✅ site_config row created in Supabase');
-    } else {
-      console.log('✅ site_config row exists in Supabase');
     }
   }catch(e){console.warn('ensureSiteConfigRow:',e);}
 }
 
-// Upload image — Supabase CDN first, base64 fallback
 async function handleImageUpload(input,previewId,urlId,folder){
   const file=input.files[0];if(!file)return;
   if(file.size>10*1024*1024){showToast('File too large. Max 10MB.','error');return;}
@@ -937,11 +987,9 @@ async function handleImageUpload(input,previewId,urlId,folder){
       const prev=previewId?document.getElementById(previewId):null;
       if(prev){prev.src=url;prev.style.display='';}
       showToast('✅ Uploaded to Supabase CDN!','success');
-      input.value='';
-      return;
+      input.value='';return;
     }
   }catch(e){}
-  // Fallback: base64
   const b64=await fileToBase64(file);
   if(urlId)document.getElementById(urlId).value=b64;
   const prev=previewId?document.getElementById(previewId):null;
@@ -958,10 +1006,7 @@ function fileToBase64(file,maxSize=800,quality=0.82){
       img.onload=()=>{
         const canvas=document.createElement('canvas');
         let w=img.width,h=img.height;
-        if(w>maxSize||h>maxSize){
-          if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}
-          else{w=Math.round(w*maxSize/h);h=maxSize;}
-        }
+        if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}else{w=Math.round(w*maxSize/h);h=maxSize;}}
         canvas.width=w;canvas.height=h;
         canvas.getContext('2d').drawImage(img,0,0,w,h);
         resolve(canvas.toDataURL('image/jpeg',quality));
@@ -998,7 +1043,6 @@ function renderGallery(){
 
 async function handleGalleryUpload(input){
   const files=Array.from(input.files);if(!files.length)return;
-  // Use the inline caption input — no more browser prompt()
   const captionInput=document.getElementById('gal-bulk-caption');
   const defaultCap=(captionInput&&captionInput.value.trim())||'MLF Activity';
   const st=DB.getSt();if(!st.gallery)st.gallery=[];
@@ -1080,8 +1124,7 @@ function openAddMember(){
   document.getElementById('memberModalTitle').textContent='➕ Add Board Member';
   document.getElementById('member-edit-idx').value='';
   ['m-name','m-desig','m-photo-url'].forEach(id=>document.getElementById(id).value='');
-  const p=document.getElementById('m-photo-preview');
-  if(p){p.src='';p.style.display='none';}
+  const p=document.getElementById('m-photo-preview');if(p){p.src='';p.style.display='none';}
   openModal('modal-member');
 }
 
@@ -1089,8 +1132,7 @@ function openAddCoord(){
   document.getElementById('coordModalTitle').textContent='➕ Add Coordinator';
   document.getElementById('coord-edit-idx').value='';
   ['c-name','c-role','c-id','c-phone','c-area','c-photo-url'].forEach(id=>document.getElementById(id).value='');
-  const p=document.getElementById('c-photo-preview');
-  if(p){p.src='';p.style.display='none';}
+  const p=document.getElementById('c-photo-preview');if(p){p.src='';p.style.display='none';}
   openModal('modal-coord');
 }
 
@@ -1104,10 +1146,7 @@ function editMember(type,idx){
     document.getElementById('m-desig').value=m.desig||'';
     document.getElementById('m-photo-url').value=m.photo||'';
     const p=document.getElementById('m-photo-preview');
-    if(p){
-      if(m.photo&&m.photo.length>10){p.src=m.photo;p.style.display='';}
-      else{p.src='';p.style.display='none';}
-    }
+    if(p){if(m.photo&&m.photo.length>10){p.src=m.photo;p.style.display='';}else{p.src='';p.style.display='none';}}
     openModal('modal-member');
   } else {
     const c=(st.coordinators||[])[idx];if(!c)return;
@@ -1120,10 +1159,7 @@ function editMember(type,idx){
     document.getElementById('c-area').value=c.area||'';
     document.getElementById('c-photo-url').value=c.photo||'';
     const p=document.getElementById('c-photo-preview');
-    if(p){
-      if(c.photo&&c.photo.length>10){p.src=c.photo;p.style.display='';}
-      else{p.src='';p.style.display='none';}
-    }
+    if(p){if(c.photo&&c.photo.length>10){p.src=c.photo;p.style.display='';}else{p.src='';p.style.display='none';}}
     openModal('modal-coord');
   }
 }
@@ -1146,7 +1182,6 @@ function saveMember(type){
     const cid=document.getElementById('c-id').value.trim();
     const rawPhone=document.getElementById('c-phone').value.trim();
     if(!name||!role){showToast('Name and Role are required','error');return;}
-    // Validate phone — must be exactly 10 digits if provided
     const mobile=rawPhone.replace(/\D/g,'').slice(-10);
     if(rawPhone&&mobile.length!==10){showToast('Phone must be a valid 10-digit number','error');return;}
     if(!st.coordinators)st.coordinators=[];
@@ -1154,27 +1189,14 @@ function saveMember(type){
     const obj={name,role,id:cid,phone:mobile||rawPhone,area:document.getElementById('c-area').value.trim(),photo:document.getElementById('c-photo-url').value};
     if(idx!=='')st.coordinators[parseInt(idx)]=obj;else st.coordinators.push(obj);
     DB.setSt(st);renderCoords();closeModal('modal-coord');
-    // Register coordinator in volunteers so they can log in on website
     if(cid&&mobile.length===10){
       const vols=JSON.parse(localStorage.getItem('mlf_volunteers')||'[]');
       const existIdx=vols.findIndex(v=>v.id===cid.toUpperCase());
-      const coordVol={
-        id:cid.toUpperCase(),type:'C',name,dob:'',fatherName:'',motherName:'',
-        occupation:role,mobile,
-        aadhaarDisplay:'Admin registered',aadhaarKey:'admin_'+cid.toUpperCase(),
-        at:document.getElementById('c-area').value.trim(),post:'',ps:'',
-        district:document.getElementById('c-area').value.trim(),state:'Odisha',pin:'',
-        joinDate:new Date().toISOString().split('T')[0],
-        status:'Active',photo:document.getElementById('c-photo-url').value
-      };
+      const coordVol={id:cid.toUpperCase(),type:'C',name,dob:'',fatherName:'',motherName:'',occupation:role,mobile,aadhaarDisplay:'Admin registered',aadhaarKey:'admin_'+cid.toUpperCase(),at:document.getElementById('c-area').value.trim(),post:'',ps:'',district:document.getElementById('c-area').value.trim(),state:'Odisha',pin:'',joinDate:new Date().toISOString().split('T')[0],status:'Active',photo:document.getElementById('c-photo-url').value};
       if(existIdx>-1)vols[existIdx]=coordVol;else vols.push(coordVol);
       localStorage.setItem('mlf_volunteers',JSON.stringify(vols));
       showToast(`✅ Coordinator saved! Login: ID ${cid.toUpperCase()} + phone ${mobile}`,'success');
-    } else if(cid&&!mobile){
-      showToast('✅ Coordinator saved! Add valid phone to enable login.','success');
-    } else {
-      showToast('✅ Coordinator saved!','success');
-    }
+    } else {showToast('✅ Coordinator saved!','success');}
   }
 }
 
@@ -1215,101 +1237,40 @@ function renderFestivals(){
     </div>
   </div>`).join('');
 }
-function openAddFestival(){
-  document.getElementById('festModalTitle').textContent='➕ Add Festival';
-  document.getElementById('fest-edit-idx').value='';
-  ['f-month','f-day','f-name','f-emoji','f-wish'].forEach(id=>document.getElementById(id).value='');
-  openModal('modal-festival');
-}
-function editFestival(idx){
-  const f=getFestivals()[idx];
-  document.getElementById('festModalTitle').textContent='✏️ Edit Festival';
-  document.getElementById('fest-edit-idx').value=idx;
-  document.getElementById('f-month').value=f.month;document.getElementById('f-day').value=f.day;
-  document.getElementById('f-name').value=f.name;document.getElementById('f-emoji').value=f.emoji;
-  document.getElementById('f-wish').value=f.wish;
-  openModal('modal-festival');
-}
+function openAddFestival(){document.getElementById('festModalTitle').textContent='➕ Add Festival';document.getElementById('fest-edit-idx').value='';['f-month','f-day','f-name','f-emoji','f-wish'].forEach(id=>document.getElementById(id).value='');openModal('modal-festival');}
+function editFestival(idx){const f=getFestivals()[idx];document.getElementById('festModalTitle').textContent='✏️ Edit Festival';document.getElementById('fest-edit-idx').value=idx;document.getElementById('f-month').value=f.month;document.getElementById('f-day').value=f.day;document.getElementById('f-name').value=f.name;document.getElementById('f-emoji').value=f.emoji;document.getElementById('f-wish').value=f.wish;openModal('modal-festival');}
 function saveFestival(){
-  const month=parseInt(document.getElementById('f-month').value);
-  const day=parseInt(document.getElementById('f-day').value);
-  const name=document.getElementById('f-name').value.trim();
+  const month=parseInt(document.getElementById('f-month').value);const day=parseInt(document.getElementById('f-day').value);const name=document.getElementById('f-name').value.trim();
   if(!month||!day||!name){showToast('Month, Day and Name are required','error');return;}
-  const fests=getFestivals();
-  const idx=document.getElementById('fest-edit-idx').value;
+  const fests=getFestivals();const idx=document.getElementById('fest-edit-idx').value;
   const obj={month,day,name,emoji:document.getElementById('f-emoji').value||'🎉',wish:document.getElementById('f-wish').value};
   if(idx!=='')fests[parseInt(idx)]=obj;else fests.push(obj);
   saveFestivalsList(fests);renderFestivals();closeModal('modal-festival');showToast('✅ Festival saved!','success');
 }
-function deleteFestival(idx){
-  if(!confirm('Delete this festival?'))return;
-  const fests=getFestivals();fests.splice(idx,1);saveFestivalsList(fests);renderFestivals();
-}
+function deleteFestival(idx){if(!confirm('Delete this festival?'))return;const fests=getFestivals();fests.splice(idx,1);saveFestivalsList(fests);renderFestivals();}
 
 // ── TICKER ──
 function getTicker(){return DB.getSt()?.notifcal?.ticker||[];}
 function saveTickers(arr){const st=DB.getSt();if(!st.notifcal)st.notifcal={};st.notifcal.ticker=arr;DB.setSt(st);}
-function renderTicker(){
-  const tickers=getTicker();const list=document.getElementById('tickerList');if(!list)return;
-  if(!tickers.length){list.innerHTML='<p style="color:var(--gray);font-size:13px;">No custom messages. Default messages show.</p>';return;}
-  list.innerHTML=tickers.map((t,i)=>`<div class="festival-item">
-    <div class="info"><div class="name">${t.label||''} — ${t.text}</div><div class="date">Tag: ${t.tag}</div></div>
-    <button class="btn btn-red btn-xs" onclick="deleteTicker(${i})">🗑</button>
-  </div>`).join('');
-}
+function renderTicker(){const tickers=getTicker();const list=document.getElementById('tickerList');if(!list)return;if(!tickers.length){list.innerHTML='<p style="color:var(--gray);font-size:13px;">No custom messages. Default messages show.</p>';return;}list.innerHTML=tickers.map((t,i)=>`<div class="festival-item"><div class="info"><div class="name">${t.label||''} — ${t.text}</div><div class="date">Tag: ${t.tag}</div></div><button class="btn btn-red btn-xs" onclick="deleteTicker(${i})">🗑</button></div>`).join('');}
 function openAddTicker(){openModal('modal-ticker');}
-function saveTicker(){
-  const tag=g('tick-tag'),label=g('tick-label'),text=g('tick-text').trim();
-  if(!text){showToast('Message text is required','error');return;}
-  const tickers=getTicker();tickers.push({tag,label,text});
-  saveTickers(tickers);renderTicker();closeModal('modal-ticker');showToast('✅ Ticker message saved!','success');
-}
+function saveTicker(){const tag=g('tick-tag'),label=g('tick-label'),text=g('tick-text').trim();if(!text){showToast('Message text is required','error');return;}const tickers=getTicker();tickers.push({tag,label,text});saveTickers(tickers);renderTicker();closeModal('modal-ticker');showToast('✅ Ticker message saved!','success');}
 function deleteTicker(idx){const t=getTicker();t.splice(idx,1);saveTickers(t);renderTicker();}
-function saveBdayWish(){
-  const val=document.getElementById('bday-wish').value.trim();
-  const st=DB.getSt();if(!st.notifcal)st.notifcal={};st.notifcal.birthdayWish=val;DB.setSt(st);
-  showToast('✅ Birthday template saved!','success');
-}
+function saveBdayWish(){const val=document.getElementById('bday-wish').value.trim();const st=DB.getSt();if(!st.notifcal)st.notifcal={};st.notifcal.birthdayWish=val;DB.setSt(st);showToast('✅ Birthday template saved!','success');}
 
-// ── BIRTHDAY WIDGET (Dashboard) ──
+// ── BIRTHDAY WIDGET ──
 function renderBirthdays(){
   const el=document.getElementById('dash-birthdays');if(!el)return;
-  const vols=getVols();
-  const today=new Date();
-  today.setHours(0,0,0,0);
-  const upcoming=vols.filter(v=>{
-    if(!v.dob)return false;
-    const parts=v.dob.split('-');
-    if(parts.length<3)return false;
-    const bday=new Date(today.getFullYear(),parseInt(parts[1])-1,parseInt(parts[2]));
-    const diff=Math.ceil((bday-today)/86400000);
-    return diff>=0&&diff<=7;
-  }).sort((a,b)=>{
-    const ap=a.dob.split('-'),bp=b.dob.split('-');
-    return (new Date(today.getFullYear(),parseInt(ap[1])-1,parseInt(ap[2])))-(new Date(today.getFullYear(),parseInt(bp[1])-1,parseInt(bp[2])));
-  });
+  const vols=getVols();const today=new Date();today.setHours(0,0,0,0);
+  const upcoming=vols.filter(v=>{if(!v.dob)return false;const parts=v.dob.split('-');if(parts.length<3)return false;const bday=new Date(today.getFullYear(),parseInt(parts[1])-1,parseInt(parts[2]));const diff=Math.ceil((bday-today)/86400000);return diff>=0&&diff<=7;}).sort((a,b)=>{const ap=a.dob.split('-'),bp=b.dob.split('-');return(new Date(today.getFullYear(),parseInt(ap[1])-1,parseInt(ap[2])))-(new Date(today.getFullYear(),parseInt(bp[1])-1,parseInt(bp[2])));});
   if(!upcoming.length){el.innerHTML='<p style="color:var(--gray);font-size:13px;">No birthdays in the next 7 days.</p>';return;}
   const colors=['#0A4D8C','#2E8B57','#F57C00','#9333ea','#0891b2'];
-  el.innerHTML=upcoming.map((v,i)=>{
-    const parts=v.dob.split('-');
-    const bday=new Date(today.getFullYear(),parseInt(parts[1])-1,parseInt(parts[2]));
-    const diff=Math.ceil((bday-today)/86400000);
-    const label=diff===0?'🎉 Today!':diff===1?'Tomorrow':`In ${diff} days`;
-    return`<div class="bday-item">
-      <div class="bday-av" style="background:${colors[i%colors.length]};color:#fff;">${(v.name||'V')[0].toUpperCase()}</div>
-      <div style="flex:1">
-        <strong style="font-size:13px;display:block;">${v.name}</strong>
-        <span style="font-size:11px;color:var(--gray);">${v.id} · ${parts[2]}/${parts[1]}</span>
-      </div>
-      <span style="font-size:11px;font-weight:700;color:${diff===0?'var(--orange)':'var(--blue)'};">${label}</span>
-    </div>`;
-  }).join('');
+  el.innerHTML=upcoming.map((v,i)=>{const parts=v.dob.split('-');const bday=new Date(today.getFullYear(),parseInt(parts[1])-1,parseInt(parts[2]));const diff=Math.ceil((bday-today)/86400000);const label=diff===0?'🎉 Today!':diff===1?'Tomorrow':`In ${diff} days`;return`<div class="bday-item"><div class="bday-av" style="background:${colors[i%colors.length]};color:#fff;">${(v.name||'V')[0].toUpperCase()}</div><div style="flex:1"><strong style="font-size:13px;display:block;">${v.name}</strong><span style="font-size:11px;color:var(--gray);">${v.id} · ${parts[2]}/${parts[1]}</span></div><span style="font-size:11px;font-weight:700;color:${diff===0?'var(--orange)':'var(--blue)'};">${label}</span></div>`;}).join('');
 }
 
 // ── VOLUNTEERS ──
 function renderVolunteers(filter=''){
-  const all=getVols();
-  const vols=all.filter(v=>!filter||v.name?.toLowerCase().includes(filter)||v.id?.toLowerCase().includes(filter));
+  const all=getVols();const vols=all.filter(v=>!filter||v.name?.toLowerCase().includes(filter)||v.id?.toLowerCase().includes(filter));
   const tbody=document.getElementById('volTbody');if(!tbody)return;
   document.getElementById('volBadge').textContent=all.length;
   document.getElementById('dash-vols').textContent=all.length;
@@ -1325,43 +1286,17 @@ function renderVolunteers(filter=''){
     <td><span class="badge-active">Active ✅</span></td>
     <td><button class="btn btn-outline btn-xs" onclick="viewVolDetails('${v.id}')">👁 View</button></td>
   </tr>`).join('');
-  // Recent for dashboard
   const recent=document.getElementById('dash-recent-vols');
-  if(recent){
-    const last5=all.slice(-5).reverse();
-    if(!last5.length){recent.innerHTML='<p style="color:var(--gray);font-size:13px;">No volunteers yet.</p>';return;}
-    recent.innerHTML=last5.map(v=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--gray-lt);">
-      <div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">${(v.name||'V')[0].toUpperCase()}</div>
-      <div><strong style="font-size:13px;">${v.name}</strong><br><span style="font-size:11px;color:var(--gray);">${v.id} · ${v.joinDate||''}</span></div>
-    </div>`).join('');
-  }
+  if(recent){const last5=all.slice(-5).reverse();if(!last5.length){recent.innerHTML='<p style="color:var(--gray);font-size:13px;">No volunteers yet.</p>';return;}recent.innerHTML=last5.map(v=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--gray-lt);"><div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">${(v.name||'V')[0].toUpperCase()}</div><div><strong style="font-size:13px;">${v.name}</strong><br><span style="font-size:11px;color:var(--gray);">${v.id} · ${v.joinDate||''}</span></div></div>`).join('');}
 }
 
 function filterVolunteers(){renderVolunteers(document.getElementById('vol-search').value.toLowerCase());}
 
 function viewVolDetails(id){
   const v=getVols().find(x=>x.id===id);if(!v)return;
-  const body=document.getElementById('volDetailBody');
-  if(!body)return;
-  const rows=[
-    ['Vol ID',v.id],['Name',v.name],['Date of Birth',v.dob||'-'],
-    ['Father',v.fatherName||'-'],['Mother',v.motherName||'-'],
-    ['Occupation',v.occupation||'-'],['Mobile',v.mobile],
-    ['Aadhaar',v.aadhaarDisplay||'-'],['Village',v.at||'-'],
-    ['Post',v.post||'-'],['Police Station',v.ps||'-'],
-    ['District',v.district||'-'],['State',v.state||'-'],
-    ['PIN',v.pin||'-'],['Joined',v.joinDate||'-'],['Status','Active ✅']
-  ];
-  body.innerHTML=`<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
-    ${v.photo&&v.photo.length>10?`<img src="${v.photo}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--blue);">`:
-    '<div style="width:70px;height:70px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;">👤</div>'}
-    <div><div style="font-family:Poppins;font-size:18px;font-weight:700;color:var(--blue);">${v.name}</div>
-    <div style="font-size:12px;color:var(--orange);font-weight:700;letter-spacing:1px;">${v.id}</div></div>
-  </div>
-  <table style="width:100%;font-size:13px;border-collapse:collapse;">
-    ${rows.map(r=>`<tr><td style="padding:7px 10px;color:var(--gray);font-weight:600;width:120px;border-bottom:1px solid var(--gray-lt);">${r[0]}</td>
-    <td style="padding:7px 10px;border-bottom:1px solid var(--gray-lt);font-weight:${r[0]==='Vol ID'?'700':'400'};color:${r[0]==='Vol ID'?'var(--blue)':'var(--text)'};">${r[1]}</td></tr>`).join('')}
-  </table>`;
+  const body=document.getElementById('volDetailBody');if(!body)return;
+  const rows=[['Vol ID',v.id],['Name',v.name],['Date of Birth',v.dob||'-'],['Father',v.fatherName||'-'],['Mother',v.motherName||'-'],['Occupation',v.occupation||'-'],['Mobile',v.mobile],['Aadhaar',v.aadhaarDisplay||'-'],['Village',v.at||'-'],['Post',v.post||'-'],['Police Station',v.ps||'-'],['District',v.district||'-'],['State',v.state||'-'],['PIN',v.pin||'-'],['Joined',v.joinDate||'-'],['Status','Active ✅']];
+  body.innerHTML=`<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">${v.photo&&v.photo.length>10?`<img src="${v.photo}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--blue);">`:'<div style="width:70px;height:70px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;">👤</div>'}<div><div style="font-family:Poppins;font-size:18px;font-weight:700;color:var(--blue);">${v.name}</div><div style="font-size:12px;color:var(--orange);font-weight:700;letter-spacing:1px;">${v.id}</div></div></div><table style="width:100%;font-size:13px;border-collapse:collapse;">${rows.map(r=>`<tr><td style="padding:7px 10px;color:var(--gray);font-weight:600;width:120px;border-bottom:1px solid var(--gray-lt);">${r[0]}</td><td style="padding:7px 10px;border-bottom:1px solid var(--gray-lt);font-weight:${r[0]==='Vol ID'?'700':'400'};color:${r[0]==='Vol ID'?'var(--blue)':'var(--text)'};">${r[1]}</td></tr>`).join('')}</table>`;
   openModal('modal-vol-detail');
 }
 
@@ -1370,9 +1305,7 @@ function exportVolunteers(){
   const hdr=['ID','Name','DOB','Father','Mother','Occupation','Mobile','Aadhaar','Village','Post','PS','District','State','PIN','Joined'];
   const rows=vols.map(v=>[v.id,v.name,v.dob,v.fatherName,v.motherName,v.occupation,v.mobile,v.aadhaarDisplay,v.at,v.post,v.ps,v.district,v.state,v.pin,v.joinDate]);
   const csv=[hdr,...rows].map(r=>r.map(c=>`"${(c||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv,{type:'text/csv;charset=utf-8'}]));
-  a.download='MLF_Volunteers_'+new Date().toISOString().split('T')[0]+'.csv';a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='MLF_Volunteers_'+new Date().toISOString().split('T')[0]+'.csv';a.click();
   showToast('📥 CSV exported!','success');
 }
 
@@ -1380,64 +1313,33 @@ function syncToSheets(){
   const url=localStorage.getItem('mlf_url');
   if(!url){showToast('Set Google Sheets URL first in Settings','error');return;}
   const rows=getVols().map(v=>[v.id,v.name,v.dob,v.fatherName,v.motherName,v.occupation,v.mobile,v.aadhaarDisplay,v.at,v.post,v.ps,v.district,v.state,v.pin,v.joinDate,v.status||'Active']);
-  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({tab:'Volunteers',action:'write',rows:[['ID','Name','DOB','Father','Mother','Occ','Mobile','Aadhaar','Village','Post','PS','District','State','PIN','Joined','Status'],...rows]})})
-    .then(()=>showToast('✅ Sync sent! Check Google Sheet.','success'))
-    .catch(()=>showToast('Sync may have failed. Check URL.','error'));
+  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({tab:'Volunteers',action:'write',rows:[['ID','Name','DOB','Father','Mother','Occ','Mobile','Aadhaar','Village','Post','PS','District','State','PIN','Joined','Status'],...rows]})}).then(()=>showToast('✅ Sync sent! Check Google Sheet.','success')).catch(()=>showToast('Sync may have failed. Check URL.','error'));
 }
 
 // ── DONORS ──
 function renderDonors(){
-  const donors=getDonors();
-  document.getElementById('dash-donors').textContent=donors.length;
+  const donors=getDonors();document.getElementById('dash-donors').textContent=donors.length;
   const tbody=document.getElementById('donorTbody');if(!tbody)return;
   if(!donors.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:30px;">No donors recorded yet.</td></tr>';return;}
-  tbody.innerHTML=donors.map((d,i)=>`<tr>
-    <td><strong>${d.name||'Anonymous'}</strong></td>
-    <td>${d.mobile||'-'}</td>
-    <td><strong>₹${(d.amount||0).toLocaleString('en-IN')}</strong></td>
-    <td><span class="badge-active" style="background:#FFF3E0;color:var(--orange);">${d.type||'Cash'}</span></td>
-    <td>${d.date||'-'}</td>
-    <td>${d.msg||'-'}</td>
-    <td><button class="btn btn-red btn-xs" onclick="deleteDonor(${i})">🗑</button></td>
-  </tr>`).join('');
+  tbody.innerHTML=donors.map((d,i)=>`<tr><td><strong>${d.name||'Anonymous'}</strong></td><td>${d.mobile||'-'}</td><td><strong>₹${(d.amount||0).toLocaleString('en-IN')}</strong></td><td><span class="badge-active" style="background:#FFF3E0;color:var(--orange);">${d.type||'Cash'}</span></td><td>${d.date||'-'}</td><td>${d.msg||'-'}</td><td><button class="btn btn-red btn-xs" onclick="deleteDonor(${i})">🗑</button></td></tr>`).join('');
 }
 
-function openAddDonor(){
-  document.getElementById('d-date').value=new Date().toISOString().split('T')[0];
-  openModal('modal-donor');
-}
-function saveDonor(){
-  const donors=getDonors();
-  donors.push({name:g('d-name'),mobile:g('d-mobile'),amount:parseFloat(g('d-amount'))||0,type:g('donor-type'),date:g('d-date'),msg:g('d-msg')});
-  setDonors(donors);renderDonors();closeModal('modal-donor');showToast('💝 Donor saved!','success');
-}
+function openAddDonor(){document.getElementById('d-date').value=new Date().toISOString().split('T')[0];openModal('modal-donor');}
+function saveDonor(){const donors=getDonors();donors.push({name:g('d-name'),mobile:g('d-mobile'),amount:parseFloat(g('d-amount'))||0,type:g('donor-type'),date:g('d-date'),msg:g('d-msg')});setDonors(donors);renderDonors();closeModal('modal-donor');showToast('💝 Donor saved!','success');}
 function deleteDonor(idx){if(!confirm('Delete this donor record?'))return;const d=getDonors();d.splice(idx,1);setDonors(d);renderDonors();}
-function selectDType(el,type){
-  document.querySelectorAll('.dtype-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');document.getElementById('donor-type').value=type;
-}
-
-// ── EXPORT DONORS CSV (NEW) ──
+function selectDType(el,type){document.querySelectorAll('.dtype-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('donor-type').value=type;}
 function exportDonors(){
-  const donors=getDonors();
-  if(!donors.length){showToast('No donors to export','error');return;}
+  const donors=getDonors();if(!donors.length){showToast('No donors to export','error');return;}
   const hdr=['Name','Mobile','Amount (₹)','Type','Date','Notes'];
   const rows=donors.map(d=>[d.name||'Anonymous',d.mobile||'',d.amount||0,d.type||'Cash',d.date||'',d.msg||'']);
   const csv=[hdr,...rows].map(r=>r.map(c=>`"${(c||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download='MLF_Donors_'+new Date().toISOString().split('T')[0]+'.csv';
-  a.click();showToast('📥 Donors CSV exported!','success');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='MLF_Donors_'+new Date().toISOString().split('T')[0]+'.csv';a.click();showToast('📥 Donors CSV exported!','success');
 }
 
 // ── SAVE SECTIONS ──
 function saveSection(sec){
   const st=DB.getSt();
-  if(sec==='hero'){
-    st.hero={b:g('hero-b'),h1:g('hero-h1'),em:g('hero-em'),p:g('hero-p'),b1:g('hero-b1'),b2:g('hero-b2'),bg:g('hero-bg-url')||undefined};
-    const c=document.getElementById('hero-bg-current');if(c&&st.hero.bg)c.textContent='Custom image set ✅';
-  }
+  if(sec==='hero'){st.hero={b:g('hero-b'),h1:g('hero-h1'),em:g('hero-em'),p:g('hero-p'),b1:g('hero-b1'),b2:g('hero-b2'),bg:g('hero-bg-url')||undefined};const c=document.getElementById('hero-bg-current');if(c&&st.hero.bg)c.textContent='Custom image set ✅';}
   else if(sec==='about'){st.about={p1:g('about-p1'),p2:g('about-p2'),bn:g('about-bn'),bl:g('about-bl'),mt:g('about-mt'),mp:g('about-mp'),vt:g('about-vt'),vp:g('about-vp'),i:g('about-main-url'),fi:g('about-float-url')};}
   else if(sec==='programs'){st.programs={c1:{img:g('prg1-url'),t:g('prg1-t'),p:g('prg1-p'),l:g('prg1-l')},c2:{img:g('prg2-url'),t:g('prg2-t'),p:g('prg2-p'),l:g('prg2-l')},c3:{img:g('prg3-url'),t:g('prg3-t'),p:g('prg3-p'),l:g('prg3-l')}};}
   else if(sec==='stats'){st.stats=[{n:g('stat1-n'),l:g('stat1-l')},{n:g('stat2-n'),l:g('stat2-l')},{n:g('stat3-n'),l:g('stat3-l')}];}
@@ -1449,12 +1351,7 @@ function saveSection(sec){
   else if(sec==='logo'){st.logo={n:g('logo-n'),t:g('logo-t'),tt:g('logo-tt'),i:g('logo-url')};}
   else if(sec==='footer'){st.footer={about:g('ft-about'),reg:g('ft-reg'),pan:g('ft-pan'),copy:g('ft-copy'),soc1:g('soc1'),soc2:g('soc2'),soc3:g('soc3'),soc4:g('soc4')};}
   else if(sec==='legal'){st.legal={r:g('leg-r'),pan:g('leg-pan'),niti:g('leg-niti'),desc:g('leg-desc')};}
-  else if(sec==='progpages'){st.progpages={
-    edu:{img:g('edu-img'),t:g('edu-t'),p1:g('edu-p1'),p2:g('edu-p2'),ft:g('edu-ft'),fp:g('edu-fp')},
-    health:{img:g('health-img'),t:g('health-t'),p1:g('health-p1'),p2:g('health-p2'),ft:g('health-ft'),fp:g('health-fp')},
-    rural:{img:g('rural-img'),t:g('rural-t'),p1:g('rural-p1'),p2:g('rural-p2'),ft:g('rural-ft'),fp:g('rural-fp')},
-    env:{img:g('env-img'),t:g('env-t'),p1:g('env-p1'),p2:g('env-p2'),ft:g('env-ft'),fp:g('env-fp')}
-  };}
+  else if(sec==='progpages'){st.progpages={edu:{img:g('edu-img'),t:g('edu-t'),p1:g('edu-p1'),p2:g('edu-p2'),ft:g('edu-ft'),fp:g('edu-fp')},health:{img:g('health-img'),t:g('health-t'),p1:g('health-p1'),p2:g('health-p2'),ft:g('health-ft'),fp:g('health-fp')},rural:{img:g('rural-img'),t:g('rural-t'),p1:g('rural-p1'),p2:g('rural-p2'),ft:g('rural-ft'),fp:g('rural-fp')},env:{img:g('env-img'),t:g('env-t'),p1:g('env-p1'),p2:g('env-p2'),ft:g('env-ft'),fp:g('env-fp')}};}
   DB.setSt(st);
   const lb=document.getElementById('lastSavedBadge');
   if(lb){const t=new Date();lb.textContent='✅ Saved '+t.getHours()+':'+String(t.getMinutes()).padStart(2,'0')+':'+String(t.getSeconds()).padStart(2,'0');}
@@ -1473,8 +1370,7 @@ function loadAllFields(){
   const st=DB.getSt();
   function sv(id,val){const el=document.getElementById(id);if(el&&val!=null)el.value=val;}
   function si(id,src){const el=document.getElementById(id);if(el&&src&&src.length>10){el.src=src;el.style.display='';}}
-  if(st.hero){sv('hero-b',st.hero.b);sv('hero-h1',st.hero.h1);sv('hero-em',st.hero.em);sv('hero-p',st.hero.p);sv('hero-b1',st.hero.b1);sv('hero-b2',st.hero.b2);
-    if(st.hero.bg){sv('hero-bg-url',st.hero.bg);si('hero-bg-preview',st.hero.bg);const c=document.getElementById('hero-bg-current');if(c)c.textContent='Custom image set ✅';}}
+  if(st.hero){sv('hero-b',st.hero.b);sv('hero-h1',st.hero.h1);sv('hero-em',st.hero.em);sv('hero-p',st.hero.p);sv('hero-b1',st.hero.b1);sv('hero-b2',st.hero.b2);if(st.hero.bg){sv('hero-bg-url',st.hero.bg);si('hero-bg-preview',st.hero.bg);const c=document.getElementById('hero-bg-current');if(c)c.textContent='Custom image set ✅';}}
   if(st.about){sv('about-p1',st.about.p1);sv('about-p2',st.about.p2);sv('about-bn',st.about.bn);sv('about-bl',st.about.bl);sv('about-mt',st.about.mt);sv('about-mp',st.about.mp);sv('about-vt',st.about.vt);sv('about-vp',st.about.vp);sv('about-main-url',st.about.i);si('about-main-preview',st.about.i);sv('about-float-url',st.about.fi);si('about-float-preview',st.about.fi);}
   if(st.programs){['1','2','3'].forEach(n=>{const c=st.programs['c'+n];if(!c)return;sv(`prg${n}-url`,c.img);si(`prg${n}-preview`,c.img);sv(`prg${n}-t`,c.t);sv(`prg${n}-p`,c.p);sv(`prg${n}-l`,c.l);});}
   if(st.stats){st.stats.forEach((s,i)=>{sv(`stat${i+1}-n`,s.n);sv(`stat${i+1}-l`,s.l);});}
@@ -1490,27 +1386,23 @@ function loadAllFields(){
   if(st.notifcal?.birthdayWish){sv('bday-wish',st.notifcal.birthdayWish);}
 }
 
-function updateDashboard(){
-  // Refresh all dashboard stats
-  renderVolunteers();
-  renderDonors();
-  renderBirthdays();
-  // Fix photo count from latest state
-  const photos=(DB.getSt().gallery||[]).length;
-  document.getElementById('dash-photos').textContent=photos;
-  const board=(DB.getSt().board||[]).length;
-  document.getElementById('dash-board').textContent=board;
-}
+function updateDashboard(){renderVolunteers();renderDonors();renderBirthdays();const photos=(DB.getSt().gallery||[]).length;document.getElementById('dash-photos').textContent=photos;const board=(DB.getSt().board||[]).length;document.getElementById('dash-board').textContent=board;}
 
-// ── PASSWORD ──
-function changePassword(){
+// ── PASSWORD CHANGE (now saves to Supabase) ──
+async function changePassword(){
   const cur=g('pw-cur'),nw=g('pw-new'),conf=g('pw-confirm');
   if(cur!==adminCreds.pass){showToast('Current password is wrong','error');return;}
   if(nw.length<6){showToast('New password must be at least 6 characters','error');return;}
   if(nw!==conf){showToast('Passwords do not match','error');return;}
-  adminCreds.pass=nw;localStorage.setItem('mlf_admin_creds',JSON.stringify(adminCreds));
+  adminCreds.pass=nw;
+  showToast('Saving to Supabase... ⏳','');
+  const saved=await saveAdminCredsToSupabase(adminCreds);
   ['pw-cur','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
-  showToast('🔒 Password updated successfully!','success');
+  if(saved){
+    showToast('🔒 Password updated on ALL devices via Supabase!','success');
+  } else {
+    showToast('🔒 Password saved locally. Sync when online.','success');
+  }
 }
 
 // ── VOLUNTEER LOOKUP ──
@@ -1520,97 +1412,25 @@ function lookupVolunteer(){
   if(!mobile||mobile.length!==10){showToast('Enter a valid 10-digit mobile number','error');return;}
   if(!last4||last4.length!==4){showToast('Enter the last 4 digits of Aadhaar','error');return;}
   const vol=getVols().find(v=>v.mobile===mobile&&v.aadhaarDisplay&&v.aadhaarDisplay.endsWith(last4));
-  if(!vol){
-    res.innerHTML='<div class="warn-box">❌ No volunteer found with this mobile + Aadhaar combination.</div>';
-    return;
-  }
-  res.innerHTML=`<div class="info-box" style="background:#dcfce7;border-color:#86efac;color:#166534;">
-    ✅ Volunteer found!<br>
-    <strong style="font-size:16px;letter-spacing:1px;">${vol.name}</strong><br>
-    ID: <strong style="font-size:18px;color:var(--blue);letter-spacing:2px;">${vol.id}</strong><br>
-    District: ${vol.district||'-'} · Joined: ${vol.joinDate||'-'}
-  </div>`;
+  if(!vol){res.innerHTML='<div class="warn-box">❌ No volunteer found with this mobile + Aadhaar combination.</div>';return;}
+  res.innerHTML=`<div class="info-box" style="background:#dcfce7;border-color:#86efac;color:#166534;">✅ Volunteer found!<br><strong style="font-size:16px;letter-spacing:1px;">${vol.name}</strong><br>ID: <strong style="font-size:18px;color:var(--blue);letter-spacing:2px;">${vol.id}</strong><br>District: ${vol.district||'-'} · Joined: ${vol.joinDate||'-'}</div>`;
 }
 
 // ── SHEETS ──
 function saveSheets(){localStorage.setItem('mlf_url',g('sheets-url').trim());showToast('📊 Sheets URL saved!','success');}
-function testSheets(){
-  const url=localStorage.getItem('mlf_url');if(!url){showToast('Save a URL first','error');return;}
-  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({test:true,time:new Date().toISOString()})})
-    .then(()=>showToast('✅ Ping sent! Check your Google Sheet.','success'))
-    .catch(()=>showToast('Could not reach URL. Check if it is correct.','error'));
-}
+function testSheets(){const url=localStorage.getItem('mlf_url');if(!url){showToast('Save a URL first','error');return;}fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({test:true,time:new Date().toISOString()})}).then(()=>showToast('✅ Ping sent! Check your Google Sheet.','success')).catch(()=>showToast('Could not reach URL.','error'));}
 
 // ── TAB SWITCH ──
-function switchTab(event,id){
-  const btn=event.currentTarget||event.target;
-  const container=btn.closest('.page')||document;
-  container.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  container.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  const pane=document.getElementById('tab-'+id);if(pane)pane.classList.add('active');
-  btn.classList.add('active');
-}
+function switchTab(event,id){const btn=event.currentTarget||event.target;const container=btn.closest('.page')||document;container.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));container.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));const pane=document.getElementById('tab-'+id);if(pane)pane.classList.add('active');btn.classList.add('active');}
 
 // ── QR & DESIGNATIONS ──
-function generateAdminQR(){
-  const idVal=g('qrPreviewId').trim().toUpperCase();
-  const baseUrl=g('qrBaseUrl').trim()||window.location.href.replace('admin.html','index.html');
-  if(!idVal){showToast('Enter a member ID first','error');return;}
-  const display=document.getElementById('adminQRDisplay');display.innerHTML='';
-  try{
-    new QRCode(display,{text:baseUrl+'?volunteer='+idVal,width:200,height:200,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
-    showToast('✅ QR generated for: '+idVal,'success');
-  }catch(e){display.innerHTML='<p style="color:red;">QR generation failed.</p>';}
-}
-
-function downloadAdminQR(){
-  const display=document.getElementById('adminQRDisplay');
-  const canvas=display.querySelector('canvas');
-  const img=display.querySelector('img');
-  let src='';
-  if(canvas)src=canvas.toDataURL('image/png',1.0);
-  else if(img)src=img.src;
-  else{showToast('Generate a QR code first','error');return;}
-  const idVal=g('qrPreviewId').trim().toUpperCase()||'QR';
-  const a=document.createElement('a');a.href=src;a.download='MLF-QR-'+idVal+'.png';a.click();
-  showToast('✅ QR PNG downloaded!','success');
-}
-
-function resetCounter(){
-  if(!confirm('Reset ID counter to 0?\n\nIMPORTANT: Existing IDs will NOT change. New registrations will start from 01.'))return;
-  localStorage.setItem('mlf_counter','0');
-  showToast('Counter reset to 0.','');loadDesigPage();
-}
-
-function loadDesigPage(){
-  const ctr=localStorage.getItem('mlf_counter')||'0';
-  const el=document.getElementById('currentCounter');
-  if(el)el.textContent=ctr+' (next: '+String(parseInt(ctr)+1).padStart(2,'0')+')';
-  const vols=getVols();
-  const byType={};
-  vols.forEach(v=>{const t=v.type||'V';if(!byType[t])byType[t]=[];byType[t].push(v);});
-  const typeNames={'V':'🤝 Volunteers','C':'📍 Coordinators','E':'👔 Employees','S':'⭐ Supporters'};
-  const list=document.getElementById('idStatsList');if(!list)return;
-  if(!vols.length){list.innerHTML='<p style="color:var(--gray);">No members registered yet.</p>';return;}
-  list.innerHTML=Object.entries(byType).map(([t,arr])=>`
-    <div style="margin-bottom:16px;">
-      <div style="font-weight:700;color:var(--blue);margin-bottom:8px;font-family:Poppins;">${typeNames[t]||t}: ${arr.length}</div>
-      ${arr.map(v=>`<div style="display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--off);border-radius:8px;margin-bottom:4px;">
-        <code style="font-weight:700;color:var(--blue);font-size:13px;">${v.id}</code>
-        <span>${v.name}</span>
-        <button class="btn btn-outline btn-xs" style="margin-left:auto;" onclick="document.getElementById('qrPreviewId').value='${v.id}';showPage('desig');generateAdminQR();">🔲 QR</button>
-      </div>`).join('')}
-    </div>
-  `).join('');
-}
-
+function generateAdminQR(){const idVal=g('qrPreviewId').trim().toUpperCase();const baseUrl=g('qrBaseUrl').trim()||window.location.href.replace('admin.html','index.html');if(!idVal){showToast('Enter a member ID first','error');return;}const display=document.getElementById('adminQRDisplay');display.innerHTML='';try{new QRCode(display,{text:baseUrl+'?volunteer='+idVal,width:200,height:200,colorDark:'#073A6B',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});showToast('✅ QR generated for: '+idVal,'success');}catch(e){display.innerHTML='<p style="color:red;">QR generation failed.</p>';}}
+function downloadAdminQR(){const display=document.getElementById('adminQRDisplay');const canvas=display.querySelector('canvas');const img=display.querySelector('img');let src='';if(canvas)src=canvas.toDataURL('image/png',1.0);else if(img)src=img.src;else{showToast('Generate a QR code first','error');return;}const idVal=g('qrPreviewId').trim().toUpperCase()||'QR';const a=document.createElement('a');a.href=src;a.download='MLF-QR-'+idVal+'.png';a.click();showToast('✅ QR PNG downloaded!','success');}
+function resetCounter(){if(!confirm('Reset ID counter to 0?\n\nIMPORTANT: Existing IDs will NOT change. New registrations will start from 01.'))return;localStorage.setItem('mlf_counter','0');showToast('Counter reset to 0.','');loadDesigPage();}
+function loadDesigPage(){const ctr=localStorage.getItem('mlf_counter')||'0';const el=document.getElementById('currentCounter');if(el)el.textContent=ctr+' (next: '+String(parseInt(ctr)+1).padStart(2,'0')+')';const vols=getVols();const byType={};vols.forEach(v=>{const t=v.type||'V';if(!byType[t])byType[t]=[];byType[t].push(v);});const typeNames={'V':'🤝 Volunteers','C':'📍 Coordinators','E':'👔 Employees','S':'⭐ Supporters'};const list=document.getElementById('idStatsList');if(!list)return;if(!vols.length){list.innerHTML='<p style="color:var(--gray);">No members registered yet.</p>';return;}list.innerHTML=Object.entries(byType).map(([t,arr])=>`<div style="margin-bottom:16px;"><div style="font-weight:700;color:var(--blue);margin-bottom:8px;font-family:Poppins;">${typeNames[t]||t}: ${arr.length}</div>${arr.map(v=>`<div style="display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--off);border-radius:8px;margin-bottom:4px;"><code style="font-weight:700;color:var(--blue);font-size:13px;">${v.id}</code><span>${v.name}</span><button class="btn btn-outline btn-xs" style="margin-left:auto;" onclick="document.getElementById('qrPreviewId').value='${v.id}';showPage('desig');generateAdminQR();">🔲 QR</button></div>`).join('')}</div>`).join('');}
 
 // ── SUPABASE FORCE SYNC ──
-async function syncNowToSupabase(){
-  const st=DB.getSt();
-  await DB.pushToSupabase(st);
-  showToast('✅ Synced! Public website will now show latest changes.','success');
-}
+async function syncNowToSupabase(){const st=DB.getSt();await DB.pushToSupabase(st);showToast('✅ Synced! Public website will now show latest changes.','success');}
 
 // ── MODALS ──
 function openModal(id){document.getElementById(id).classList.add('open');}
@@ -1619,11 +1439,14 @@ document.querySelectorAll('.modal-ov').forEach(o=>o.addEventListener('click',e=>
 
 // ── TOAST ──
 let _toastT;
-function showToast(msg,type){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className=`toast ${type}`;t.classList.add('show');
-  clearTimeout(_toastT);_toastT=setTimeout(()=>t.classList.remove('show'),3500);
-}
+function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;t.classList.add('show');clearTimeout(_toastT);_toastT=setTimeout(()=>t.classList.remove('show'),3500);}
+
+// ── STARTUP: Load creds from Supabase BEFORE showing login ──
+(async function startup(){
+  await loadAdminCreds();
+  // Auto-login if already logged in this session (optional)
+  // For security, always show login screen fresh
+})();
 </script>
 </body>
 </html>
