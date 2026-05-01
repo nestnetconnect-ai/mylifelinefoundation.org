@@ -896,8 +896,8 @@ function getDonors(){return DB.get('mlf_donors')||[];}
 function setDonors(d){DB.set('mlf_donors',d);}
 function g(id){const el=document.getElementById(id);return el?el.value:'';}
 
-async function init(){
-  // Step 1: Show UI immediately from localStorage
+function init(){
+  checkSupabase();
   loadAllFields();
   renderBoard();renderCoords();renderGallery();
   renderFestivals();renderTicker();
@@ -907,33 +907,6 @@ async function init(){
   const sel=document.getElementById('sheets-url');if(sel)sel.value=su;
   const bday=DB.getSt()?.notifcal?.birthdayWish;
   const bdEl=document.getElementById('bday-wish');if(bdEl&&bday)bdEl.value=bday;
-  showToast('Loading latest data... ⏳','');
-
-  // Step 2: Check Supabase connection
-  checkSupabase();
-
-  // Step 3: Load fresh data from Supabase in background
-  try{
-    const fresh=await loadContentFromSupabase();
-    if(fresh&&Object.keys(fresh).length>0){
-      cachedContent=fresh;
-      loadAllFields();
-      renderBoard();renderCoords();renderGallery();
-      renderFestivals();renderTicker();
-      updateDashboard();
-      showToast('✅ Latest data loaded from Supabase!','success');
-    } else {
-      showToast('✅ Ready (using local data)','success');
-    }
-  }catch(e){
-    showToast('⚠️ Supabase load failed. Using local data.','');
-  }
-
-  // Step 4: Load volunteers from Supabase
-  try{
-    await loadVolunteersFromSupabase();
-    renderVolunteers();
-  }catch(e){}
 }
 
 const PAGE_TITLES={dashboard:'Dashboard',hero:'Hero Section',about:'About Section',programs:'Programs',stats:'Impact Stats',testimonials:'Testimonials',join:'Join Section',vision:'Vision & Mission',board:'Board Members',coordinators:'Coordinators',gallery:'Gallery',progpages:'Program Pages',donate:'Donate Page',contact:'Contact Page',branding:'Logo & Branding',footer:'Footer',legal:'Legal Documents',festivals:'Festivals & Ticker',volunteers:'Volunteers',donors:'Donors',password:'Change Password',forgot:'Forgot Password',sheets:'Google Sheets',desig:'🏷️ ID & Designations'};
