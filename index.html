@@ -7,6 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title id="pageTitle">My Lifeline Foundation – Empowering Rural Odisha</title>
+<!-- v1777608265 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -544,7 +545,9 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
     <a onclick="showPage('donate')">Donate</a>
     <a onclick="showPage('contact-page')">Contact</a>
   </div>
-  <span id="navAuthButtons" style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;"></span>
+  <span id="navAuthButtons" style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;">
+    <a class="nav-btn-login" onclick="openModal('modalLogin')" style="border:2px solid var(--blue);color:var(--blue);border-radius:9px;padding:8px 18px;font-size:13px;font-weight:700;background:white;cursor:pointer;white-space:nowrap;text-decoration:none;">🔐 Login</a>
+  </span>
   <div id="navClockSlot"></div>
   <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
@@ -569,8 +572,21 @@ footer{background:var(--blue-dk);color:rgba(255,255,255,.8);}
 <div id="hero-clock-slot">
 <div class="clock-widget" id="clockWidget">
   <div class="cw-time" id="cwTime">--:--:--</div>
-  <div class="cw-date" id="cwDate">Loading...</div>
+  <div class="cw-date" id="cwDate">--/--/----</div>
   <div class="cw-odia-month" id="cwOdiaMonth"></div>
+  <script>
+  // Inline clock - runs before any external script loads
+  (function(){
+    function tc(){
+      var n=new Date();
+      var t=document.getElementById('cwTime');
+      var d=document.getElementById('cwDate');
+      if(t)t.textContent=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2)+':'+('0'+n.getSeconds()).slice(-2);
+      if(d)d.textContent=('0'+n.getDate()).slice(-2)+'/'+('0'+(n.getMonth()+1)).slice(-2)+'/'+n.getFullYear();
+    }
+    tc();setInterval(tc,1000);
+  })();
+  </script>
   <div class="cw-divider"></div>
   <span class="cw-notice-label cw-label-upcoming"><span id="cwLabelText">ଆସନ୍ତା ଉତ୍ସବ</span></span>
   <div class="cw-notice-box"><div class="cw-notice-scroll" id="cwScroll"></div></div>
